@@ -1,15 +1,43 @@
 <ion-menu [content]="content">
   <ion-header>
-    <ion-toolbar>
+    <!-- <ion-toolbar>
       <h3 no-margin padding-left ion-text color="white">Menu</h3>
-    </ion-toolbar>
+    </ion-toolbar> -->
   </ion-header>
 
-  <ion-content>
-    <ion-list>
-      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-        {{p.title}}
-      </button>
+  <ion-content class="menu-side-bar">
+    <ion-list class="p-t-70">
+      <!-- <ion-icon name="close"></ion-icon> -->
+      <ion-icon menuClose class="icon-close">
+        <!-- <svg-icon src="/assets/icon/svg/popup/close.svg" [stretch]="true" [svgStyle]="{'width.px':25}">
+        </svg-icon> -->
+        <img width="25px" src="/assets/icon/svg/popup/close.svg" alt="">
+      </ion-icon>
+      <ion-grid class="p-0 m-b-20">
+        <ion-row>
+          <ion-col col-12 class="p-0">
+            <ion-row align-items-center class="pos-r row-search">
+              <ion-input class="m-0-input" type="text" placeholder="Поиск практики"></ion-input>
+              <ion-icon class="icon-serch">
+                <!-- <svg-icon src="/assets/icon/svg/popup/search.svg" [stretch]="true" [svgStyle]="{'width.px':70,'fill':'rgb(150,50,255)'}">
+                </svg-icon> -->
+                <img width="16px" src="/assets/icon/svg/popup/search.svg" alt="">
+              </ion-icon>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+
+      <div *ngFor="let p of pages">
+        <button class="bg-none sidebar-item" menuClose (click)="openPage(p)">
+            <ion-icon menuClose class="icon-sidebar-item">
+                <svg-icon src="{{p.icon}}" [stretch]="true" [svgStyle]="{'height.px':17}">
+                </svg-icon>
+              </ion-icon>
+          {{p.title}}
+        </button>
+      </div>
     </ion-list>
   </ion-content>
 

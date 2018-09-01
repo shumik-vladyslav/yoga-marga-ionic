@@ -9,29 +9,85 @@
 
 <ion-content padding-vertical>
 
-  <ion-title text-center margin-bottom>Каталог</ion-title>
-
-  <ion-card no-margin class="full-width">
-    <ion-card-content class="box-shadow" no-padding padding-vertical>
+  <!-- <ion-title text-center margin-bottom class="">Каталог</ion-title> -->
+  <h1>
+    Каталог
+  </h1>
+  <ion-card no-margin class="full-width box-shadow">
+    <ion-card-content no-padding padding-vertical>
       <ion-grid>
         <ion-row>
-          <ion-col col-4 class="border-r" no-padding>
-            <ion-item text-center no-padding>
-              <ion-icon name="ios-hand-outline" ion-text color="gray-100" class="fs-responsive-icon"></ion-icon>
-              <p margin-top ion-text color="gray-100" class="fs-responsive-text">Мантра Ом</p>
-            </ion-item>
+          <ion-col col-4 class="border-r col-between" no-padding>
+
+            <ion-row>
+              <ion-col col-12>
+                <ion-item text-center no-padding>
+                  <!-- <ion-icon>
+                    <svg-icon src="/assets/icon/svg/main-page/om.svg" [stretch]="true" [svgStyle]="{'height.px':50}">
+                    </svg-icon>
+                  </ion-icon> -->
+                  <img height="50px" src="/assets/icon/svg/main-page/om.svg" alt="">
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col col-12>
+                <ion-item text-center no-padding class="min-height-default">
+                  <!-- <ion-icon name="ios-hand-outline" ion-text class=""></ion-icon> -->
+                  <p ion-text class="fs-16 text-wrap">Мантра Ом</p>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
           </ion-col>
-          <ion-col col-4 class="border-r" no-padding>
-            <ion-item text-center no-padding>
-              <ion-icon name="ios-hand-outline" ion-text color="gray-100" class="fs-responsive-icon"></ion-icon>
-              <p margin-top ion-text color="gray-100" class="fs-responsive-text">Простирание</p>
-            </ion-item>
+          <ion-col col-4 class="border-r col-between" no-padding>
+
+            <ion-row>
+              <ion-col col-12>
+                <ion-item text-center no-padding>
+                  <ion-icon>
+                    <svg-icon src="/assets/icon/svg/lichniy-kabinet/dostizhenie-prostiraniya.svg" [stretch]="true" [svgStyle]="{'height.px':50}">
+                    </svg-icon>
+                  </ion-icon>
+                  <!-- <img height="50px" src="/assets/icon/svg/lichniy-kabinet/dostizhenie-prostiraniya.svg" alt=""> -->
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col col-12>
+                <ion-item text-center no-padding class="min-height-default">
+                  <!-- <ion-icon name="ios-hand-outline" ion-text class=""></ion-icon> -->
+                  <p ion-text class="fs-16 text-wrap">День практики</p>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
           </ion-col>
-          <ion-col col-4 no-padding>
-            <ion-item text-center no-padding>
-              <ion-icon name="ios-hand-outline" ion-text color="gray-100" class="fs-responsive-icon"></ion-icon>
-              <p margin-top ion-text color="gray-100" class="fs-responsive-text">Ассаны</p>
-            </ion-item>
+          <ion-col col-4 class="border-r col-between" no-padding>
+
+            <ion-row>
+              <ion-col col-12>
+                <ion-item text-center no-padding>
+                  <!-- <ion-icon>
+                    <svg-icon src="/assets/icon/svg/main-page/asani.svg" [stretch]="true" [svgStyle]="{'height.px':50}">
+                    </svg-icon>
+                  </ion-icon> -->
+                  <img height="50px" src="/assets/icon/svg/main-page/asani.svg" alt="">
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col col-12>
+                <ion-item text-center no-padding class="min-height-default">
+                  <!-- <ion-icon name="ios-hand-outline" ion-text class=""></ion-icon> -->
+                  <p ion-text class="fs-16 text-wrap">Ассаны</p>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -41,36 +97,88 @@
 
   <ion-grid>
     <ion-row justify-content-end>
-      <button ion-button block outline icon-start margin-top margin-bottom class="btn-md-width-200 btn-light-green mr-md-50 btn-sm-width">
-        <ion-icon name="ios-book-outline"></ion-icon>
-        В каталог
+      <button icon-start margin-top margin-bottom class="button-custom mr-md-50 btn-sm-width">
+        <!-- <ion-icon name="ios-book-outline"></ion-icon> -->
+        Все практики
+        <span class="arrow"></span>
       </button>
     </ion-row>
   </ion-grid>
 
   <ion-title text-center margin-bottom>Каталог</ion-title>
 
-  <ion-card no-margin class="full-width">
-    <ion-card-content class="box-shadow" no-padding padding-vertical>
+  <ion-card no-margin class="full-width box-shadow">
+    <ion-card-content no-padding padding-vertical>
       <ion-grid>
         <ion-row>
-          <ion-col col-4 class="border-r" no-padding>
-            <ion-item text-center no-padding>
-              <ion-icon name="ios-hand-outline" ion-text color="gray-100" class="fs-responsive-icon"></ion-icon>
-              <p margin-top ion-text color="gray-100" class="fs-responsive-text">Утрение практики</p>
-            </ion-item>
+          <ion-col col-4 class="border-r col-between" no-padding>
+
+            <ion-row>
+              <ion-col col-12>
+                <ion-item text-center no-padding>
+                  <ion-icon>
+                    <svg-icon src="/assets/icon/svg/kompleksy/moe-utro.svg" [stretch]="true" [svgStyle]="{'height.px':50}">
+                    </svg-icon>
+                  </ion-icon>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col col-12>
+                <ion-item text-center no-padding class="min-height-default">
+                  <!-- <ion-icon name="ios-hand-outline" ion-text class=""></ion-icon> -->
+                  <p ion-text class="fs-16 text-wrap">Мантра Ом</p>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
           </ion-col>
-          <ion-col col-4 class="border-r" no-padding>
-            <ion-item text-center no-padding>
-              <ion-icon name="ios-hand-outline" ion-text color="gray-100" class="fs-responsive-icon"></ion-icon>
-              <p margin-top ion-text color="gray-100" class="fs-responsive-text">День практики</p>
-            </ion-item>
+          <ion-col col-4 class="border-r col-between" no-padding>
+
+            <ion-row>
+              <ion-col col-12>
+                <ion-item text-center no-padding>
+                  <ion-icon>
+                    <svg-icon src="/assets/icon/svg/kompleksy/den-praktiki.svg" [stretch]="true" [svgStyle]="{'height.px':50}">
+                    </svg-icon>
+                  </ion-icon>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col col-12>
+                <ion-item text-center no-padding class="min-height-default">
+                  <!-- <ion-icon name="ios-hand-outline" ion-text class=""></ion-icon> -->
+                  <p ion-text class="fs-16 text-wrap">Мантра Ом</p>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
           </ion-col>
-          <ion-col col-4 no-padding>
-            <ion-item text-center no-padding>
-              <ion-icon name="ios-hand-outline" ion-text color="gray-100" class="fs-responsive-icon"></ion-icon>
-              <p margin-top ion-text color="gray-100" class="fs-responsive-text">Ритритный день</p>
-            </ion-item>
+          <ion-col col-4 class="border-r col-between" no-padding>
+
+            <ion-row>
+              <ion-col col-12>
+                <ion-item text-center no-padding>
+                  <ion-icon>
+                    <svg-icon src="/assets/icon/svg/kompleksy/ritritnii-den.svg" [stretch]="true" [svgStyle]="{'height.px':50}">
+                    </svg-icon>
+                  </ion-icon>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col col-12>
+                <ion-item text-center no-padding class="min-height-default">
+                  <!-- <ion-icon name="ios-hand-outline" ion-text class=""></ion-icon> -->
+                  <p ion-text class="fs-16 text-wrap">Мантра Ом</p>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -79,35 +187,36 @@
 
   <ion-grid>
     <ion-row justify-content-end>
-      <button ion-button block outline icon-start margin-top margin-bottom class="btn-md-width-200 btn-light-green mr-md-50 btn-sm-width">
-        <ion-icon name="ios-book-outline"></ion-icon>
-        К комплексам
+      <button icon-start margin-top margin-bottom class="button-custom mr-md-50 btn-sm-width">
+        <!-- <ion-icon name="ios-book-outline"></ion-icon> -->
+        Все практики
+        <span class="arrow"></span>
       </button>
     </ion-row>
   </ion-grid>
 
   <ion-title text-center margin-bottom>Достижения</ion-title>
 
-  <ion-card no-margin class="full-width">
-    <ion-card-content class="box-shadow" no-padding padding-vertical>
+  <ion-card no-margin class="full-width box-shadow">
+    <ion-card-content no-padding padding-vertical>
       <ion-grid>
         <ion-row>
           <ion-col col-4 no-padding>
             <ion-item text-center no-padding>
-              <h1 class="fs-responsive-icon" ion-text color="green-100">108 000</h1>
-              <p margin-top ion-text color="gray-100" class="fs-responsive-text">Начитано мантры Ом</p>
+              <h1 class="" ion-text color="primary" class="fs-30">108 000</h1>
+              <p margin-top ion-text class="fs-16 text-wrap">Начитано мантры Ом</p>
             </ion-item>
           </ion-col>
           <ion-col col-4 no-padding>
             <ion-item text-center no-padding>
-                <h1 class="fs-responsive-icon" ion-text color="green-100">10 080</h1>
-              <p margin-top ion-text color="gray-100" class="fs-responsive-text">Сделано простираний</p>
+              <h1 class="" ion-text color="primary" class="fs-30">10 080</h1>
+              <p margin-top ion-text class="fs-16 text-wrap">Сделано простираний</p>
             </ion-item>
           </ion-col>
           <ion-col col-4 no-padding>
             <ion-item text-center no-padding>
-              <h1 class="fs-responsive-icon" ion-text color="green-100">1 080</h1>
-              <p margin-top ion-text color="gray-100" class="fs-responsive-text">Виполнено комплексов</p>
+              <h1 class="" ion-text color="primary" class="fs-30">1 080</h1>
+              <p margin-top ion-text class="fs-16 text-wrap">Виполнено комплексов</p>
             </ion-item>
           </ion-col>
         </ion-row>
@@ -117,9 +226,10 @@
 
   <ion-grid>
     <ion-row justify-content-end>
-      <button ion-button block outline icon-start margin-top margin-bottom class="btn-md-width-200 btn-light-green mr-md-50 btn-sm-width">
-        <ion-icon name="ios-book-outline"></ion-icon>
+      <button icon-start margin-top margin-bottom class="button-custom mr-md-50 btn-sm-width">
+        <!-- <ion-icon name="ios-book-outline"></ion-icon> -->
         В личный кабинет
+        <span class="arrow"></span>
       </button>
     </ion-row>
   </ion-grid>

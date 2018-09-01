@@ -4,7 +4,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
+import { MainPage } from '../pages/main-page/main-page';
 
 @Component({
   templateUrl: 'app.html'
@@ -14,15 +14,19 @@ export class MyApp {
 
   rootPage: any = HomePage;
 
-  pages: Array<{title: string, component: any}>;
-
+  pages: Array<{title: string, icon:string, component: any}>;
+ 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Йога-марга', component: HomePage },
-      { title: 'Зарегистрироваться', component: ListPage }
+      { title: 'Коталог', icon: '/assets/icon/svg/navigation/icon-nav1.svg', component: HomePage },
+      { title: 'Комплексы', icon: '/assets/icon/svg/navigation/icon-nav2.svg', component: MainPage },
+      { title: 'Личный кабинет', icon: '/assets/icon/svg/navigation/icon-nav3.svg', component: MainPage },
+      { title: 'Настройки', icon: '/assets/icon/svg/navigation/icon-nav4.svg', component: MainPage },
+      { title: 'Дхарма-вичара', icon: '/assets/icon/svg/navigation/icon-nav5.svg', component: MainPage },
+      { title: 'Выйти', icon: '/assets/icon/svg/navigation/icon-nav6.svg', component: MainPage },
     ];
 
   }

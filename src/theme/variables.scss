@@ -35,17 +35,19 @@ $app-direction: ltr;
 
 $colors: (
   white:      #ffffff,
-  primary:    #488aff,
-  secondary:  #32db64,
+  primary:    #8bdcd6,
+  secondary:  #b3e8e5,
   danger:     #f53d3d,
   light:      #f4f4f4,
   dark:       #222,
-  gray-100:   #c9c9c9,
+  gray:       #808080,
+  gray-100:   #f2f2f2,
   green-100:  #67d0cb
 );
 
 // COLOR FOR BACKGROUND
 $green-100:  #67d0cb;
+$gradient-primary: linear-gradient(to right, #52c9c3 0%, #96deda 100%);
 
 // App iOS Variables
 // --------------------------------------------------
@@ -91,75 +93,3 @@ $green-100:  #67d0cb;
 
 @import "roboto";
 @import "noto-sans";
-
-
-// Global style (HAS BEEN ON GLOBAL STYLE FILE)
-.label-md{
-  margin: 0 !important;
-}
-.pos-a{
-  position: absolute !important;
-}
-.full-width{
-    width: 100% !important;
-}
-.border-r{
-    border-right: 1px solid rgb(245, 245, 245);
-}
-.box-shadow{
-    box-shadow: 0 2px 2px 0 rgba(255, 255, 255, 0.14), 0 3px 1px -2px rgba(136, 136, 136, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12) !important;
-}
-.fs-responsive-icon{
-    font-size: calc(3vw + 8px) !important;
-}
-.fs-responsive-text{
-    font-size: calc(1vw + 6px) !important;
-}
-.fs-40{
-  font-size: 40px;
-}
-.btn-md-width-200{
-  width: 200px !important;
-}
-.btn-light-green{
-  color: rgb(147, 197, 185) !important;
-  border-color: rgb(147, 197, 185) !important;
-  text-transform: none !important;
-}
-.item-inner{
-  padding-right: 0 !important;
-}
-.header-md:after{
-  background-image: none !important;
-}
-.toolbar-background-md{
-  background: $green-100 !important;
-}
-.header-title{
-  font-size: 16px;
-  margin-bottom: 0;
-  margin-top: 0;
-}
-.input-style{
-  .item-inner{
-    border: 1px solid #dedede !important;
-    border-radius: 20px;
-    margin-bottom: 10px;
-  }
-}
-.br-20{
-  border-radius: 20px !important; 
-}
-.height-50{
-  height: 50px !important;
-} 
-@media screen and (min-width: 500px) {
-  .mr-md-50{
-    margin-right: 50px !important;
-  }
-}
-@media screen and (max-width: 500px) {
-  .btn-sm-width{
-    width: 150px !important;
-  }
-}
