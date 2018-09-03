@@ -1,11 +1,7 @@
 import { NgModule } from '@angular/core';
-import { DashboardComponent } from './dashboard/dashboard';
-import { SingUpComponent } from './sing-up/sing-up';
 @NgModule({
-	declarations: [DashboardComponent,
-    SingUpComponent],
+	declarations: [],
 	imports: [],
-	exports: [DashboardComponent,
-    SingUpComponent]
+	exports: []
 })
 export class ComponentsModule {}

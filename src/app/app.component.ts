@@ -5,6 +5,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
 import { MainPage } from '../pages/main-page/main-page';
+import { SingInPage } from '../pages/sing-in/sing-in';
+import { CreateComplexPage } from '../pages/create-complex/create-complex';
 
 @Component({
   templateUrl: 'app.html'
@@ -27,6 +29,10 @@ export class MyApp {
       { title: 'Настройки', icon: '/assets/icon/svg/navigation/icon-nav4.svg', component: MainPage },
       { title: 'Дхарма-вичара', icon: '/assets/icon/svg/navigation/icon-nav5.svg', component: MainPage },
       { title: 'Выйти', icon: '/assets/icon/svg/navigation/icon-nav6.svg', component: MainPage },
+      { title: 'sing-in', icon: '/assets/icon/svg/navigation/icon-nav3.svg', component: SingInPage },
+      { title: 'sing-up', icon: '/assets/icon/svg/navigation/icon-nav3.svg', component: MainPage },
+      { title: 'crete-complex', icon: '/assets/icon/svg/navigation/icon-nav3.svg', component: CreateComplexPage },
+
     ];
 
   }

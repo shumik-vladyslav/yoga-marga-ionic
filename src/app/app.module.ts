@@ -7,15 +7,19 @@ import { HttpClientModule } from '@angular/common/http'
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { MainPage } from '../pages/main-page/main-page';
+import { SingInPage } from '../pages/sing-in/sing-in';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { CreateComplexPage } from '../pages/create-complex/create-complex';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    MainPage
+    MainPage,
+    SingInPage,
+    CreateComplexPage
   ],
   imports: [
     BrowserModule,
@@ -27,7 +31,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   entryComponents: [
     MyApp,
     HomePage,
-    MainPage
+    MainPage,
+    SingInPage,
+    CreateComplexPage
   ],
   providers: [
     StatusBar,

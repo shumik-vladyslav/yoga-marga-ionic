@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-navbar>
+    <!-- (click)="goBack()" -->
+    <button ion-button menuToggle ion-text color="white" class="pos-a">
+      <span class="arrow arrow-back"></span>
+    </button>
+    <p text-center ion-text color="white" class="header-title">Практики</p>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row justify-content-center>
+      <ion-col col-12>
+          <ion-row class="m-t-10">
+              <ion-col col-12>
+                  <ion-item no-padding class="input-style input-bg">
+                      <ion-input text-center placeholder="Введите название комплекса" color="gray" clearInput></ion-input>
+                    </ion-item>
+                    <p padding-horizontal text-center ion-text class="text-coment">
+                        Пожалуйста, назовите свой новый комплекс
+                      </p>
+                </ion-col>
+
+          </ion-row>
+          <ion-row>
+              <ion-col>
+                <h3 text-center>
+                  Утрение практики
+                </h3>
+              </ion-col>
+          </ion-row>
+        <ion-row nowrap>
+            <ion-item id="radio-style" class="width-default radio-style">
+              <ion-toggle [(ngModel)]="radio2"></ion-toggle>
+            </ion-item>
+              <p padding-horizontal text-left ion-text text-wrap class="m-l-20 fs-15">
+                Крия-йога
+              </p>
+        </ion-row>
+      </ion-col>
+      <button text-capitalize class="height-50 btn-sing-up p-l-20 p-r-20 width-default btn-hover">Создать комплекс</button>
+    </ion-row>
+  </ion-grid>
+</ion-content>
