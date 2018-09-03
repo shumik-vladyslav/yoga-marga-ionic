@@ -1,0 +1,58 @@
+page-all-practices {
+
+}
+.radio-wrap{
+    display: flex;
+    justify-content: center;
+}
+.container {
+    display: block;
+    position: relative;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  /* Hide the browser's default radio button */
+  .container input {
+    position: absolute;
+    opacity: 0;
+  }
+  .checkmark{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 15px;
+    border: 1px solid color($colors, primary);
+    transition: all 0.5s;
+    svg{
+        width: 25px;
+        fill: color($colors, icon);
+        transition: all .5s;
+    }
+  }
+  /* On mouse-over, add a grey background color */
+  .container:hover input ~ .checkmark {
+    background: color($colors,primary);
+    color: color($colors, white);
+    transition: all 0.5s;
+    svg{
+        fill: color($colors, white);
+        transition: all .5s;
+    }
+  }
+  
+  /* When the radio button is checked, add a blue background */
+  .container input:checked ~ .checkmark {
+    background: color($colors,primary);
+    color: color($colors, white);
+    svg{
+        fill: color($colors, white);
+        transition: all .5s;
+    }
+  }
+  

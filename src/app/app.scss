@@ -64,6 +64,7 @@ h1 {
   text-align: center;
   font-family: gilroyregular, Arial, sans-serif;
   margin: 0.67em 0;
+  color: color($colors, gray);
 }
 h2 {
   font-family: gilroyregular, Arial, sans-serif;
@@ -82,6 +83,17 @@ h6 {
 }
 p {
   font-family: gilroyregular, Arial, sans-serif;
+  color: color($colors, text-light);
+}
+p.text-wrap {
+  font-family: gilroyregular, Arial, sans-serif;
+  color: color($colors, text-light) !important;
+}
+div{
+  font-family: gilroyregular, Arial, sans-serif;
+}
+.text-light{
+  color: color($colors, text-light);
 }
 .label-md{
   margin: 0 !important;
@@ -100,7 +112,15 @@ p {
 }
 .border-r{
     border-right: 2px solid color($colors, gray-100);
+    &:last-child {
+      border: none;
+    }
+    &:only-child {
+      border-right: 2px solid color($colors, gray-100);
+      border-left: 2px solid color($colors, gray-100);
+    }
 }
+
 .box-shadow{
   -webkit-box-shadow: 0px 0px 10px 2px rgba(81,81,81,0.1);
   box-shadow: 0px 0px 10px 2px rgba(81,81,81,0.1)
@@ -111,7 +131,7 @@ p {
 .header-md:after{
   background-image: none !important;
 }
-.toolbar-background-md, .menu-inner{
+.toolbar-background-md, .menu-inner, .toolbar-background-ios{
   background: $gradient-primary !important;
 }
 .header-title{
@@ -128,6 +148,29 @@ p {
     padding-left: 10px;
     padding-right: 10px !important;
     .input-wrapper{
+      .label{
+        color: #999999;
+        font-family: gilroyregular, Arial, sans-serif;
+      }
+    }
+  }
+}
+.input-offise{
+  .item-inner{
+    border: none !important;
+    border-bottom: 1px solid color($colors, gray-50) !important;
+    border-radius: 0px;
+    margin-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 10px !important;
+    .input-wrapper{
+      ion-input {
+        input{
+          margin-left: 0;
+          margin-top: 8px;
+          margin-bottom: 8px;
+        }
+      }
       .label{
         color: #999999;
         font-family: gilroyregular, Arial, sans-serif;
@@ -363,6 +406,13 @@ page-sing-in > ion-content > div.scroll-content{
     padding: 0 !important;
   }
 }
+.toggle-ios .toggle-icon::before{
+  background-color: #fff0;
+}
+.toggle-ios .toggle-inner{
+  width: 20px;
+  height: 20px;
+}
 // style for custom radio button -- end
 .text-coment{
   letter-spacing: 2.6px;
@@ -370,6 +420,23 @@ page-sing-in > ion-content > div.scroll-content{
   font-size: 9px;
   color: color($colors, gray-50);
 }
+.img-icon{
+  width: 80px;
+  margin: auto;
+  height: 50px;
+}
+.btn-back{
+  background: none;
+  box-shadow: none;
+  top: 3px;
+  &:hover{
+    background: none !important;
+  }
+}
+.toolbar-content-ios .btn-back{
+  top: -6px;
+}
+
 @media screen and (min-width: 500px) {
   .mr-md-50{
     margin-right: 50px !important;

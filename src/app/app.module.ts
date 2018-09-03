@@ -12,6 +12,13 @@ import { SingInPage } from '../pages/sing-in/sing-in';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { CreateComplexPage } from '../pages/create-complex/create-complex';
+import { AllPracticesPage } from '../pages/all-practices/all-practices';
+import { MorningPracticePage } from '../pages/morning-practice/morning-practice';
+import { EveningPracticePage } from '../pages/evening-practice/evening-practice';
+import { MeditativePracticesPage } from '../pages/meditative-practices/meditative-practices';
+import { ComplexsPage } from '../pages/complexs/complexs';
+import { MyComplexsPage } from '../pages/my-complexs/my-complexs';
+import { PrivateOfficePage } from '../pages/private-office/private-office';
 
 @NgModule({
   declarations: [
@@ -19,13 +26,21 @@ import { CreateComplexPage } from '../pages/create-complex/create-complex';
     HomePage,
     MainPage,
     SingInPage,
-    CreateComplexPage
+    CreateComplexPage,
+    AllPracticesPage,
+    MorningPracticePage,
+    EveningPracticePage,
+    MeditativePracticesPage,
+    ComplexsPage,
+    MyComplexsPage,
+    PrivateOfficePage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AngularSvgIconModule,
-    HttpClientModule
+    HttpClientModule,
+   
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -33,7 +48,14 @@ import { CreateComplexPage } from '../pages/create-complex/create-complex';
     HomePage,
     MainPage,
     SingInPage,
-    CreateComplexPage
+    CreateComplexPage,
+    AllPracticesPage,
+    MorningPracticePage,
+    EveningPracticePage,
+    MeditativePracticesPage,
+    ComplexsPage,
+    MyComplexsPage,
+    PrivateOfficePage
   ],
   providers: [
     StatusBar,

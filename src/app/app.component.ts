@@ -6,7 +6,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
 import { MainPage } from '../pages/main-page/main-page';
 import { SingInPage } from '../pages/sing-in/sing-in';
-import { CreateComplexPage } from '../pages/create-complex/create-complex';
+import { ComplexsPage } from '../pages/complexs/complexs';
+import { MyComplexsPage } from '../pages/my-complexs/my-complexs';
+import { PrivateOfficePage } from '../pages/private-office/private-office';
 
 @Component({
   templateUrl: 'app.html'
@@ -24,15 +26,14 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Коталог', icon: '/assets/icon/svg/navigation/icon-nav1.svg', component: HomePage },
-      { title: 'Комплексы', icon: '/assets/icon/svg/navigation/icon-nav2.svg', component: MainPage },
-      { title: 'Личный кабинет', icon: '/assets/icon/svg/navigation/icon-nav3.svg', component: MainPage },
+      { title: 'Комплексы', icon: '/assets/icon/svg/navigation/icon-nav2.svg', component: ComplexsPage },
+      { title: 'Личный кабинет', icon: '/assets/icon/svg/navigation/icon-nav3.svg', component: PrivateOfficePage },
       { title: 'Настройки', icon: '/assets/icon/svg/navigation/icon-nav4.svg', component: MainPage },
       { title: 'Дхарма-вичара', icon: '/assets/icon/svg/navigation/icon-nav5.svg', component: MainPage },
       { title: 'Выйти', icon: '/assets/icon/svg/navigation/icon-nav6.svg', component: MainPage },
       { title: 'sing-in', icon: '/assets/icon/svg/navigation/icon-nav3.svg', component: SingInPage },
       { title: 'sing-up', icon: '/assets/icon/svg/navigation/icon-nav3.svg', component: MainPage },
-      { title: 'crete-complex', icon: '/assets/icon/svg/navigation/icon-nav3.svg', component: CreateComplexPage },
-
+      { title: 'my-complexs', icon: '/assets/icon/svg/navigation/icon-nav3.svg', component: MyComplexsPage }
     ];
 
   }

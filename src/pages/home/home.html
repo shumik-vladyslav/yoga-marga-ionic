@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
     <button ion-button menuToggle class="pos-a" ion-text color="white">
-      <ion-icon name="menu"></ion-icon>
+      <ion-icon name="menu" class="fs-30"></ion-icon>
     </button>
     <p text-center ion-text color="white" class="header-title">Йога-марга</p>
   </ion-navbar>
@@ -16,7 +16,7 @@
   <ion-card no-margin class="full-width box-shadow">
     <ion-card-content no-padding padding-vertical>
       <ion-grid>
-        <ion-row>
+        <ion-row justify-content-center>
           <ion-col col-4 class="border-r col-between" no-padding>
 
             <ion-row>
@@ -26,7 +26,7 @@
                     <svg-icon src="/assets/icon/svg/main-page/om.svg" [stretch]="true" [svgStyle]="{'height.px':50}">
                     </svg-icon>
                   </ion-icon> -->
-                  <img height="50px" src="/assets/icon/svg/main-page/om.svg" alt="">
+                  <img class="img-icon" src="/assets/icon/svg/main-page/om.svg" alt="">
                 </ion-item>
               </ion-col>
             </ion-row>
@@ -46,11 +46,11 @@
             <ion-row>
               <ion-col col-12>
                 <ion-item text-center no-padding>
-                  <ion-icon>
+                  <!-- <ion-icon>
                     <svg-icon src="/assets/icon/svg/lichniy-kabinet/dostizhenie-prostiraniya.svg" [stretch]="true" [svgStyle]="{'height.px':50}">
                     </svg-icon>
-                  </ion-icon>
-                  <!-- <img height="50px" src="/assets/icon/svg/lichniy-kabinet/dostizhenie-prostiraniya.svg" alt=""> -->
+                  </ion-icon> -->
+                  <img class="img-icon" src="/assets/icon/svg/lichniy-kabinet/dostizhenie-prostiraniya.svg" alt="">
                 </ion-item>
               </ion-col>
             </ion-row>
@@ -65,7 +65,7 @@
             </ion-row>
 
           </ion-col>
-          <ion-col col-4 class="border-r col-between" no-padding>
+          <ion-col col-4 class="col-between" no-padding>
 
             <ion-row>
               <ion-col col-12>
@@ -74,7 +74,7 @@
                     <svg-icon src="/assets/icon/svg/main-page/asani.svg" [stretch]="true" [svgStyle]="{'height.px':50}">
                     </svg-icon>
                   </ion-icon> -->
-                  <img height="50px" src="/assets/icon/svg/main-page/asani.svg" alt="">
+                  <img class="img-icon" src="/assets/icon/svg/main-page/asani.svg" alt="">
                 </ion-item>
               </ion-col>
             </ion-row>
@@ -97,7 +97,7 @@
 
   <ion-grid>
     <ion-row justify-content-end>
-      <button icon-start margin-top margin-bottom class="button-custom mr-md-50 btn-sm-width">
+      <button icon-start margin-top margin-bottom class="button-custom mr-md-50 btn-sm-width" (click)="goAllPracticesPage()">
         <!-- <ion-icon name="ios-book-outline"></ion-icon> -->
         Все практики
         <span class="arrow"></span>
@@ -105,21 +105,24 @@
     </ion-row>
   </ion-grid>
 
-  <ion-title text-center margin-bottom>Каталог</ion-title>
+  <h1>
+    Комплексы
+  </h1>
 
   <ion-card no-margin class="full-width box-shadow">
     <ion-card-content no-padding padding-vertical>
       <ion-grid>
-        <ion-row>
+        <ion-row justify-content-center>
           <ion-col col-4 class="border-r col-between" no-padding>
 
             <ion-row>
               <ion-col col-12>
                 <ion-item text-center no-padding>
-                  <ion-icon>
+                  <!-- <ion-icon>
                     <svg-icon src="/assets/icon/svg/kompleksy/moe-utro.svg" [stretch]="true" [svgStyle]="{'height.px':50}">
                     </svg-icon>
-                  </ion-icon>
+                  </ion-icon> -->
+                  <img class="img-icon" src="/assets/icon/svg/kompleksy/moe-utro.svg" alt="">
                 </ion-item>
               </ion-col>
             </ion-row>
@@ -139,10 +142,11 @@
             <ion-row>
               <ion-col col-12>
                 <ion-item text-center no-padding>
-                  <ion-icon>
+                  <!-- <ion-icon>
                     <svg-icon src="/assets/icon/svg/kompleksy/den-praktiki.svg" [stretch]="true" [svgStyle]="{'height.px':50}">
                     </svg-icon>
-                  </ion-icon>
+                  </ion-icon> -->
+                  <img class="img-icon" src="/assets/icon/svg/kompleksy/den-praktiki.svg" alt="">
                 </ion-item>
               </ion-col>
             </ion-row>
@@ -157,15 +161,17 @@
             </ion-row>
 
           </ion-col>
-          <ion-col col-4 class="border-r col-between" no-padding>
+          <ion-col col-4 class="col-between" no-padding>
 
             <ion-row>
               <ion-col col-12>
                 <ion-item text-center no-padding>
-                  <ion-icon>
+                  <!-- <ion-icon>
                     <svg-icon src="/assets/icon/svg/kompleksy/ritritnii-den.svg" [stretch]="true" [svgStyle]="{'height.px':50}">
                     </svg-icon>
-                  </ion-icon>
+                  </ion-icon> -->
+                  <img class="img-icon" src="/assets/icon/svg/kompleksy/ritritnii-den.svg" alt="">
+                  
                 </ion-item>
               </ion-col>
             </ion-row>
@@ -195,12 +201,14 @@
     </ion-row>
   </ion-grid>
 
-  <ion-title text-center margin-bottom>Достижения</ion-title>
-
+  <!-- <ion-title text-center margin-bottom></ion-title> -->
+  <h1>
+    Достижения
+  </h1>
   <ion-card no-margin class="full-width box-shadow">
     <ion-card-content no-padding padding-vertical>
       <ion-grid>
-        <ion-row>
+        <ion-row justify-content-center>
           <ion-col col-4 no-padding>
             <ion-item text-center no-padding>
               <h1 class="" ion-text color="primary" class="fs-30">108 000</h1>
