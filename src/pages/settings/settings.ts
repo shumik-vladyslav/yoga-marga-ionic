@@ -1,26 +1,27 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { GoalsPage } from '../goals/goals';
+import { TermsPage } from '../terms/terms';
 
 /**
- * Generated class for the PrivateOfficePage page.
+ * Generated class for the SettingsPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
 
 @Component({
-  selector: 'page-private-office',
-  templateUrl: 'private-office.html',
+  selector: 'page-settings',
+  templateUrl: 'settings.html',
 })
-export class PrivateOfficePage {
+export class SettingsPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
-  goGoalsPage(){
-    this.navCtrl.setRoot(GoalsPage);
+  goTermsPage(){
+    this.navCtrl.setRoot(TermsPage);
   }
   ionViewDidLoad() {
-    console.log('ionViewDidLoad PrivateOfficePage');
+    console.log('ionViewDidLoad SettingsPage');
   }
+
 }

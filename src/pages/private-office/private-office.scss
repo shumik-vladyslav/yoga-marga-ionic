@@ -6,7 +6,7 @@ page-private-office {
     min-width: 173px;
     align-items: center;
 }
-.input-style{
+.input-perivat-office{
     max-width: 400px;
     min-height: 1.4rem !important;
 }
@@ -31,7 +31,12 @@ page-private-office {
     color: color($colors, text-light) !important;
     font-weight: bold;
 }
-.valye-goals{
+.value-goals{
     font-size: 14px;
     margin-top: 0;
+}
+.img-icon-office{
+    width: 40px;
+    height: 40px;
+    margin: auto;
 }

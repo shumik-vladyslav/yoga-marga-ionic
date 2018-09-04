@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle class="pos-a" ion-text color="white">
+      <ion-icon name="menu" class="fs-30"></ion-icon>
+    </button>
+    <p text-center ion-text color="white" class="header-title">Настройки</p>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding-vertical>
+  <ion-grid>
+    <ion-row justify-content-center>
+      <ion-col col-md-10 col-xs-12>
+        <ion-row justify-content-center>
+          <ion-col col-12 no-padding>
+            <p class="link" (click)="goTermsPage()">
+              Пользовательськое соглашение
+              <span class="arrow-link"></span>
+            </p>
+          </ion-col>
+        </ion-row>
+        <ion-row justify-content-center>
+          <ion-col col-12 no-padding>
+            <h1 class="m-b-20 h1-settings">
+              Пожалуйста, напишите Ваш вопрос/предложение:
+            </h1>
+          </ion-col>
+        </ion-row>
+        <ion-row justify-content-center>
+          <ion-col col-12 no-padding>
+            <ion-item no-padding class="input-text-area">
+              <ion-textarea text-left placeholder="" color="gray" clearInput></ion-textarea>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid>
+    <ion-row justify-content-center>
+      <button icon-center margin-top margin-bottom class="button-custom mr-md-50 btn-sm-width">
+        <!-- <ion-icon name="ios-book-outline"></ion-icon> -->
+        Отправить
+      </button>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

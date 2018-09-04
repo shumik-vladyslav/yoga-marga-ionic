@@ -19,6 +19,13 @@ import { MeditativePracticesPage } from '../pages/meditative-practices/meditativ
 import { ComplexsPage } from '../pages/complexs/complexs';
 import { MyComplexsPage } from '../pages/my-complexs/my-complexs';
 import { PrivateOfficePage } from '../pages/private-office/private-office';
+import { GoalsPage } from '../pages/goals/goals';
+import { SettingsPage } from '../pages/settings/settings';
+import { TermsPage } from '../pages/terms/terms';
+import { Template_1Page } from '../pages/template-1/template-1';
+import { Template_2Page } from '../pages/template-2/template-2';
+import { Template_3Page } from '../pages/template-3/template-3';
+import { Template_4Page } from '../pages/template-4/template-4';
 
 @NgModule({
   declarations: [
@@ -33,7 +40,14 @@ import { PrivateOfficePage } from '../pages/private-office/private-office';
     MeditativePracticesPage,
     ComplexsPage,
     MyComplexsPage,
-    PrivateOfficePage
+    PrivateOfficePage,
+    GoalsPage,
+    SettingsPage,
+    TermsPage,
+    Template_1Page,
+    Template_2Page,
+    Template_3Page,
+    Template_4Page
   ],
   imports: [
     BrowserModule,
@@ -55,7 +69,14 @@ import { PrivateOfficePage } from '../pages/private-office/private-office';
     MeditativePracticesPage,
     ComplexsPage,
     MyComplexsPage,
-    PrivateOfficePage
+    PrivateOfficePage,
+    GoalsPage,
+    SettingsPage,
+    TermsPage,
+    Template_1Page,
+    Template_2Page,
+    Template_3Page,
+    Template_4Page
   ],
   providers: [
     StatusBar,

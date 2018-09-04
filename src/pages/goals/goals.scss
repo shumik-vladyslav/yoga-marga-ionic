@@ -1,0 +1,10 @@
+page-goals {
+
+}
+.input-goals-page{
+    width: 60% !important; 
+    @include media-breakpoint('xs'){
+        margin: 0 !important;
+        width: 100% !important;
+    }
+}

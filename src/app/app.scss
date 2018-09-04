@@ -65,6 +65,9 @@ h1 {
   font-family: gilroyregular, Arial, sans-serif;
   margin: 0.67em 0;
   color: color($colors, gray);
+  @include media-breakpoint('xs'){
+    font-size: 20px;
+  }
 }
 h2 {
   font-family: gilroyregular, Arial, sans-serif;
@@ -155,7 +158,7 @@ div{
     }
   }
 }
-.input-offise{
+.input-office{
   .item-inner{
     border: none !important;
     border-bottom: 1px solid color($colors, gray-50) !important;
@@ -183,7 +186,7 @@ div{
   margin: AUTO;
   .item-inner{
     border: none !important;
-    background: #f1f1f1!important;
+    background: color($colors, gray-300)!important;
     color: #7fd7d2;
     font-weight: bold;
     font-size: 17px;
@@ -193,6 +196,66 @@ div{
 .input-bg> div.item-inner > div > ion-input > input{
   padding: 0 !important;
 }
+.input-goals{
+  max-width: 350px;
+  margin: AUTO;
+  .item-inner{
+    padding: 0;
+    padding-right: 0 !important;
+    height: 30px;
+    font-size: 16px;
+    border: none !important;
+    background: color($colors, gray-300)!important;
+    color: #7fd7d2;
+    font-weight: bold;
+    .input-wrapper{
+      ion-input{
+        input{
+          margin: 5px 5px;
+          padding: 0 !important;
+          padding-right: 10px !important;
+        }
+        button{
+          right: 2px;
+          width: 18px;
+
+        }
+      }
+    }
+  }
+}
+.input-text-area{
+  div.item-inner{
+    font-size: 14px;
+    border: none !important;
+    background: color($colors, gray-300)!important;
+    color: #7fd7d2;
+    div {
+       ion-textarea {
+         textarea{
+          min-height: 115px;
+        }
+      }
+    }
+  }
+}
+.input-teamplate{
+  max-width: 75px;
+  margin: AUTO;
+  .item-inner{
+    height: 30px;
+    font-size: 25px;
+    background: color($colors, gray-300)!important;
+    font-weight: normal;
+    .input-wrapper{
+      ion-input{
+        input{
+          padding-right: 0px !important;
+        }
+      }
+    }
+  }
+}
 .p-l-input-17{
   .item-inner{
     padding-left: 17px;
@@ -201,6 +264,9 @@ div{
 .height-80{
   height: 80px !important;
 } 
+.height-full{
+  height: 100%;
+}
 .btn:hover{
   color: color($colors,white) !important;
   background-color: color($colors,primary) !important;
@@ -300,7 +366,7 @@ span.arrow {
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
-  margin-bottom: -3px;
+  margin-bottom: -1px;
   transition: all 0.5s;
 }
 span.arrow-back{
@@ -436,7 +502,23 @@ page-sing-in > ion-content > div.scroll-content{
 .toolbar-content-ios .btn-back{
   top: -6px;
 }
-
+.letter-spacing-2{
+  letter-spacing: 2px;
+}
+.img-assan-big{
+  height: 300px;
+  width: auto;
+  border: 1px solid color($colors, primary);
+}
+.gray-box-text{
+  width: 118px;
+  margin: auto;
+  text-align: center;
+  background: saddlebrown;
+  padding: 8px;
+  color: color($colors, primary);
+  background: color($colors, gray-300);
+}
 @media screen and (min-width: 500px) {
   .mr-md-50{
     margin-right: 50px !important;
