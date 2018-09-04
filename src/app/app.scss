@@ -131,9 +131,13 @@ div{
 .item-inner{
   padding-right: 0 !important;
 }
+
+// box shadow
 .header-md:after{
   background-image: none !important;
+  display: none;
 }
+
 .toolbar-background-md, .menu-inner, .toolbar-background-ios{
   background: $gradient-primary !important;
 }
@@ -335,8 +339,8 @@ div{
 }
 .icon-close{
   position: absolute;
-  right: 6px;
-  top: 6px;
+  right: 9px;
+  top: 15px;
   cursor: pointer;
 }
 .sidebar-item{
@@ -428,11 +432,11 @@ span.arrow-back{
   white-space: pre-wrap;
 }
 
-// page login - aling center
-page-sing-in > ion-content > div.scroll-content{
-  display: flex;
-  align-items: center;
-}
+// // page login - aling center
+// page-sing-in > ion-content > div.scroll-content{
+//   display: flex;
+//   align-items: center;
+// }
 
 // style for custom radio button --start
 .radio-style > div.item-inner > ion-toggle{
@@ -519,6 +523,12 @@ page-sing-in > ion-content > div.scroll-content{
   color: color($colors, primary);
   background: color($colors, gray-300);
 }
+
+.content{
+  margin-top: -8px !important;
+}
+
+
 @media screen and (min-width: 500px) {
   .mr-md-50{
     margin-right: 50px !important;

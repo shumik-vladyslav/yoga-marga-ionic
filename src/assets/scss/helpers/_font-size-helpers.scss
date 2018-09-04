@@ -15,7 +15,7 @@ $sizeamount: (10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26
 @include media-breakpoint('xs'){
     @each $size in $sizeamount {
         .fs-#{$size} {
-        font-size: calc(#{$size}px / 1.2) !important;
+        font-size: calc(#{$size}px / 1.4) !important;
         }
     }
 }
