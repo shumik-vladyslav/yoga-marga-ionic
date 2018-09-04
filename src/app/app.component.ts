@@ -14,6 +14,7 @@ import { Template_1Page } from '../pages/template-1/template-1';
 import { Template_2Page } from '../pages/template-2/template-2';
 import { Template_3Page } from '../pages/template-3/template-3';
 import { Template_4Page } from '../pages/template-4/template-4';
+import { LoadScreenPage } from '../pages/load-screen/load-screen';
 
 @Component({
   templateUrl: 'app.html'
@@ -43,7 +44,8 @@ export class MyApp {
       { title: 'template-1', icon: '/assets/icon/svg/navigation/icon-nav3.svg', component: Template_1Page },
       { title: 'template-2', icon: '/assets/icon/svg/navigation/icon-nav3.svg', component: Template_2Page },
       { title: 'template-3', icon: '/assets/icon/svg/navigation/icon-nav3.svg', component: Template_3Page },
-      { title: 'template-4', icon: '/assets/icon/svg/navigation/icon-nav3.svg', component: Template_4Page }
+      { title: 'template-4', icon: '/assets/icon/svg/navigation/icon-nav3.svg', component: Template_4Page },
+      { title: 'load-screen', icon: '/assets/icon/svg/navigation/icon-nav3.svg', component: LoadScreenPage },
 
     ];
 

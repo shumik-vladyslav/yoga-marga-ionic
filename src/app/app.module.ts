@@ -26,6 +26,7 @@ import { Template_1Page } from '../pages/template-1/template-1';
 import { Template_2Page } from '../pages/template-2/template-2';
 import { Template_3Page } from '../pages/template-3/template-3';
 import { Template_4Page } from '../pages/template-4/template-4';
+import { LoadScreenPage } from '../pages/load-screen/load-screen';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { Template_4Page } from '../pages/template-4/template-4';
     Template_1Page,
     Template_2Page,
     Template_3Page,
-    Template_4Page
+    Template_4Page,
+    LoadScreenPage
   ],
   imports: [
     BrowserModule,
@@ -76,7 +78,8 @@ import { Template_4Page } from '../pages/template-4/template-4';
     Template_1Page,
     Template_2Page,
     Template_3Page,
-    Template_4Page
+    Template_4Page,
+    LoadScreenPage
   ],
   providers: [
     StatusBar,
