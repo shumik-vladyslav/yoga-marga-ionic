@@ -7,9 +7,11 @@ page-template-3 {
         width: 120px;
         height: 120px;
         border: 1px solid color($colors, primary);
+        background-position: bottom;
+        background-size: 100% 100%;
         img{
             height: 100%;
-            width: 100%;
+            width: auto;
         }
     }
     .img-sm-wrap{
