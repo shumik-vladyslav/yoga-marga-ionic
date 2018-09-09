@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { Template_4Page } from '../template-4/template-4';
 
 /**
  * Generated class for the Template_3Page page.
@@ -15,6 +16,10 @@ import { NavController, NavParams } from 'ionic-angular';
 export class Template_3Page {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+  }
+
+  goToTemplate4(){
+    this.navCtrl.setRoot(Template_4Page);
   }
 
   ionViewDidLoad() {

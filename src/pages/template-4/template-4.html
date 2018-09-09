@@ -7,32 +7,31 @@
     <p text-right ion-text color="white" class="header-title">
       <img class="header-icon" width="25px" height="25px" src="/assets/icon/svg/header/text.svg" alt="">
       <img class="header-icon" width="25px" height="25px" src="/assets/icon/svg/header/audio.svg" alt="">
-      <img class="header-icon" width="25px" height="25px" src="/assets/icon/svg/header/video.svg" alt="">
+      <!-- <img class="header-icon" width="25px" height="25px" src="/assets/icon/svg/header/video.svg" alt=""> -->
   </ion-navbar>
 </ion-header>
 <ion-content class="p-b-20">
-  <ion-row justify-content-center>
+  <ion-row *ngIf='active' justify-content-center>
     <ion-col col-lg-10 col-xs-12>
       <h1 ion-text color="primary">
         Сурья-намаскар
       </h1>
       <ion-row justify-content-center class="m-b-10 img-wrap-big">
-        <span class="arrow-slide arrow-left"></span>
+        <span (click)="back()" class="arrow-slide arrow-left"></span>
         <div class="img-sm-wrap-inside">
-          <img src="/assets/imgs/photo/Surya-namaskar-small/surya-namaskar2.jpg" alt="">
+          <img [src]="active.url" alt="">
         </div>
-        <span class="arrow-slide arrow-right"></span>
+        <span (click)="skip()" class="arrow-slide arrow-right"></span>
       </ion-row>
       <p ion-text text-center text-wrap color="gray" class="m-b-20 m-t-20">
-        Хаста-уттанасана
+        {{active.name}}
       </p>
       <p class="text-after-img">
-        Вдохните и поднимите руки, прогнитесь назад. Пальцы рук раставлены, указательные пальцы рук касаются друг друга, а большие
-        - слегка перекрещиваются.
+        {{active.description}}
       </p>
     </ion-col>
   </ion-row>
-  <ion-grid>
+  <!-- <ion-grid>
     <ion-card padding no-margin class="full-width box-shadow col-between height-full m-b-20">
       <ion-row justify-content-center>
         <ion-col col-lg-11 col-xs-12 class="col-between">
@@ -59,6 +58,6 @@
         </ion-col>
       </ion-row>
     </ion-card>
-  </ion-grid>
+  </ion-grid> -->
 
 </ion-content>

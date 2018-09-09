@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { MainPage } from '../main-page/main-page';
+import { HomePage } from '../home/home';
 
 /**
  * Generated class for the SingInPage page.
@@ -17,9 +18,15 @@ export class SingInPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
+
   goSingUp(){
     this.navCtrl.setRoot(MainPage);
-    }
+  }
+
+  goToHome(){
+    this.navCtrl.setRoot(HomePage);
+  }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad SingInPage');
   }

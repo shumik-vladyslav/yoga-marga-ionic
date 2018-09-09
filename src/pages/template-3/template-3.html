@@ -7,7 +7,7 @@
     <p text-right ion-text color="white" class="header-title">
       <img class="header-icon" width="25px" height="25px" src="/assets/icon/svg/header/text.svg" alt="">
       <img class="header-icon" width="25px" height="25px" src="/assets/icon/svg/header/audio.svg" alt="">
-      <img class="header-icon" width="25px" height="25px" src="/assets/icon/svg/header/video.svg" alt="">
+      <!-- <img class="header-icon" width="25px" height="25px" src="/assets/icon/svg/header/video.svg" alt=""> -->
   </ion-navbar>
 </ion-header>
 <ion-content>
@@ -62,7 +62,7 @@
         <ion-col col-lg-11 col-xs-12 class="col-between">
           <ion-item no-padding>
             <p ion-text text-center text-wrap color="gray" class="m-b-20">
-              Установите время для выполнения практики
+              Установите время для выполнения всей практики
             </p>
             <ion-item text-center no-padding>
               <ion-item no-padding class="input-style input-goals input-teamplate">
@@ -73,13 +73,54 @@
               </p>
             </ion-item>
           </ion-item>
-          <ion-grid>
+          <ion-item no-padding>
+            <p ion-text text-center text-wrap color="gray" class="m-b-20">
+              Установите время для каждого упражнения
+            </p>
+            <ion-item text-center no-padding>
+              <ion-item no-padding class="input-style input-goals input-teamplate">
+                <ion-input text-center placeholder="" color="gray"></ion-input>
+              </ion-item>
+              <p margin-top ion-text text-wrap class="fs-14 text-wrap m-t-0 letter-spacing-2">
+                МИНУТ
+              </p>
+            </ion-item>
+          </ion-item>
+        
+              <ion-item no-padding>
+                <p ion-text text-wrap text-center color="gray" class="height-80">
+                  Установите время, через которое Вы услышите настановление о неотвлечении от медитации
+                </p>
+                <ion-item text-center no-padding>
+                  <ion-item no-padding class="input-style input-goals input-teamplate">
+                    <ion-input text-center placeholder="" color="gray"></ion-input>
+                  </ion-item>
+                  <p margin-top ion-text class="fs-14 text-wrap m-t-0 m-b-20 letter-spacing-2">МИНУТ</p>
+                </ion-item>
+                <ion-row nowrap align-items-center>
+                  <ion-item id="radio-style ios" class="width-default radio-style">
+                    <ion-toggle [(ngModel)]="radio1"></ion-toggle>
+                  </ion-item>
+                  <p padding-horizontal color="text-light" text-wrap text-capitalize text-left ion-text class="m-0 p-0 fs-13 letter-spacing-2">
+                    Однократное напоминание
+                  </p>
+                </ion-row>
+                <ion-row nowrap align-items-center>
+                  <ion-item id="radio-style ios" class="width-default radio-style">
+                    <ion-toggle [(ngModel)]="radio2"></ion-toggle>
+                  </ion-item>
+                  <p padding-horizontal color="text-light" text-wrap text-left ion-text text-capitalize class="m-0 p-0 fs-13 letter-spacing-2">
+                    Постоянное напоминание
+                  </p>
+                </ion-row>
+              </ion-item>
+          <!-- <ion-grid>
             <ion-row justify-content-center>
               <button icon-center class="m-t-10 button-custom m-r-0 btn-sm-width">
                 Установить
               </button>
             </ion-row>
-          </ion-grid>
+          </ion-grid> -->
         </ion-col>
       </ion-row>
     </ion-card>
@@ -87,7 +128,7 @@
 
   <ion-grid>
     <ion-row justify-content-center>
-      <button icon-center margin-top margin-bottom class="button-custom m-r-0 btn-sm-width">
+      <button (click)="goToTemplate4()" icon-center margin-top margin-bottom class="button-custom m-r-0 btn-sm-width">
         Начать практику
       </button>
     </ion-row>

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { CreateComplexPage } from '../create-complex/create-complex';
+import { MyComplexsPage } from '../my-complexs/my-complexs';
 
 /**
  * Generated class for the ComplexsPage page.
@@ -19,6 +20,10 @@ export class ComplexsPage {
   }
   goCreateComplexPage(){
     this.navCtrl.setRoot(CreateComplexPage);
+  }
+
+  goToMyComplex(){
+    this.navCtrl.setRoot(MyComplexsPage);
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad ComplexsPage');

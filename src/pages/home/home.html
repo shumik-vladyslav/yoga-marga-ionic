@@ -65,7 +65,7 @@
             </ion-row>
 
           </ion-col>
-          <ion-col col-4 class="col-between" no-padding>
+          <ion-col (click)="goToAsana2()" col-4 class="col-between" no-padding>
 
             <ion-row>
               <ion-col col-12>
@@ -193,9 +193,9 @@
 
   <ion-grid>
     <ion-row justify-content-end>
-      <button icon-start margin-top margin-bottom class="button-custom mr-md-50 btn-sm-width">
+      <button (click)="goToComplexsPage()" icon-start margin-top margin-bottom class="button-custom mr-md-50 btn-sm-width">
         <!-- <ion-icon name="ios-book-outline"></ion-icon> -->
-        Все практики
+        Все комплексы
         <span class="arrow"></span>
       </button>
     </ion-row>
@@ -234,7 +234,7 @@
 
   <ion-grid>
     <ion-row justify-content-end>
-      <button icon-start margin-top margin-bottom class="button-custom mr-md-50 btn-sm-width">
+      <button (click)="goToPrivateOffice()" icon-start margin-top margin-bottom class="button-custom mr-md-50 btn-sm-width">
         <!-- <ion-icon name="ios-book-outline"></ion-icon> -->
         В личный кабинет
         <span class="arrow"></span>
