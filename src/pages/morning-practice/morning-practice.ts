@@ -13,13 +13,16 @@ import { AllPracticesPage } from '../all-practices/all-practices';
   selector: 'page-morning-practice',
   templateUrl: 'morning-practice.html',
 })
+
 export class MorningPracticePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
+
   goAllPracticesPage(){
     this.navCtrl.setRoot(AllPracticesPage);
   }
+  
   ionViewDidLoad() {
     console.log('ionViewDidLoad MorningPracticePage');
   }

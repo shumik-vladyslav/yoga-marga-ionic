@@ -14,17 +14,20 @@ import { MyComplexsPage } from '../my-complexs/my-complexs';
   selector: 'page-complexs',
   templateUrl: 'complexs.html',
 })
+
 export class ComplexsPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
-  goCreateComplexPage(){
+
+  goCreateComplexPage() {
     this.navCtrl.setRoot(CreateComplexPage);
   }
 
-  goToMyComplex(){
+  goToMyComplex() {
     this.navCtrl.setRoot(MyComplexsPage);
   }
+  
   ionViewDidLoad() {
     console.log('ionViewDidLoad ComplexsPage');
   }

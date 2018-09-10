@@ -13,13 +13,16 @@ import { PrivateOfficePage } from '../private-office/private-office';
   selector: 'page-goals',
   templateUrl: 'goals.html',
 })
+
 export class GoalsPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
+  
   goPrivateOfficePage(){
     this.navCtrl.setRoot(PrivateOfficePage);
   }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad GoalsPage');
   }

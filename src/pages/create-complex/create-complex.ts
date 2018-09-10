@@ -13,7 +13,9 @@ import { ComplexsPage } from '../complexs/complexs';
   selector: 'page-create-complex',
   templateUrl: 'create-complex.html',
 })
+
 export class CreateComplexPage {
+
   morningData = [
     {name: 'Крия-йога', checkId: '1'},
     {name: 'Сурья-намаскар', checkId: '2'},
@@ -32,12 +34,14 @@ export class CreateComplexPage {
     {name: 'Простирание', checkId: '15'},
     {name: 'Сукшма-вьяяма', checkId: '16'},
   ];
+
   eveningData = [
     {name: 'Випарита-карани', checkId: '17'},
     {name: 'Махашавамудра', checkId: '18'},
     {name: 'Молитва йоги сновидений', checkId: '19'},
     {name: 'Йога сновидений', checkId: '20'}
   ];
+
   meditativeData = [
     {name: 'Анапанасати', checkId: '21'},
     {name: 'Махашанти', checkId: '22'},
@@ -65,11 +69,14 @@ export class CreateComplexPage {
     {name: 'Теургии', checkId: '40'},
     {name: 'Бхаджаны', checkId: '41'}
   ];
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
+
   goComplexsPage(){
     this.navCtrl.setRoot(ComplexsPage);
   }
+  
   ionViewDidLoad() {
     console.log('ionViewDidLoad CreateComplexPage');
   }

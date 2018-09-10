@@ -4,7 +4,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
-import { MainPage } from '../pages/main-page/main-page';
+import { SignUpPage } from '../pages/sing-up/sing-up';
 import { SingInPage } from '../pages/sing-in/sing-in';
 import { ComplexsPage } from '../pages/complexs/complexs';
 import { MyComplexsPage } from '../pages/my-complexs/my-complexs';
@@ -37,11 +37,11 @@ export class MyApp {
       { title: 'Комплексы', icon: '/assets/icon/svg/navigation/icon-nav2.svg', component: ComplexsPage },
       { title: 'Личный кабинет', icon: '/assets/icon/svg/navigation/icon-nav3.svg', component: PrivateOfficePage },
       { title: 'Настройки', icon: '/assets/icon/svg/navigation/icon-nav4.svg', component: SettingsPage },
-      { title: 'Дхарма-вичара', icon: '/assets/icon/svg/navigation/icon-nav5.svg', component: MainPage },
-      { title: 'Выйти', icon: '/assets/icon/svg/navigation/icon-nav6.svg', component: MainPage },
+      { title: 'Дхарма-вичара', icon: '/assets/icon/svg/navigation/icon-nav5.svg', component: SignUpPage },
+      { title: 'Выйти', icon: '/assets/icon/svg/navigation/icon-nav6.svg', component: SignUpPage },
       { title: '', icon: '', component: '' },
       { title: 'sing-in', icon: '/assets/icon/svg/navigation/icon-nav3.svg', component: SingInPage },
-      { title: 'sing-up', icon: '/assets/icon/svg/navigation/icon-nav3.svg', component: MainPage },
+      { title: 'sing-up', icon: '/assets/icon/svg/navigation/icon-nav3.svg', component: SignUpPage },
       { title: 'my-complexs', icon: '/assets/icon/svg/navigation/icon-nav3.svg', component: MyComplexsPage },
       { title: 'template-1', icon: '/assets/icon/svg/navigation/icon-nav3.svg', component: Template_1Page },
       { title: 'template-2', icon: '/assets/icon/svg/navigation/icon-nav3.svg', component: Template_2Page },

@@ -15,10 +15,12 @@ import { MeditativePracticesPage } from '../meditative-practices/meditative-prac
   selector: 'page-all-practices',
   templateUrl: 'all-practices.html',
 })
+
 export class AllPracticesPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
+
   goMorningPracticePage(){
     this.navCtrl.setRoot(MorningPracticePage);
   }
@@ -26,9 +28,11 @@ export class AllPracticesPage {
   goEveningPracticePage(){
     this.navCtrl.setRoot(EveningPracticePage);
   }
+
   goMeditativePracticesPage(){
     this.navCtrl.setRoot(MeditativePracticesPage);
   }
+  
   ionViewDidLoad() {
     console.log('ionViewDidLoad AllPracticesPage');
   }

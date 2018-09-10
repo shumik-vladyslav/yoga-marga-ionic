@@ -17,9 +17,11 @@ export class SettingsPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
+
   goTermsPage(){
     this.navCtrl.setRoot(TermsPage);
   }
+  
   ionViewDidLoad() {
     console.log('ionViewDidLoad SettingsPage');
   }

@@ -6,7 +6,7 @@ import { HttpClientModule } from '@angular/common/http'
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { MainPage } from '../pages/main-page/main-page';
+import { SignUpPage } from '../pages/sing-up/sing-up';
 import { SingInPage } from '../pages/sing-in/sing-in';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -32,7 +32,7 @@ import { LoadScreenPage } from '../pages/load-screen/load-screen';
   declarations: [
     MyApp,
     HomePage,
-    MainPage,
+    SignUpPage,
     SingInPage,
     CreateComplexPage,
     AllPracticesPage,
@@ -62,7 +62,7 @@ import { LoadScreenPage } from '../pages/load-screen/load-screen';
   entryComponents: [
     MyApp,
     HomePage,
-    MainPage,
+    SignUpPage,
     SingInPage,
     CreateComplexPage,
     AllPracticesPage,

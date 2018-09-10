@@ -14,10 +14,13 @@ import { Subject } from 'rxjs/Subject';
   selector: 'page-template-4',
   templateUrl: 'template-4.html',
 })
+
 export class Template_4Page {
+
   active;
   index;
   timer;
+
   data = [
     {
       name: 'Тадасана',
@@ -87,6 +90,7 @@ export class Template_4Page {
   ]
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+
     this.init(0);
     let pomniTaimer = Observable.timer(3000, 10000);
     pomniTaimer
@@ -94,9 +98,12 @@ export class Template_4Page {
     .subscribe(() => {
       new Audio('assets/sound/pomni.mp3').play();
     })
+    
   }
+  
   subject = new Subject();
   subjectPomni = new Subject();
+  
   init(i){
     if(i >= 0 && this.data.length > i){
       new Audio('assets/sound/gong.mp3').play();

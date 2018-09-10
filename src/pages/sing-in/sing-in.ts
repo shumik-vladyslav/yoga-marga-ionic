@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { MainPage } from '../main-page/main-page';
+import { SignUpPage } from '../sing-up/sing-up';
 import { HomePage } from '../home/home';
 
 /**
@@ -14,13 +14,14 @@ import { HomePage } from '../home/home';
   selector: 'page-sing-in',
   templateUrl: 'sing-in.html',
 })
+
 export class SingInPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   goSingUp(){
-    this.navCtrl.setRoot(MainPage);
+    this.navCtrl.setRoot(SignUpPage);
   }
 
   goToHome(){

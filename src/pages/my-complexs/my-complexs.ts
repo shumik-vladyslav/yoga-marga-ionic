@@ -13,13 +13,16 @@ import { AllPracticesPage } from '../all-practices/all-practices';
   selector: 'page-my-complexs',
   templateUrl: 'my-complexs.html',
 })
+
 export class MyComplexsPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
+  
   goAllPracticesPage(){
     this.navCtrl.setRoot(AllPracticesPage);
   }
+  
   ionViewDidLoad() {
     console.log('ionViewDidLoad MyComplexsPage');
   }

@@ -13,6 +13,7 @@ import { Template_4Page } from '../template-4/template-4';
   selector: 'page-template-3',
   templateUrl: 'template-3.html',
 })
+
 export class Template_3Page {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {

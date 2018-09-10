@@ -12,6 +12,7 @@ import { NavController, NavParams } from 'ionic-angular';
   selector: 'page-load-screen',
   templateUrl: 'load-screen.html',
 })
+
 export class LoadScreenPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {

@@ -9,11 +9,13 @@ import { Template_3Page } from '../template-3/template-3';
   selector: 'page-home',
   templateUrl: 'home.html'
 })
+
 export class HomePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,) {
    
   }
+  
   goAllPracticesPage(){
     this.navCtrl.setRoot(AllPracticesPage);
   }

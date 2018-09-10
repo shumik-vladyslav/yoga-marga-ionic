@@ -3,11 +3,13 @@ import { NavController, NavParams } from 'ionic-angular';
 import { SingInPage } from '../sing-in/sing-in';
 
 @Component({
-  selector: 'main-page',
-  templateUrl: 'main-page.html'
+  selector: 'sing-up',
+  templateUrl: 'sing-up.html'
 })
-export class MainPage {
+export class SignUpPage {
+
   gender;
+  
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
   

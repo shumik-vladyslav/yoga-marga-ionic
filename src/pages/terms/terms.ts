@@ -13,13 +13,16 @@ import { SettingsPage } from '../settings/settings';
   selector: 'page-terms',
   templateUrl: 'terms.html',
 })
+
 export class TermsPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
+  
   goSettingsPage(){
     this.navCtrl.setRoot(SettingsPage);
   }
+  
   ionViewDidLoad() {
     console.log('ionViewDidLoad TermsPage');
   }
