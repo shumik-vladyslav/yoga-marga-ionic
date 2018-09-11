@@ -27,6 +27,7 @@ import { Template_2Page } from '../pages/template-2/template-2';
 import { Template_3Page } from '../pages/template-3/template-3';
 import { Template_4Page } from '../pages/template-4/template-4';
 import { LoadScreenPage } from '../pages/load-screen/load-screen';
+import { SettingsProvider } from '../providers/shared-services-settings/shared-services-settings';
 
 @NgModule({
   declarations: [
@@ -84,7 +85,8 @@ import { LoadScreenPage } from '../pages/load-screen/load-screen';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    SettingsProvider
   ]
 })
 export class AppModule {}

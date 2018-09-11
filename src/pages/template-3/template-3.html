@@ -17,41 +17,9 @@
         Сурья-намаскар
       </h1>
       <ion-row justify-content-center class="m-b-10 img-sm-wrap">
-        <div class="img-sm-wrap-inside" style="background-image: url(../../assets/imgs/photo/Surya-namaskar-small/surya-namaskar1.jpg);">
-          <img src="/assets/imgs/photo/Surya-namaskar-small/surya-namaskar1.jpg" alt="">
-        </div>
-        <div class="img-sm-wrap-inside" style="background-image: url(../../assets/imgs/photo/Surya-namaskar-small/surya-namaskar2.jpg);">
-          <img src="/assets/imgs/photo/Surya-namaskar-small/surya-namaskar2.jpg" alt="">
-        </div>
-        <div class="img-sm-wrap-inside" style="background-image: url(../../assets/imgs/photo/Surya-namaskar-small/surya-namaskar3.jpg);">
-          <img src="/assets/imgs/photo/Surya-namaskar-small/surya-namaskar3.jpg" alt="">
-        </div>
-        <div class="img-sm-wrap-inside" style="background-image: url(../../assets/imgs/photo/Surya-namaskar-small/surya-namaskar4.jpg);">
-          <img src="/assets/imgs/photo/Surya-namaskar-small/surya-namaskar4.jpg" alt="">
-        </div>
-        <div class="img-sm-wrap-inside" style="background-image: url(../../assets/imgs/photo/Surya-namaskar-small/surya-namaskar5.jpg);">
-          <img src="/assets/imgs/photo/Surya-namaskar-small/surya-namaskar5.jpg" alt="">
-        </div>
-        <div class="img-sm-wrap-inside" style="background-image: url(../../assets/imgs/photo/Surya-namaskar-small/surya-namaskar6.jpg);">
-          <img src="/assets/imgs/photo/Surya-namaskar-small/surya-namaskar6.jpg" alt="">
-        </div>
-        <div class="img-sm-wrap-inside" style="background-image: url(../../assets/imgs/photo/Surya-namaskar-small/surya-namaskar7.jpg);">
-          <img src="/assets/imgs/photo/Surya-namaskar-small/surya-namaskar7.jpg" alt="">
-        </div>
-        <div class="img-sm-wrap-inside" style="background-image: url(../../assets/imgs/photo/Surya-namaskar-small/surya-namaskar9.jpg);">
-          <img src="/assets/imgs/photo/Surya-namaskar-small/surya-namaskar9.jpg" alt="">
-        </div>
-        <div class="img-sm-wrap-inside" style="background-image: url(../../assets/imgs/photo/Surya-namaskar-small/surya-namaskar3.jpg);">
-          <img src="/assets/imgs/photo/Surya-namaskar-small/surya-namaskar3.jpg" alt="">
-        </div>
-        <div class="img-sm-wrap-inside" style="background-image: url(../../assets/imgs/photo/Surya-namaskar-small/surya-namaskar1.jpg);">
-          <img src="/assets/imgs/photo/Surya-namaskar-small/surya-namaskar1.jpg" alt="">
-        </div>
-        <div class="img-sm-wrap-inside" style="background-image: url(../../assets/imgs/photo/Surya-namaskar-small/surya-namaskar2.jpg);">
-          <img src="/assets/imgs/photo/Surya-namaskar-small/surya-namaskar2.jpg" alt="">
-        </div>
-        <div class="img-sm-wrap-inside" style="background-image: url(../../assets/imgs/photo/Surya-namaskar-small/surya-namaskar1.jpg);">
-          <img src="/assets/imgs/photo/Surya-namaskar-small/surya-namaskar1.jpg" alt="">
+        <div *ngFor="let item of data" class="img-sm-wrap-inside" 
+        [ngStyle]="{'background-image': 'url(' + item.url + ')'}">
+          <img [src]="item.url" alt="">
         </div>
       </ion-row>
     </ion-col>
@@ -66,7 +34,7 @@
             </p>
             <ion-item text-center no-padding>
               <ion-item no-padding class="input-style input-goals input-teamplate">
-                <ion-input text-center placeholder="" color="gray"></ion-input>
+                <ion-input [(ngModel)]="fullTime" min="0" text-center placeholder="" color="gray"></ion-input>
               </ion-item>
               <p margin-top ion-text text-wrap class="fs-14 text-wrap m-t-0 letter-spacing-2">
                 МИНУТ
@@ -79,7 +47,7 @@
             </p>
             <ion-item text-center no-padding>
               <ion-item no-padding class="input-style input-goals input-teamplate">
-                <ion-input text-center placeholder="" color="gray"></ion-input>
+                <ion-input [(ngModel)]="eachTime" text-center placeholder="" color="gray"></ion-input>
               </ion-item>
               <p margin-top ion-text text-wrap class="fs-14 text-wrap m-t-0 letter-spacing-2">
                 МИНУТ
@@ -93,13 +61,13 @@
                 </p>
                 <ion-item text-center no-padding>
                   <ion-item no-padding class="input-style input-goals input-teamplate">
-                    <ion-input text-center placeholder="" color="gray"></ion-input>
+                    <ion-input [(ngModel)]="pomniTime" text-center placeholder="" color="gray"></ion-input>
                   </ion-item>
                   <p margin-top ion-text class="fs-14 text-wrap m-t-0 m-b-20 letter-spacing-2">МИНУТ</p>
                 </ion-item>
                 <ion-row nowrap align-items-center>
                   <ion-item id="radio-style ios" class="width-default radio-style">
-                    <ion-toggle [(ngModel)]="radio1"></ion-toggle>
+                    <ion-toggle [(ngModel)]="soloPomniFlag"></ion-toggle>
                   </ion-item>
                   <p padding-horizontal color="text-light" text-wrap text-capitalize text-left ion-text class="m-0 p-0 fs-13 letter-spacing-2">
                     Однократное напоминание
@@ -107,7 +75,7 @@
                 </ion-row>
                 <ion-row nowrap align-items-center>
                   <ion-item id="radio-style ios" class="width-default radio-style">
-                    <ion-toggle [(ngModel)]="radio2"></ion-toggle>
+                    <ion-toggle [(ngModel)]="multiPomniFlag"></ion-toggle>
                   </ion-item>
                   <p padding-horizontal color="text-light" text-wrap text-left ion-text text-capitalize class="m-0 p-0 fs-13 letter-spacing-2">
                     Постоянное напоминание

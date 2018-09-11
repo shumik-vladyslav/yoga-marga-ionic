@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
+import { SettingsProvider } from '../../providers/shared-services-settings/shared-services-settings';
 
 /**
  * Generated class for the Template_4Page page.
@@ -21,84 +22,33 @@ export class Template_4Page {
   index;
   timer;
 
-  data = [
-    {
-      name: 'Тадасана',
-      description: `Стоим прямо.`,
-      url: '/assets/imgs/photo/asana-2/asana1.jpg',
-      time: 0,
-      defTime: 3000,
-      skipFlag: false
-    },
-    {
-      name: 'Врикшасана',
-      description: `Дерево в лево.`,
-      url: '/assets/imgs/photo/asana-2/asana2-1.jpg',
-      time: 0,
-      defTime: 3000,
-      skipFlag: false
-    },
-    {
-      name: 'Врикшасана',
-      description: `Верево в право.`,
-      url: '/assets/imgs/photo/asana-2/asana2-2.jpg',
-      time: 0,
-      defTime: 3000,
-      skipFlag: false
-    },
-    {
-      name: 'Триконасана',
-      description: `Триконасана подготовка.`,
-      url: '/assets/imgs/photo/asana-2/asana3-1.jpg',
-      time: 0,
-      defTime: 3000,
-      skipFlag: true
-    },
-    {
-      name: 'Триконасана',
-      description: `Триконасана лево.`,
-      url: '/assets/imgs/photo/asana-2/asana3-2.5.jpg',
-      time: 0,
-      defTime: 3000,
-      skipFlag: false
-    },
-    {
-      name: 'Триконасана',
-      description: `Триконасана право.`,
-      url: '/assets/imgs/photo/asana-2/asana3-3.jpg',
-      time: 0,
-      defTime: 3000,
-      skipFlag: false
-    },
-    {
-      name: 'Триконасана',
-      description: `Триконасана перевернутая в лево.`,
-      url: '/assets/imgs/photo/asana-2/asana4-1.2.jpg',
-      time: 0,
-      defTime: 3000,
-      skipFlag: false
-    },
-    {
-      name: 'Триконасана',
-      description: `Триконасана перевернутая в право.`,
-      url: '/assets/imgs/photo/asana-2/asana4-2.jpg',
-      time: 0,
-      defTime: 3000,
-      skipFlag: false
-    },
+  data = [];
 
-  ]
+  settings;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+    private settingsProvider: SettingsProvider) {
+    this.settings = this.settingsProvider.getSettings();
+    this.data = this.settingsProvider.getData();
 
     this.init(0);
-    let pomniTaimer = Observable.timer(3000, 10000);
-    pomniTaimer
-    .takeUntil(this.subjectPomni)
-    .subscribe(() => {
-      new Audio('assets/sound/pomni.mp3').play();
-    })
-    
+    if(this.settings.soloPomniFlag){
+      let pomniTaimer = Observable.timer(this.settings.pomniTime * 60000);
+      pomniTaimer
+      .takeUntil(this.subjectPomni)
+      .subscribe(() => {
+        new Audio('assets/sound/pomni.mp3').play();
+      })
+    }
+
+    if(this.settings.multiPomniFlag){
+      let pomniTaimer = Observable.timer(this.settings.pomniTime * 60000, this.settings.pomniTime * 60000);
+      pomniTaimer
+      .takeUntil(this.subjectPomni)
+      .subscribe(() => {
+        new Audio('assets/sound/pomni.mp3').play();
+      })
+    }
   }
   
   subject = new Subject();
@@ -109,7 +59,8 @@ export class Template_4Page {
       new Audio('assets/sound/gong.mp3').play();
       this.active = this.data[i];
       this.index = i;
-      this.timer = Observable.timer(this.active.defTime);
+      this.timer = Observable.timer(this.settings.fullTime > 0 ? (this.settings.fullTime / this.data.length * 60000) : (this.settings.eachTime > 0 ? 
+        this.settings.eachTime * 60000 : this.active.defTime));
       this.timer
       .takeUntil(this.subject)
       .subscribe((value) => {

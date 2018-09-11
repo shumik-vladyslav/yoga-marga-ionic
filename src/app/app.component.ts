@@ -22,7 +22,7 @@ import { LoadScreenPage } from '../pages/load-screen/load-screen';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = Template_4Page;
+  rootPage: any = Template_3Page;
   // rootPage: any = SingInPage;
   
 
