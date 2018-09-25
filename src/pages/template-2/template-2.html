@@ -7,7 +7,7 @@
     <p text-right ion-text color="white" class="header-title">
       <img class="header-icon" width="25px" height="25px" src="/assets/icon/svg/header/text.svg" alt="">
       <img class="header-icon" width="25px" height="25px" src="/assets/icon/svg/header/audio.svg" alt="">
-      <img class="header-icon" width="25px" height="25px" src="/assets/icon/svg/header/video.svg" alt="">
+      <!-- <img class="header-icon" width="25px" height="25px" src="/assets/icon/svg/header/video.svg" alt=""> -->
   </ion-navbar>
 </ion-header>
 <ion-content>
@@ -36,20 +36,20 @@
                 </p>
                 <ion-item text-center no-padding>
                   <ion-item no-padding class="input-style input-goals input-teamplate">
-                    <ion-input text-center placeholder="" color="gray"></ion-input>
+                    <ion-input [(ngModel)]="praktikaTime" text-center placeholder="" color="gray"></ion-input>
                   </ion-item>
                   <p margin-top ion-text text-wrap class="fs-14 text-wrap m-t-0 m-b-20 letter-spacing-2">
                     МИНУТ
                   </p>
                 </ion-item>
               </ion-item>
-              <ion-grid>
+              <!-- <ion-grid>
                 <ion-row justify-content-center>
                   <button icon-center margin-top class="button-custom m-r-0 btn-sm-width">
                     Установить
                   </button>
                 </ion-row>
-              </ion-grid>
+              </ion-grid> -->
             </ion-card>
           </ion-col>
           <ion-col col-xs-12>
@@ -60,13 +60,13 @@
                 </p>
                 <ion-item text-center no-padding>
                   <ion-item no-padding class="input-style input-goals input-teamplate">
-                    <ion-input text-center placeholder="" color="gray"></ion-input>
+                    <ion-input [(ngModel)]="pomniTime" text-center placeholder="" color="gray"></ion-input>
                   </ion-item>
                   <p margin-top ion-text class="fs-14 text-wrap m-t-0 m-b-20 letter-spacing-2">МИНУТ</p>
                 </ion-item>
                 <ion-row nowrap align-items-center>
                   <ion-item id="radio-style ios" class="width-default radio-style">
-                    <ion-toggle [(ngModel)]="radio1"></ion-toggle>
+                    <ion-toggle [(ngModel)]="soloPomniFlag"></ion-toggle>
                   </ion-item>
                   <p padding-horizontal color="text-light" text-wrap text-capitalize text-left ion-text class="m-0 p-0 fs-13 letter-spacing-2">
                     Однократное напоминание
@@ -74,20 +74,20 @@
                 </ion-row>
                 <ion-row nowrap align-items-center>
                   <ion-item id="radio-style ios" class="width-default radio-style">
-                    <ion-toggle [(ngModel)]="radio2"></ion-toggle>
+                    <ion-toggle [(ngModel)]="multiPomniFlag"></ion-toggle>
                   </ion-item>
                   <p padding-horizontal color="text-light" text-wrap text-left ion-text text-capitalize class="m-0 p-0 fs-13 letter-spacing-2">
                     Постоянное напоминание
                   </p>
                 </ion-row>
               </ion-item>
-              <ion-grid>
+              <!-- <ion-grid>
                 <ion-row justify-content-center>
                   <button icon-center margin-top class="button-custom m-r-0 btn-sm-width">
                     Установить
                   </button>
                 </ion-row>
-              </ion-grid>
+              </ion-grid> -->
             </ion-card>
           </ion-col>
           <ion-col col-xs-12>
@@ -125,7 +125,7 @@
 
   <ion-grid>
     <ion-row justify-content-center>
-      <button icon-center margin-top margin-bottom class="button-custom m-r-0 btn-sm-width">
+      <button (click)="start()" icon-center margin-top margin-bottom class="button-custom m-r-0 btn-sm-width">
         Начать практику
       </button>
     </ion-row>
