@@ -24,7 +24,6 @@ export class MyApp {
 
   // rootPage: any = Template_1Page;
   rootPage: any = SingInPage;
-  
 
   pages: Array<{title: string, icon:string, component: any}>;
  
@@ -48,9 +47,7 @@ export class MyApp {
       { title: 'template-3', icon: '/assets/icon/svg/navigation/icon-nav3.svg', component: Template_3Page },
       { title: 'template-4', icon: '/assets/icon/svg/navigation/icon-nav3.svg', component: Template_4Page },
       { title: 'load-screen', icon: '/assets/icon/svg/navigation/icon-nav3.svg', component: LoadScreenPage },
-
     ];
-
   }
 
   initializeApp() {
@@ -67,4 +64,5 @@ export class MyApp {
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
   }
+
 }

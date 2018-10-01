@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/timer';
 
 /**
  * Generated class for the Template_1Page page.

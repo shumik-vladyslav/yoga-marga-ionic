@@ -8,7 +8,6 @@
 </ion-header>
 
 <ion-content padding-vertical>
-
   <!-- <ion-title text-center margin-bottom class="">Каталог</ion-title> -->
   <h1>
     Каталог
@@ -17,7 +16,13 @@
     <ion-card-content no-padding padding-vertical>
       <ion-grid>
         <ion-row justify-content-center>
-          <ion-col col-4 class="border-r col-between" no-padding>
+          <!--  -->
+          <ion-col col-4 class="border-r col-between" no-padding *ngFor="let p of practices$ | async | slice:0:3"
+            navPush="PracticePerformancePage" [navParams]="{practice: p}">
+            <!-- (click)="onClickPractice(p)" -->
+            <!-- <pre>
+              {{practices | json}}
+            </pre> -->
 
             <ion-row>
               <ion-col col-12>
@@ -26,7 +31,7 @@
                     <svg-icon src="/assets/icon/svg/main-page/om.svg" [stretch]="true" [svgStyle]="{'height.px':50}">
                     </svg-icon>
                   </ion-icon> -->
-                  <img class="img-icon" src="/assets/icon/svg/main-page/om.svg" alt="">
+                  <img class="img-icon" [src]="p.ico" alt="">
                 </ion-item>
               </ion-col>
             </ion-row>
@@ -35,21 +40,18 @@
               <ion-col col-12>
                 <ion-item text-center no-padding class="min-height-default">
                   <!-- <ion-icon name="ios-hand-outline" ion-text class=""></ion-icon> -->
-                  <p ion-text class="fs-16 text-wrap">Мантра Ом</p>
+                  <p ion-text class="fs-16 text-wrap">{{p.name}}</p>
                 </ion-item>
               </ion-col>
             </ion-row>
 
           </ion-col>
-          <ion-col col-4 class="border-r col-between" no-padding>
+
+          <!-- <ion-col col-4 class="border-r col-between" no-padding>
 
             <ion-row>
               <ion-col col-12>
                 <ion-item text-center no-padding>
-                  <!-- <ion-icon>
-                    <svg-icon src="/assets/icon/svg/lichniy-kabinet/dostizhenie-prostiraniya.svg" [stretch]="true" [svgStyle]="{'height.px':50}">
-                    </svg-icon>
-                  </ion-icon> -->
                   <img class="img-icon" src="/assets/icon/svg/lichniy-kabinet/dostizhenie-prostiraniya.svg" alt="">
                 </ion-item>
               </ion-col>
@@ -58,22 +60,18 @@
             <ion-row>
               <ion-col col-12>
                 <ion-item text-center no-padding class="min-height-default">
-                  <!-- <ion-icon name="ios-hand-outline" ion-text class=""></ion-icon> -->
                   <p ion-text class="fs-16 text-wrap">День практики</p>
                 </ion-item>
               </ion-col>
             </ion-row>
 
           </ion-col>
+          
           <ion-col (click)="goToAsana2()" col-4 class="col-between" no-padding>
 
             <ion-row>
               <ion-col col-12>
                 <ion-item text-center no-padding>
-                  <!-- <ion-icon>
-                    <svg-icon src="/assets/icon/svg/main-page/asani.svg" [stretch]="true" [svgStyle]="{'height.px':50}">
-                    </svg-icon>
-                  </ion-icon> -->
                   <img class="img-icon" src="/assets/icon/svg/main-page/asani.svg" alt="">
                 </ion-item>
               </ion-col>
@@ -82,13 +80,13 @@
             <ion-row>
               <ion-col col-12>
                 <ion-item text-center no-padding class="min-height-default">
-                  <!-- <ion-icon name="ios-hand-outline" ion-text class=""></ion-icon> -->
                   <p ion-text class="fs-16 text-wrap">Ассаны</p>
                 </ion-item>
               </ion-col>
             </ion-row>
 
-          </ion-col>
+          </ion-col> -->
+
         </ion-row>
       </ion-grid>
     </ion-card-content>
@@ -171,7 +169,7 @@
                     </svg-icon>
                   </ion-icon> -->
                   <img class="img-icon" src="/assets/icon/svg/kompleksy/ritritnii-den.svg" alt="">
-                  
+
                 </ion-item>
               </ion-col>
             </ion-row>

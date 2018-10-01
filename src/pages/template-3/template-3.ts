@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Template_4Page } from '../template-4/template-4';
 import { SettingsProvider } from '../../providers/shared-services-settings/shared-services-settings';
+import 'rxjs/add/observable/timer';
 
 /**
  * Generated class for the Template_3Page page.

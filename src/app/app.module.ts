@@ -1,8 +1,12 @@
+import { PracticePerformancePageModule } from './../pages/practice-performance/practice-performance.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { HttpClientModule } from '@angular/common/http'
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -27,7 +31,10 @@ import { Template_2Page } from '../pages/template-2/template-2';
 import { Template_3Page } from '../pages/template-3/template-3';
 import { Template_4Page } from '../pages/template-4/template-4';
 import { LoadScreenPage } from '../pages/load-screen/load-screen';
+
+
 import { SettingsProvider } from '../providers/shared-services-settings/shared-services-settings';
+import { config } from '../config';
 
 @NgModule({
   declarations: [
@@ -55,9 +62,12 @@ import { SettingsProvider } from '../providers/shared-services-settings/shared-s
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    AngularFireModule.initializeApp(config.firebase),
+    AngularFireAuthModule,
+    AngularFirestoreModule,
     AngularSvgIconModule,
-    HttpClientModule,
-   
+    PracticePerformancePageModule,
+    HttpClientModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
