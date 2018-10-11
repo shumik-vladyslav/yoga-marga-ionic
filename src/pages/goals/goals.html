@@ -8,8 +8,6 @@
 </ion-header>
 
 <ion-content padding-vertical>
-
-
   <ion-card no-margin class="full-width box-shadow m-t-20 m-b-40">
     <ion-card-content no-padding padding-vertical>
       <ion-grid>
@@ -41,7 +39,8 @@
               <ion-col col-12>
                 <ion-item text-center no-padding>
                   <ion-item no-padding class="input-style input-goals-page input-goals">
-                    <ion-input text-center placeholder="" color="gray" clearInput></ion-input>
+                      <!-- (ionChange)="onChangeGoal('om',$event.value)" -->
+                    <ion-input text-center placeholder="" color="gray" clearInput [(ngModel)]="goals.om"></ion-input>
                   </ion-item>
                   <p margin-top ion-text class="fs-14 text-wrap m-t-0">Кругов</p>
                 </ion-item>
@@ -74,7 +73,7 @@
               <ion-col col-12>
                 <ion-item text-center no-padding>
                   <ion-item no-padding class="input-style input-goals-page input-goals">
-                    <ion-input text-center placeholder="" color="gray" clearInput></ion-input>
+                    <ion-input text-center placeholder="" color="gray" clearInput [(ngModel)]="goals.om_dram"></ion-input>
                   </ion-item>
                   <p margin-top ion-text class="fs-14 text-wrap m-t-0">Кругов</p>
                 </ion-item>
@@ -109,7 +108,7 @@
               <ion-col col-12>
                 <ion-item text-center no-padding>
                   <ion-item no-padding class="input-style input-goals-page input-goals">
-                    <ion-input text-center placeholder="" color="gray" clearInput></ion-input>
+                    <ion-input text-center placeholder="" color="gray" clearInput [(ngModel)]="goals.prostiraniya"></ion-input>
                   </ion-item>
                   <p margin-top ion-text class="fs-14 text-wrap m-t-0">Раз</p>
                 </ion-item>
@@ -153,7 +152,7 @@
               <ion-col col-12>
                 <ion-item text-center no-padding>
                   <ion-item no-padding class="input-style input-goals-page input-goals">
-                    <ion-input text-center placeholder="" color="gray" clearInput></ion-input>
+                    <ion-input text-center placeholder="" color="gray" clearInput [(ngModel)]="goals.chandaly"></ion-input>
                   </ion-item>
                   <p margin-top ion-text class="fs-14 text-wrap m-t-0">Кругов</p>
                 </ion-item>
@@ -186,7 +185,7 @@
               <ion-col col-12>
                 <ion-item text-center no-padding>
                   <ion-item no-padding class="input-style input-goals-page input-goals">
-                    <ion-input text-center placeholder="" color="gray" clearInput></ion-input>
+                    <ion-input text-center placeholder="" color="gray" clearInput [(ngModel)]="goals.anuloma_viloma"></ion-input>
                   </ion-item>
                   <p margin-top ion-text class="fs-14 text-wrap m-t-0">Часов</p>
                 </ion-item>
@@ -221,7 +220,7 @@
               <ion-col col-12>
                 <ion-item text-center no-padding>
                   <ion-item no-padding class="input-style input-goals-page input-goals">
-                    <ion-input text-center placeholder="" color="gray" clearInput></ion-input>
+                    <ion-input text-center placeholder="" color="gray" clearInput [(ngModel)]="goals.sahita_kumbhaka"></ion-input>
                   </ion-item>
                   <p margin-top ion-text class="fs-14 text-wrap m-t-0">Часов</p>
                 </ion-item>
@@ -236,7 +235,7 @@
 
   <ion-grid>
     <ion-row justify-content-end>
-      <button icon-start margin-top margin-bottom class="button-custom mr-md-50 btn-sm-width">
+      <button icon-start margin-top margin-bottom class="button-custom mr-md-50 btn-sm-width" (click)="submit()">
         Сохранить
       </button>
     </ion-row>

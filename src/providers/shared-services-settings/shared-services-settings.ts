@@ -9,6 +9,7 @@ import { Injectable } from '@angular/core';
 */
 @Injectable()
 export class SettingsProvider {
+  
   settings = {
     fullTime: 0,
     eachTime: 0,

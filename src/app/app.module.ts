@@ -1,3 +1,5 @@
+import { ProgressChartDirective } from './../directives/progress-chart/progress-chart';
+import { ExercisePerformancePageModule } from './../pages/exercise-performance/exercise-performance.module';
 import { PracticePerformancePageModule } from './../pages/practice-performance/practice-performance.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -7,6 +9,9 @@ import { HttpClientModule } from '@angular/common/http'
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule,AngularFireStorage } from '@angular/fire/storage';
+import { File } from '@ionic-native/file';
+import { IonicStorageModule } from '@ionic/storage';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -35,6 +40,10 @@ import { LoadScreenPage } from '../pages/load-screen/load-screen';
 
 import { SettingsProvider } from '../providers/shared-services-settings/shared-services-settings';
 import { config } from '../config';
+import { AuthProvider } from '../providers/auth/auth';
+import { ExercisePerformancePage } from '../pages/exercise-performance/exercise-performance';
+import { FileCacheProvider } from '../providers/file-cache/file-cache';
+import { FileTransfer } from '@ionic-native/file-transfer';
 
 @NgModule({
   declarations: [
@@ -57,17 +66,26 @@ import { config } from '../config';
     Template_2Page,
     Template_3Page,
     Template_4Page,
-    LoadScreenPage
+    LoadScreenPage,
+    ProgressChartDirective
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot(
+      {
+        name: '__filecache',
+           driverOrder: ['indexeddb', 'sqlite', 'websql']
+      }
+    ),
     AngularFireModule.initializeApp(config.firebase),
     AngularFireAuthModule,
-    AngularFirestoreModule,
+    AngularFirestoreModule.enablePersistence(),
+    AngularFireStorageModule,
     AngularSvgIconModule,
     PracticePerformancePageModule,
-    HttpClientModule
+    HttpClientModule,
+    ExercisePerformancePageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -90,13 +108,19 @@ import { config } from '../config';
     Template_2Page,
     Template_3Page,
     Template_4Page,
-    LoadScreenPage
+    LoadScreenPage,
+    ProgressChartDirective
   ],
   providers: [
+    AngularFireStorage,
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    SettingsProvider
+    SettingsProvider,
+    AuthProvider,
+    FileCacheProvider,
+    FileTransfer,
+    File
   ]
 })
 export class AppModule {}

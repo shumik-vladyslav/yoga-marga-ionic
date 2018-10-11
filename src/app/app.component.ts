@@ -1,3 +1,4 @@
+import { AuthProvider } from './../providers/auth/auth';
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -27,7 +28,12 @@ export class MyApp {
 
   pages: Array<{title: string, icon:string, component: any}>;
  
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(
+    public platform: Platform, 
+    public statusBar: StatusBar, 
+    public splashScreen: SplashScreen,
+    public authP: AuthProvider
+  ) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -48,6 +54,8 @@ export class MyApp {
       { title: 'template-4', icon: '/assets/icon/svg/navigation/icon-nav3.svg', component: Template_4Page },
       { title: 'load-screen', icon: '/assets/icon/svg/navigation/icon-nav3.svg', component: LoadScreenPage },
     ];
+
+    this.authP.getInstance();
   }
 
   initializeApp() {
