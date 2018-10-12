@@ -1,0 +1,174 @@
+<!--
+  Generated template for the PracticePerformancePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+
+<ion-header>
+  <ion-toolbar>
+    <button ion-button navPop ion-text color="white" class="pos-a btn-back" icon-only>
+      <span class="arrow arrow-back"></span>
+    </button>
+    <p text-right ion-text color="white" class="header-title">
+      <img class="header-icon" width="25px" height="25px" src="/assets/icon/svg/header/text.svg" alt="">
+      <img class="header-icon" width="25px" height="25px" src="/assets/icon/svg/header/audio.svg" alt="">
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row justify-content-center>
+      <ion-col col-lg-10 col-xs-12>
+        <h1 ion-text color="primary">
+          {{practice.name}}
+        </h1>
+        <div [innerHTML]="practice?.shortDescription"></div>
+
+        <ion-row justify-content-center class="m-b-10 img-sm-wrap">
+          <!-- class="img-sm-wrap-inside" [ngStyle]="{'background-image': 'url(' + item.url + ')'}" -->
+          <div *ngFor="let url of imgUrls">
+            <img [src]="url">
+          </div>
+        </ion-row>
+
+      </ion-col>
+    </ion-row>
+    <ion-row justify-content-center>
+      <ion-col col-lg-11 col-xs-12>
+        <ion-row justify-content-center>
+
+          <ion-col col-lg-6 col-sm-6 col-xs-12 *ngIf="practice.userSpec">
+            <ion-card padding no-margin class="full-width box-shadow col-between height-full">
+              <ion-item no-padding>
+                <p ion-text text-center text-wrap color="gray" class="height-80">
+                  Установите время для выполнения практики
+                </p>
+                <ion-item text-center no-padding>
+                  <ion-item no-padding class="input-style input-goals input-teamplate">
+                    <ion-input [(ngModel)]="practice.userSpec.praktikaTime" text-center color="gray" (ngModelChange)="onPraktikaTimeChange()"></ion-input>
+                  </ion-item>
+                  <p margin-top ion-text text-wrap class="fs-14 text-wrap m-t-0 m-b-20 letter-spacing-2">
+                    МИНУТ
+                  </p>
+                </ion-item>
+              </ion-item>
+            </ion-card>
+          </ion-col>
+
+          <ion-col col-lg-6 col-sm-6 col-xs-12 *ngIf="practice.userSpec">
+            <ion-card padding no-margin class="full-width box-shadow col-between height-full">
+              <ion-item no-padding>
+                <p ion-text text-wrap text-center color="gray" class="height-80">
+                  Установите время, через которое Вы услышите настановление о неотвлечении
+                </p>
+                <ion-item text-center no-padding>
+                  <ion-item no-padding class="input-style input-goals input-teamplate">
+                    <ion-input [(ngModel)]="practice.userSpec.pomniTime" text-center placeholder="" color="gray"></ion-input>
+                  </ion-item>
+                  <p margin-top ion-text class="fs-14 text-wrap m-t-0 m-b-20 letter-spacing-2">МИНУТ</p>
+                </ion-item>
+                <ion-row nowrap align-items-center>
+                  <ion-item id="radio-style ios" class="width-default radio-style">
+                    <ion-toggle [(ngModel)]="practice.userSpec.soloPomniFlag" (ngModelChange)="onChangeSolo()"></ion-toggle>
+                  </ion-item>
+                  <p padding-horizontal color="text-light" text-wrap text-capitalize text-left ion-text class="m-0 p-0 fs-13 letter-spacing-2">
+                    Однократное напоминание
+                  </p>
+                </ion-row>
+                <ion-row nowrap align-items-center>
+                  <ion-item id="radio-style ios" class="width-default radio-style">
+                    <ion-toggle [(ngModel)]="practice.userSpec.multiPomniFlag" (ngModelChange)="onChangeMulti()"></ion-toggle>
+                  </ion-item>
+                  <p padding-horizontal color="text-light" text-wrap text-left ion-text text-capitalize class="m-0 p-0 fs-13 letter-spacing-2">
+                    Постоянное напоминание
+                  </p>
+                </ion-row>
+              </ion-item>
+
+            </ion-card>
+          </ion-col>
+
+          <ion-item no-padding *ngIf="practice.exercises">
+            <p ion-text text-center text-wrap color="gray" class="m-b-20">
+              Установите время для каждого упражнения
+            </p>
+            <ion-item text-center no-padding>
+              <ion-item no-padding class="input-style input-goals input-teamplate">
+                <ion-input [(ngModel)]="timeForExercise" text-center placeholder="" color="gray" (ngModelChange)="onTimeForExerciseChange()"></ion-input>
+              </ion-item>
+              <p margin-top ion-text text-wrap class="fs-14 text-wrap m-t-0 letter-spacing-2">
+                МИНУТ
+              </p>
+            </ion-item>
+          </ion-item>
+
+          <ion-col col-lg-6 col-sm-6 col-xs-12 *ngIf="practice.userSpec?.amountCounter">
+            <ion-card padding no-margin class="full-width box-shadow col-between height-full">
+              <ion-item no-padding>
+                <p ion-text text-center text-wrap color="gray" class="height-80">
+                  Колличество
+                </p>
+                <ion-item text-center no-padding>
+                  <ion-item no-padding class="input-style input-goals input-teamplate">
+                    <ion-input [value]="practice.userSpec?.amountCounter" text-center color="gray" disable></ion-input>
+                  </ion-item>
+                  <!-- <p margin-top ion-text text-wrap class="fs-14 text-wrap m-t-0 m-b-20 letter-spacing-2">
+                    МИНУТ
+                  </p> -->
+                </ion-item>
+              </ion-item>
+            </ion-card>
+          </ion-col>
+
+          <ion-col col-lg-6 col-sm-6 col-xs-12 *ngIf="practice.userSpec?.maxAchievement">
+            <ion-card padding no-margin class="full-width box-shadow col-between height-full">
+              <ion-item no-padding>
+                <p ion-text text-center text-wrap color="gray" class="height-80">
+                  Лучший результат
+                </p>
+                <ion-item text-center no-padding>
+                  <ion-item no-padding class="input-style input-goals input-teamplate">
+                    <ion-input [value]="practice.userSpec?.maxAchievement" text-center color="gray" disable></ion-input>
+                  </ion-item>
+                  <!-- <p margin-top ion-text text-wrap class="fs-14 text-wrap m-t-0 m-b-20 letter-spacing-2">
+                    МИНУТ
+                  </p> -->
+                </ion-item>
+              </ion-item>
+            </ion-card>
+          </ion-col>
+
+          <ion-col col-lg-6 col-sm-6 col-xs-12 *ngIf="practice.userSpec?.timespan">
+            <ion-card padding no-margin class="full-width box-shadow col-between height-full">
+              <!-- <ion-item no-padding> -->
+                <p ion-text text-center text-wrap color="gray" class="height-80">
+                  Общее время практики в минутах
+                </p>
+                <ion-item text-center no-padding>
+                  <ion-item no-padding class="input-style input-goals input-teamplate">
+                    <ion-input [value]="practice.userSpec?.timespan" text-center color="gray" disable></ion-input>
+                  </ion-item>
+                  <!-- <p margin-top ion-text text-wrap class="fs-14 text-wrap m-t-0 m-b-20 letter-spacing-2">
+                    МИНУТ
+                  </p> -->
+                </ion-item>
+              <!-- </ion-item> -->
+            </ion-card>
+          </ion-col>
+
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid>
+    <ion-row justify-content-center>
+      <button icon-center margin-top margin-bottom class="button-custom m-r-0 btn-sm-width" (click)="start()"
+        [class.active]="isStarted">
+        {{isStarted?'Закончить практику':'Начать практику'}}
+      </button>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

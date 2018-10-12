@@ -44,6 +44,7 @@ import { AuthProvider } from '../providers/auth/auth';
 import { ExercisePerformancePage } from '../pages/exercise-performance/exercise-performance';
 import { FileCacheProvider } from '../providers/file-cache/file-cache';
 import { FileTransfer } from '@ionic-native/file-transfer';
+import { UserProvider } from '../providers/user/user';
 
 @NgModule({
   declarations: [
@@ -120,7 +121,8 @@ import { FileTransfer } from '@ionic-native/file-transfer';
     AuthProvider,
     FileCacheProvider,
     FileTransfer,
-    File
+    File,
+    UserProvider
   ]
 })
 export class AppModule {}

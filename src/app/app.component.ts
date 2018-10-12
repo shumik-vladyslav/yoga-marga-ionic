@@ -1,3 +1,5 @@
+import { AngularFirestore } from '@angular/fire/firestore';
+import { UserProvider } from './../providers/user/user';
 import { AuthProvider } from './../providers/auth/auth';
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
@@ -16,6 +18,7 @@ import { Template_2Page } from '../pages/template-2/template-2';
 import { Template_3Page } from '../pages/template-3/template-3';
 import { Template_4Page } from '../pages/template-4/template-4';
 import { LoadScreenPage } from '../pages/load-screen/load-screen';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   templateUrl: 'app.html'
@@ -32,8 +35,21 @@ export class MyApp {
     public platform: Platform, 
     public statusBar: StatusBar, 
     public splashScreen: SplashScreen,
-    public authP: AuthProvider
+    // public authP: AuthProvider,
+    // private userP: UserProvider,
+    // private afs: AngularFirestore
+    public afAuth: AngularFireAuth
   ) {
+    
+    // this.afAuth.authState.subscribe(
+    //   (user: firebase.User) => {
+    //     console.log('auth provicer current user', user);
+    //     if (user) {
+    //       UserProvider.Init(afs, user.email);
+    //     }
+    //   }
+    // );
+
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -55,7 +71,7 @@ export class MyApp {
       { title: 'load-screen', icon: '/assets/icon/svg/navigation/icon-nav3.svg', component: LoadScreenPage },
     ];
 
-    this.authP.getInstance();
+    // this.authP.getInstance();
   }
 
   initializeApp() {
