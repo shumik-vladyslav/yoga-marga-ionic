@@ -127,7 +127,6 @@ export class PracticePerformancePage {
   }
 
   onTimeForExerciseChange() {
-    console.log("practices length", this.practice.exercises.length);
     if (!this.practice.exercises) return;
 
     const tmp = (+this.timeForExercise || 0) * this.practice.exercises.length;
@@ -135,7 +134,6 @@ export class PracticePerformancePage {
   }
 
   onPraktikaTimeChange() {
-    console.log("practices length", this.practice.exercises.length);
     if (!this.practice.exercises) return;
     const tmp =
       (+this.practice.userSpec.praktikaTime || 0) /
@@ -174,10 +172,12 @@ export class PracticePerformancePage {
     }
   }
 
+  timer;
   start() {
     console.log(this.practice);
 
     this.isStarted = !this.isStarted;
+
     if (!this.isStarted) {
       this.timespan = Math.round((Date.now() - this.startTime) / 1000 / 3600);
       if (this.practice.isAmountCounter || this.practice.isMaxAchievement) {
@@ -189,16 +189,19 @@ export class PracticePerformancePage {
 
     this.savePracticeSettings();
     this.startTime = Date.now();
-
+    this.timer = new Date(this.practice.userSpec.praktikaTime * 60000);
+    
     const subs = interval(
       Math.round(this.practice.userSpec.praktikaTime * 60000)
     ).subscribe(val => {
       console.log("subs", val);
       this.timespan = this.practice.userSpec.praktikaTime;
       subs.unsubscribe();
+      if (this.practice.exercises && this.practice.exercises.length > 0) return;
       return this.presentPrompt();
     });
 
+    // Напоминание
     const subs1 = interval(
       Math.round(this.practice.userSpec.pomniTime * 60000)
     ).subscribe(val => {
@@ -222,12 +225,9 @@ export class PracticePerformancePage {
     }
 
     // for decrise practicaTime counter
-    const subs2 = interval(1 * 60 * 1000).subscribe(val => {
+    const subs2 = interval(1000).subscribe(val => {
       console.log("subs2", val);
-      this.practice.userSpec.praktikaTime--;
-      if (this.practice.userSpec.praktikaTime <= 0) {
-        subs2.unsubscribe();
-      }
+      this.timer -= 1000;
     });
 
     this.subscriptions.push(subs);
@@ -252,11 +252,11 @@ export class PracticePerformancePage {
     }
 
     let alert = this.alertCtrl.create({
-      title: "Установите достижение",
+      title: "Практика закончена",
       inputs: inputsArr,
       buttons: [
         {
-          text: "Сохранить",
+          text: "Сохранить результат",
           handler: data => {
             console.log(data);
             this.savePracticeResult(data);

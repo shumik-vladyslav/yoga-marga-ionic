@@ -19,6 +19,7 @@ import { HomePage } from '../home/home';
   templateUrl: 'exercise-performance.html',
 })
 export class ExercisePerformancePage {
+  timer;
   practice;
   url;
   exerciseName;
@@ -76,6 +77,15 @@ export class ExercisePerformancePage {
     } else {
       this.exercise.timespan = this.practice.timeForExercise;
     }
+    this.timer = new Date(this.exercise.timespan * 60000);
+        // for decrise practicaTime counter
+    const subs2 = interval(1000).subscribe(val => {
+      console.log("subs2", val);
+      this.timer -= 1000;
+      if(this.timer <= 0) {
+        subs2.unsubscribe();
+      }
+    });
     console.log('exercise timespan', this.exercise.timespan);
     
     const subs = interval(this.exercise.timespan * 60 * 1000).subscribe(
@@ -85,6 +95,7 @@ export class ExercisePerformancePage {
       }
     )
     this.subscriptions.push(subs);
+    this.subscriptions.push(subs2);
     this.exerciseCounter++;
   }
 
@@ -100,21 +111,28 @@ export class ExercisePerformancePage {
   }
 
   rotateExerciseImages() {
-    if (!this.exercise.imgsIds) return;
-    
-    let showImgCounter = 0;
-    const showImgTime = this.exercise.timespan / this.exercise.imgsIds.length * 60 * 1000;
-    const sub = interval(showImgTime).subscribe( 
-      val => {
-        console.log('show img interval', val);
-        this.url = this.exercise.imgsUrls[showImgCounter];
-        showImgCounter++;
-        if (showImgCounter >= this.exercise.imgsIds.length) {
-          sub.unsubscribe;
-        }
-      }
-    )
-    this.subscriptions.push(sub);
+    if (!this.exercise.imgsIds && this.exercise.imgsIds.length>0) return;
+    if (this.exercise.imgsIds.length == 1) {
+      this.url = this.exercise.imgsUrls[0];
+      return;
+    } else {
+      this.url = this.exercise.imgsUrls[0];
+      return;
+    }
+
+    // let showImgCounter = 0;
+    // const showImgTime = this.exercise.timespan / this.exercise.imgsIds.length * 60 * 1000;
+    // const sub = interval(showImgTime).subscribe( 
+    //   val => {
+    //     console.log('show img interval', val);
+    //     this.url = this.exercise.imgsUrls[showImgCounter];
+    //     showImgCounter++;
+    //     if (showImgCounter >= this.exercise.imgsIds.length) {
+    //       sub.unsubscribe;
+    //     }
+    //   }
+    // )
+    // this.subscriptions.push(sub);
   }
 
   async getImgUrls(ids) {

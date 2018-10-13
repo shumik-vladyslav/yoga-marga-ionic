@@ -34,6 +34,53 @@
 
       </ion-col>
     </ion-row>
+    <ion-row>
+      <ion-card no-margin class="full-width box-shadow">
+        <ion-card-content no-padding padding-vertical>
+          <ion-grid>
+            <ion-row justify-content-center>
+              <ion-col col-lg-6 col-sm-6 col-xs-12 *ngIf="practice.userSpec?.amountCounter">
+                <ion-item no-padding>
+                  <p ion-text text-center text-wrap color="gray" class="height-80">
+                    Колличество
+                  </p>
+                  <p>
+                    {{practice.userSpec?.amountCounter}}
+                  </p>
+                </ion-item>
+              </ion-col>
+
+              <!-- *ngIf="practice.userSpec?.maxAchievement" -->
+              <ion-col col-lg-6 col-sm-6 col-xs-12>
+                <ion-item no-padding>
+                  <p ion-text text-center text-wrap color="gray" class="height-80">
+                    Лучший результат
+                  </p>
+                  <p>
+                    12
+                    {{practice.userSpec?.maxAchievement}}
+                  </p>
+                </ion-item>
+              </ion-col>
+
+              <ion-col col-lg-6 col-sm-6 col-xs-12 *ngIf="practice.userSpec?.timespan">
+                <!-- <ion-card padding no-margin class="full-width box-shadow col-between height-full"> -->
+                <!-- <ion-item no-padding> -->
+                <p ion-text text-center text-wrap color="gray" class="height-80">
+                  Общее время практики в минутах
+                </p>
+                <p>
+                  {{practice.userSpec?.timespan}}
+                </p>
+
+                <!-- </ion-item> -->
+                <!-- </ion-card> -->
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
+    </ion-row>
     <ion-row justify-content-center>
       <ion-col col-lg-11 col-xs-12>
         <ion-row justify-content-center>
@@ -46,7 +93,8 @@
                 </p>
                 <ion-item text-center no-padding>
                   <ion-item no-padding class="input-style input-goals input-teamplate">
-                    <ion-input [(ngModel)]="practice.userSpec.praktikaTime" text-center color="gray" (ngModelChange)="onPraktikaTimeChange()"></ion-input>
+                    <ion-input [(ngModel)]="practice.userSpec.praktikaTime" *ngIf="!isStarted" text-center color="gray" (ngModelChange)="onPraktikaTimeChange()"></ion-input>
+                    <ion-input [value]="timer| date:'mm:ss'" *ngIf="isStarted"  disabled text-center color="gray" (ngModelChange)="onPraktikaTimeChange()"></ion-input>
                   </ion-item>
                   <p margin-top ion-text text-wrap class="fs-14 text-wrap m-t-0 m-b-20 letter-spacing-2">
                     МИНУТ
@@ -102,60 +150,6 @@
               </p>
             </ion-item>
           </ion-item>
-
-          <ion-col col-lg-6 col-sm-6 col-xs-12 *ngIf="practice.userSpec?.amountCounter">
-            <ion-card padding no-margin class="full-width box-shadow col-between height-full">
-              <ion-item no-padding>
-                <p ion-text text-center text-wrap color="gray" class="height-80">
-                  Колличество
-                </p>
-                <ion-item text-center no-padding>
-                  <ion-item no-padding class="input-style input-goals input-teamplate">
-                    <ion-input [value]="practice.userSpec?.amountCounter" text-center color="gray" disable></ion-input>
-                  </ion-item>
-                  <!-- <p margin-top ion-text text-wrap class="fs-14 text-wrap m-t-0 m-b-20 letter-spacing-2">
-                    МИНУТ
-                  </p> -->
-                </ion-item>
-              </ion-item>
-            </ion-card>
-          </ion-col>
-
-          <ion-col col-lg-6 col-sm-6 col-xs-12 *ngIf="practice.userSpec?.maxAchievement">
-            <ion-card padding no-margin class="full-width box-shadow col-between height-full">
-              <ion-item no-padding>
-                <p ion-text text-center text-wrap color="gray" class="height-80">
-                  Лучший результат
-                </p>
-                <ion-item text-center no-padding>
-                  <ion-item no-padding class="input-style input-goals input-teamplate">
-                    <ion-input [value]="practice.userSpec?.maxAchievement" text-center color="gray" disable></ion-input>
-                  </ion-item>
-                  <!-- <p margin-top ion-text text-wrap class="fs-14 text-wrap m-t-0 m-b-20 letter-spacing-2">
-                    МИНУТ
-                  </p> -->
-                </ion-item>
-              </ion-item>
-            </ion-card>
-          </ion-col>
-
-          <ion-col col-lg-6 col-sm-6 col-xs-12 *ngIf="practice.userSpec?.timespan">
-            <ion-card padding no-margin class="full-width box-shadow col-between height-full">
-              <!-- <ion-item no-padding> -->
-                <p ion-text text-center text-wrap color="gray" class="height-80">
-                  Общее время практики в минутах
-                </p>
-                <ion-item text-center no-padding>
-                  <ion-item no-padding class="input-style input-goals input-teamplate">
-                    <ion-input [value]="practice.userSpec?.timespan" text-center color="gray" disable></ion-input>
-                  </ion-item>
-                  <!-- <p margin-top ion-text text-wrap class="fs-14 text-wrap m-t-0 m-b-20 letter-spacing-2">
-                    МИНУТ
-                  </p> -->
-                </ion-item>
-              <!-- </ion-item> -->
-            </ion-card>
-          </ion-col>
 
         </ion-row>
       </ion-col>
