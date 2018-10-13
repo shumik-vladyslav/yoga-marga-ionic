@@ -26,12 +26,12 @@ import { Directive, Input, Component } from "@angular/core";
     <path d="M18 2.0845
         a 15.9155 15.9155 0 0 1 0 31.831
         a 15.9155 15.9155 0 0 1 0 -31.831" fill="none"
-      stroke="#f0f0f2" stroke-width="0.5" [attr.stroke-dasharray]="progress+', 100'" />
+      stroke="#f0f0f2" stroke-width="0.5" stroke-dasharray="100, 100" />
 
     <path d="M18 2.0845
         a 15.9155 15.9155 0 0 1 0 31.831
         a 15.9155 15.9155 0 0 1 0 -31.831" fill="none"
-      stroke="#81d8d4" stroke-width="0.5" stroke-dasharray="75, 100" />
+      stroke="#81d8d4" stroke-width="0.5" [attr.stroke-dasharray]="progress+', 100'"/>
 
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" fill-opacity="0.8" font-family="Helvetica"
       font-weight="normal">

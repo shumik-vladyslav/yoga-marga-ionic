@@ -98,103 +98,23 @@
     </ion-row>
   </ion-grid>
 
-  <!-- <h1 class="m-b-40">
+  <h1>
     Достижения
   </h1>
-
   <ion-card no-margin class="full-width box-shadow">
     <ion-card-content no-padding padding-vertical>
       <ion-grid>
         <ion-row justify-content-center>
-          <ion-col col-4 class="border-r col-between" no-padding>
-
-            <ion-row>
-              <ion-col col-12>
-                <ion-item text-center no-padding>
-                  <img class="img-icon-office" src="/assets/icon/svg/kompleksy/moe-utro.svg" alt="">
-                </ion-item>
-              </ion-col>
-            </ion-row>
-
-            <ion-row class="m-b-20">
-              <ion-col col-12>
-                <ion-item text-center no-padding class="min-height-default">
-                  <p ion-text class="fs-14 text-wrap">Мантра Ом</p>
-                </ion-item>
-
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col col-12>
-                <ion-item text-center no-padding>
-                  <h1 class="" ion-text color="primary" class="fs-30">108 000</h1>
-                  <p margin-top ion-text class="fs-14 text-wrap m-t-0">Кругов</p>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-          </ion-col>
-          <ion-col col-4 class="border-r col-between" no-padding>
-
-            <ion-row>
-              <ion-col col-12>
-                <ion-item text-center no-padding>
-                  <img class="img-icon-office" src="/assets/icon/svg/meditativnye-praktiky/om-dram.svg" alt="">
-                </ion-item>
-              </ion-col>
-            </ion-row>
-
-            <ion-row class="m-b-20">
-              <ion-col col-12>
-                <ion-item text-center no-padding class="min-height-default">
-                  <p ion-text class="fs-14 text-wrap">Мантра Ом Драм</p>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col col-12>
-                <ion-item text-center no-padding>
-                  <h1 class="" ion-text color="primary" class="fs-30">10 080</h1>
-                  <p margin-top ion-text class="fs-14 text-wrap m-t-0">Кругов</p>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-          </ion-col>
-          <ion-col col-4 class="col-between" no-padding>
-
-            <ion-row>
-              <ion-col col-12>
-                <ion-item text-center no-padding>
-                  
-                  <img class="img-icon-office" src="/assets/icon/svg/lichniy-kabinet/dostizhenie-prostiraniya.svg" alt="">
-
-                </ion-item>
-              </ion-col>
-            </ion-row>
-
-            <ion-row class="m-b-20">
-              <ion-col col-12>
-                <ion-item text-center no-padding class="min-height-default">
-                  <p ion-text class="fs-14 text-wrap">Простирания</p>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col col-12>
-                <ion-item text-center no-padding>
-                  <h1 class="" ion-text color="primary" class="fs-30">1 080</h1>
-                  <p margin-top ion-text class="fs-14 text-wrap m-t-0">Раз</p>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-
+          <ion-col col-4 no-padding *ngFor="let a of achivements">
+            <ion-item text-center no-padding>
+              <h1 class="" ion-text color="primary" class="fs-30">{{a.achivement}}</h1>
+              <p margin-top ion-text class="fs-16 text-wrap">{{a.name}}</p>
+            </ion-item>
           </ion-col>
         </ion-row>
       </ion-grid>
     </ion-card-content>
-  </ion-card> -->
-
-
+  </ion-card>
 
   <!-- <ion-title text-center margin-bottom></ion-title> -->
   <h1 class="m-b-40 m-t-40">
@@ -206,12 +126,13 @@
         <ion-row justify-content-center>
           <ion-col class="border-r" col-4 no-padding *ngFor="let p of progresses">
             <ion-item text-center no-padding>
-              <!-- <progress-chart progress="10"></progress-chart> -->
+              <p ion-text class="value-goals text-wrap m-t-0">{{p.name}}</p>
+              <progress-chart [progress]="p.val"></progress-chart>
               <!-- <img class="sm-icon" src="/assets/icon/svg/kompleksy/moe-utro.svg" alt="">
               <h1 class="lable-goals" ion-text color="primary">10 000</h1>
               <p ion-text class="value-goals text-wrap m-t-0">Из</p>
-              <h1 class="lable-goals" ion-text color="primary">108 000</h1>
-              <p ion-text class="value-goals text-wrap m-t-0">Мантры Ом</p> -->
+              <h1 class="lable-goals" ion-text color="primary">108 000</h1> -->
+
             </ion-item>
           </ion-col>
           <!-- <ion-col class="border-r" col-4 no-padding>

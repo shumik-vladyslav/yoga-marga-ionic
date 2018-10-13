@@ -6,6 +6,7 @@ import { ComplexsPage } from '../complexs/complexs';
 import { Template_3Page } from '../template-3/template-3';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+import { UserProvider } from '../../providers/user/user';
 
 @Component({
   selector: 'page-home',
@@ -16,11 +17,16 @@ export class HomePage {
 
   practices$: Observable<any>;
 
+  achivements;
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
-    private afs: AngularFirestore
+    private afs: AngularFirestore,
+    private userP: UserProvider
     ) {
-      this.practices$ = this.afs.collection('practices').valueChanges()
+      this.practices$ = this.afs.collection('practices').valueChanges();
+      this.achivements = UserProvider.getUserGoals().filter(a => a.achivement > 0).slice(0,3);
+      console.log(this.achivements);
+      
   }
   
   onClickPractice(practice) {

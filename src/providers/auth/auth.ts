@@ -34,7 +34,8 @@ export class AuthProvider {
   }
 
   getUserId() {
-    return this.getInstance();
+    this.getInstance();
+    return this.user.email;
   }
 
   getUserData() {

@@ -25,13 +25,15 @@ export class PrivateOfficePage {
     public navParams: NavParams,
     public userP: UserProvider
   ) {
-    this.achivements = UserProvider.getUserPractAchievement();
-    this.progresses = this.achivements.filter(a => a.goal).map(a => Math.round(a.achivement/a.goal*100));
+    this.progresses = UserProvider.getUserGoals().map(a => {
+      return {
+        val: Math.round((a.achivement / a.goal) * 100),
+        name: a.name
+      };
+    });
+
+    this.achivements = UserProvider.getUserGoals().filter(a => a.achivement > 0);
     console.log(this.achivements);
-    console.log(UserProvider.getUser());
-    console.log(this.progresses);
-    
-    
   }
 
   goGoalsPage() {
