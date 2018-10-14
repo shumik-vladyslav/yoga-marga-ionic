@@ -1,6 +1,13 @@
 page-practice-performance {
     .active{
-      border: 1px solid red;
-      background: red;  
+      border: #51a8a3;
+      background: #51a8a3;
+      color: white;
+      border: 1px solid #51a8a3;
+      &:hover{
+        background: #51a8a3;
+        color: white;
+      } 
     }
+    
 }

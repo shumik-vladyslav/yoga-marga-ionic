@@ -7,90 +7,107 @@
   </ion-navbar>
 </ion-header>
 
+
+
 <ion-content padding-vertical>
-  <ion-grid>
-    <ion-row justify-content-start>
-      <ion-col col-12>
-        <ion-row class="row-input-outer">
-          <div class="input-row-office">
-            <img class="icon-input" src="/assets/icon/svg/lichniy-kabinet/duhovnoe-imya.svg" alt="">
-            <div class="text-light">
-              Духовное имя
+
+  <form novalidate [formGroup]="myForm">
+
+    <ion-grid>
+      <ion-row justify-content-start>
+        <ion-col col-12>
+          <ion-row class="row-input-outer">
+            <div class="input-row-office">
+              <img class="icon-input" src="/assets/icon/svg/lichniy-kabinet/duhovnoe-imya.svg" alt="">
+              <div class="text-light">
+                Духовное имя
+              </div>
             </div>
-          </div>
-          <ion-item no-padding class="input-style input-perivat-office input-office">
-            <ion-input text-left placeholder="" color="gray" clearInput></ion-input>
-          </ion-item>
-        </ion-row>
+            <ion-item [ngClass]="{'error-validation': (myForm.controls['spiritualName'].invalid) && (customeValidation === false)}" no-padding
+              class="input-style input-perivat-office input-office">
+              <ion-input [(ngModel)]="data.spiritualName" formControlName="spiritualName" text-left placeholder="" color="gray" clearInput></ion-input>
+            </ion-item>
+          </ion-row>
 
-        <ion-row class="row-input-outer">
-          <div class="input-row-office">
-            <img class="icon-input" src="/assets/icon/svg/lichniy-kabinet/imya.svg" alt="">
-            <div class="text-light">
-              Ф.И.О.
+          <ion-row class="row-input-outer">
+            <div class="input-row-office">
+              <img class="icon-input" src="/assets/icon/svg/lichniy-kabinet/imya.svg" alt="">
+              <div class="text-light">
+                Ф.И.О.
+              </div>
             </div>
-          </div>
-          <ion-item no-padding class="input-style input-perivat-office input-office">
-            <ion-input text-left placeholder="" color="gray" clearInput></ion-input>
-          </ion-item>
-        </ion-row>
+            <ion-item [ngClass]="{'error-validation': (myForm.controls['fullName'].invalid) && (customeValidation === false)}" no-padding
+              class="input-style input-perivat-office input-office">
+              <ion-input [(ngModel)]="data.fullName" formControlName="fullName" text-left placeholder="" color="gray" clearInput></ion-input>
+            </ion-item>
+          </ion-row>
 
-        <ion-row class="row-input-outer">
-          <div class="input-row-office">
-            <img class="icon-input" src="/assets/icon/svg/lichniy-kabinet/status.svg" alt="">
-            <div class="text-light">
-              Статус
+          <ion-row class="row-input-outer">
+            <div class="input-row-office">
+              <img class="icon-input" src="/assets/icon/svg/lichniy-kabinet/status.svg" alt="">
+              <div class="text-light">
+                Статус
+              </div>
             </div>
-          </div>
-          <ion-item no-padding class="input-style input-perivat-office input-office">
-            <ion-input text-left placeholder="" color="gray" clearInput></ion-input>
-          </ion-item>
-        </ion-row>
+            <ion-item [ngClass]="{'error-validation': (myForm.controls['gender'].invalid) && (customeValidation === false)}" no-padding
+              class="input-style input-perivat-office input-office custome-select">
+              <ion-label></ion-label>
+              <!-- [(ngModel)]="data.gender" formControlName="gender" -->
+              <ion-select [(ngModel)]="data.gender" formControlName="gender">
+                <ion-option value="f">Статус 1</ion-option>
+                <ion-option value="m">Статус 1</ion-option>
+              </ion-select>
+            </ion-item>
+          </ion-row>
 
-        <ion-row class="row-input-outer">
-          <div class="input-row-office">
-            <img class="icon-input" src="/assets/icon/svg/lichniy-kabinet/email.svg" alt="">
-            <div class="text-light">
-              E-mail
+          <ion-row class="row-input-outer">
+            <div class="input-row-office">
+              <img class="icon-input" src="/assets/icon/svg/lichniy-kabinet/email.svg" alt="">
+              <div class="text-light">
+                E-mail
+              </div>
             </div>
-          </div>
-          <ion-item no-padding class="input-style input-perivat-office input-office">
-            <ion-input text-left placeholder="" color="gray" clearInput></ion-input>
-          </ion-item>
-        </ion-row>
+            <ion-item [ngClass]="{'error-validation': (myForm.controls['Email'].invalid) && (customeValidation === false)}" no-padding
+              class="input-style input-perivat-office input-office">
+              <ion-input [(ngModel)]="data.Email" formControlName="Email" text-left placeholder="" color="gray" clearInput></ion-input>
+            </ion-item>
+          </ion-row>
 
-        <ion-row class="row-input-outer">
-          <div class="input-row-office">
-            <img class="icon-input" src="/assets/icon/svg/lichniy-kabinet/telefon.svg" alt="">
-            <div class="text-light">
-              Телефон
+          <ion-row class="row-input-outer">
+            <div class="input-row-office">
+              <img class="icon-input" src="/assets/icon/svg/lichniy-kabinet/telefon.svg" alt="">
+              <div class="text-light">
+                Телефон
+              </div>
             </div>
-          </div>
-          <ion-item no-padding class="input-style input-perivat-office input-office">
-            <ion-input text-left placeholder="" color="gray" clearInput></ion-input>
-          </ion-item>
-        </ion-row>
+            <ion-item [ngClass]="{'error-validation': (myForm.controls['PhoneNumber'].invalid) && (customeValidation === false)}" no-padding
+              class="input-style input-perivat-office input-office">
+              <ion-input [(ngModel)]="data.PhoneNumber" formControlName="PhoneNumber" text-left placeholder="" color="gray" clearInput></ion-input>
+            </ion-item>
+          </ion-row>
 
-        <ion-row class="row-input-outer">
-          <div class="input-row-office">
-            <img class="icon-input" src="/assets/icon/svg/lichniy-kabinet/parol.svg" alt="">
-            <div class="text-light">
-              Пароль
+          <ion-row class="row-input-outer">
+            <div class="input-row-office">
+              <img class="icon-input" src="/assets/icon/svg/lichniy-kabinet/parol.svg" alt="">
+              <div class="text-light">
+                Пароль
+              </div>
             </div>
-          </div>
-          <ion-item no-padding class="input-style input-perivat-office input-office">
-            <ion-input text-left placeholder="" type="password" color="gray" clearInput></ion-input>
-          </ion-item>
-        </ion-row>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+            <ion-item [ngClass]="{'error-validation': (myForm.controls['Password'].invalid) && (customeValidation === false)}" no-padding
+              class="input-style input-perivat-office input-office">
+              <ion-input [(ngModel)]="data.Password" formControlName="Password" text-left placeholder="" type="password" color="gray" clearInput></ion-input>
+            </ion-item>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
 
-
+  </form>
 
   <ion-grid>
     <ion-row justify-content-end>
-      <button icon-start margin-top margin-bottom class="button-custom mr-md-50 btn-sm-width" (click)="goAllPracticesPage()">
+      <button [ngClass]="{'error': (myForm.invalid) &&   (customeValidation === false)}" icon-start margin-top margin-bottom class="button-custom mr-md-50 btn-sm-width"
+        (click)="goAllPracticesPage()">
         <!-- <ion-icon name="ios-book-outline"></ion-icon> -->
         Изменить данные
         <span class="arrow"></span>
@@ -124,7 +141,7 @@
     <ion-card-content no-padding padding-vertical>
       <ion-grid>
         <ion-row justify-content-center>
-          <ion-col class="border-r" col-4 no-padding *ngFor="let p of progresses">
+          <ion-col class="border-r custom-col" col-4 no-padding *ngFor="let p of progresses">
             <ion-item text-center no-padding>
               <p ion-text class="value-goals text-wrap m-t-0">{{p.name}}</p>
               <progress-chart [progress]="p.val"></progress-chart>

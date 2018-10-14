@@ -1,34 +1,72 @@
 <ion-header>
-    <ion-navbar>
-      <button ion-button menuToggle ion-text color="white" class="pos-a">
-        <ion-icon name="menu" class="fs-30"></ion-icon>
-      </button>
-      <p text-center ion-text color="white" class="header-title">Авторизация</p>
-    </ion-navbar>
-  </ion-header>
-  
-  <ion-content>
-    <ion-grid>
-      <ion-row justify-content-center>
-        <ion-col col-xl-3 col-lg-3 col-md-5 col-sm-8 text-center>
-  
-          <!-- Logo mabe be a Svg file -->
-  
-          <ion-img class="img-sing-in" src="/assets/logo/logo.jpg"></ion-img>
-          <ion-item no-padding class="input-style">
-            <ion-input text-left placeholder="e-mail" color="gray" clearInput [(ngModel)]="email"></ion-input>
+  <ion-navbar>
+    <button ion-button menuToggle ion-text color="white" class="pos-a">
+      <ion-icon name="menu" class="fs-30"></ion-icon>
+    </button>
+    <p text-center ion-text color="white" class="header-title">Авторизация</p>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row justify-content-center>
+      <ion-col col-xl-3 col-lg-3 col-md-5 col-sm-8 text-center>
+
+        <!-- Logo mabe be a Svg file -->
+
+        <ion-img class="img-sing-in" src="/assets/logo/logo.jpg"></ion-img>
+
+        <form novalidate [formGroup]="myForm">
+
+          <ion-item [ngClass]="{'error-validation': (myForm.controls['Email'].invalid) && (customeValidation === false)}" no-padding class="input-style">
+            <ion-input formControlName="Email" text-left placeholder="e-mail" color="gray" clearInput [(ngModel)]="email"></ion-input>
           </ion-item>
-          <ion-item no-padding class="input-style">
-            <ion-input text-left placeholder="пароль" clearInput [(ngModel)]="password"></ion-input>
+          
+          <ion-item [ngClass]="{'error-validation': (myForm.controls['Password'].invalid) &&   (customeValidation === false)}" no-padding class="input-style">
+            <ion-input formControlName="Password" text-left placeholder="пароль" clearInput [(ngModel)]="password"></ion-input>
           </ion-item>
-          <button full text-capitalize class="height-80 btn-sing-up btn-hover" (click)="signIn()">Войти</button>
-          <p  text-center ion-text class="m-t-40">
-            Еще нет аккаунта? 
-            <button class="bg-none" (click)="goSingUp()">
-              Зарегистрируйтесь
-            </button>
-          </p>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-content>
+
+        </form>
+
+        
+        <button [ngClass]="{'error': (myForm.invalid) &&   (customeValidation === false)}" full text-capitalize class="height-100 btn-sing-up btn-hover" (click)="signIn()">Войти</button>
+        <p  text-center ion-text class="m-t-40">
+          Еще нет аккаунта? 
+          <button class="bg-none" (click)="goSingUp()">
+            Зарегистрируйтесь
+          </button>
+        </p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+  
+<!-- <ion-content>
+  <ion-grid>
+    <ion-row justify-content-center>
+      <ion-col col-xl-3 col-lg-3 col-md-5 col-sm-8 text-center>
+
+        <ion-img class="img-sing-in" src="/assets/logo/logo.jpg"></ion-img>
+        <form novalidate [formGroup]="myForm">
+          
+          <ion-item [ngClass]="{'error-validation': (myForm.controls['Email'].invalid) && (customeValidation === false)}" no-padding class="input-style">
+            <ion-input formControlName="Email" text-left placeholder="e-mail" color="gray" clearInput></ion-input>
+          </ion-item>
+
+          <ion-item [ngClass]="{'error-validation': (myForm.controls['Password'].invalid) &&   (customeValidation === false)}" no-padding class="input-style">
+            <ion-input formControlName="Password" text-left placeholder="пароль" clearInput></ion-input>
+          </ion-item>
+
+        </form>
+        <button [ngClass]="{'error': (myForm.invalid) &&   (customeValidation === false)}" full text-capitalize class="height-100 btn-sing-up btn-hover" (click)="goToHome()">Войти</button>
+        <p text-center ion-text class="m-t-40">
+          Еще нет аккаунта?
+          <button class="bg-none" (click)="goSingUp()">
+            Зарегистрируйтесь
+          </button>
+        </p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content> -->
+

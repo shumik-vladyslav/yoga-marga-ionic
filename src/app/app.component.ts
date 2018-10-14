@@ -76,47 +76,47 @@ export class MyApp {
         icon: "/assets/icon/svg/navigation/icon-nav6.svg",
         component: SignUpPage
       },
-      { title: "", icon: "", component: "" },
-      {
-        title: "sing-in",
-        icon: "/assets/icon/svg/navigation/icon-nav3.svg",
-        component: SingInPage
-      },
-      {
-        title: "sing-up",
-        icon: "/assets/icon/svg/navigation/icon-nav3.svg",
-        component: SignUpPage
-      },
-      {
-        title: "my-complexs",
-        icon: "/assets/icon/svg/navigation/icon-nav3.svg",
-        component: MyComplexsPage
-      },
-      {
-        title: "template-1",
-        icon: "/assets/icon/svg/navigation/icon-nav3.svg",
-        component: Template_1Page
-      },
-      {
-        title: "template-2",
-        icon: "/assets/icon/svg/navigation/icon-nav3.svg",
-        component: Template_2Page
-      },
-      {
-        title: "template-3",
-        icon: "/assets/icon/svg/navigation/icon-nav3.svg",
-        component: Template_3Page
-      },
-      {
-        title: "template-4",
-        icon: "/assets/icon/svg/navigation/icon-nav3.svg",
-        component: Template_4Page
-      },
-      {
-        title: "load-screen",
-        icon: "/assets/icon/svg/navigation/icon-nav3.svg",
-        component: LoadScreenPage
-      }
+      // { title: "", icon: "", component: "" },
+      // {
+      //   title: "sing-in",
+      //   icon: "/assets/icon/svg/navigation/icon-nav3.svg",
+      //   component: SingInPage
+      // },
+      // {
+      //   title: "sing-up",
+      //   icon: "/assets/icon/svg/navigation/icon-nav3.svg",
+      //   component: SignUpPage
+      // },
+      // {
+      //   title: "my-complexs",
+      //   icon: "/assets/icon/svg/navigation/icon-nav3.svg",
+      //   component: MyComplexsPage
+      // },
+      // {
+      //   title: "template-1",
+      //   icon: "/assets/icon/svg/navigation/icon-nav3.svg",
+      //   component: Template_1Page
+      // },
+      // {
+      //   title: "template-2",
+      //   icon: "/assets/icon/svg/navigation/icon-nav3.svg",
+      //   component: Template_2Page
+      // },
+      // {
+      //   title: "template-3",
+      //   icon: "/assets/icon/svg/navigation/icon-nav3.svg",
+      //   component: Template_3Page
+      // },
+      // {
+      //   title: "template-4",
+      //   icon: "/assets/icon/svg/navigation/icon-nav3.svg",
+      //   component: Template_4Page
+      // },
+      // {
+      //   title: "load-screen",
+      //   icon: "/assets/icon/svg/navigation/icon-nav3.svg",
+      //   component: LoadScreenPage
+      // }
     ];
 
     this.authP.getInstance();

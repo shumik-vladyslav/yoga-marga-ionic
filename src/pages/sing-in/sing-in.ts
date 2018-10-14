@@ -3,6 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { SignUpPage } from '../sing-up/sing-up';
 import { HomePage } from '../home/home';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 /**
  * Generated class for the SingInPage page.
@@ -17,13 +18,25 @@ import { AngularFireAuth } from '@angular/fire/auth';
 })
 
 export class SingInPage {
+  
   email;
   password;
+
+  customeValidation;
+  myForm: FormGroup;
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    public afAuth: AngularFireAuth) {
+    public afAuth: AngularFireAuth,
+    public formBuilder: FormBuilder
+  ) {
+      this.myForm = formBuilder.group({
+              
+        Email : ['', [ Validators.required, Validators.email]],
+        Password: ['', [Validators.required, Validators.pattern(".{8,}")]],
+      
+      });
   }
 
   goSingUp(){
@@ -31,6 +44,9 @@ export class SingInPage {
   }
 
   async signIn() {
+    if(this.myForm.invalid){
+      this.customeValidation = false;
+    }
     try {
       const user = await this.afAuth.auth.signInWithEmailAndPassword(this.email, this.password);
       console.log('user', user);
@@ -49,3 +65,5 @@ export class SingInPage {
   }
 
 }
+
+

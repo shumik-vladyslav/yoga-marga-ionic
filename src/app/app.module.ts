@@ -45,6 +45,7 @@ import { ExercisePerformancePage } from '../pages/exercise-performance/exercise-
 import { FileCacheProvider } from '../providers/file-cache/file-cache';
 import { FileTransfer } from '@ionic-native/file-transfer';
 import { UserProvider } from '../providers/user/user';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -86,7 +87,9 @@ import { UserProvider } from '../providers/user/user';
     AngularSvgIconModule,
     PracticePerformancePageModule,
     HttpClientModule,
-    ExercisePerformancePageModule
+    ExercisePerformancePageModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

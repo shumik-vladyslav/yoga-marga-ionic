@@ -43,4 +43,37 @@ page-private-office {
         height: 40px;
         margin: auto;
     }
+    ion-col.custom-col > ion-item > div.item-inner > div > ion-label{
+        margin: 0 !important;
+        min-height: 200px;
+        display: flex;
+        flex-flow: column;
+        justify-content: space-between;
+    }
+    .custome-select > div.item-inner > div > ion-select{
+        padding: 7px 8px 8px 0px;
+        width: 100%;
+        max-width: 100%;
+    }
+    .button-custom{
+        &.error{
+            background: #ffffff;
+            border: 2px solid #f53d3d !important;
+            color: #f53d3d;
+            span{
+                border-top: 2px solid #f53d3d;
+                border-right: 2px solid #f53d3d;
+            }
+            &:hover{
+                background: #f53d3d;
+                border: 2px solid #f53d3d !important;
+                color: #ffffff; 
+            }
+        }
+    }
+    .error-validation > .item-inner{
+        border-left: none !important;
+        border-right: none !important;
+        border-top: none !important;
+    }
 }

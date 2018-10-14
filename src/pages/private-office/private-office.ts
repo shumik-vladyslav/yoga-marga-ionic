@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { NavController, NavParams } from "ionic-angular";
 import { GoalsPage } from "../goals/goals";
 import { UserProvider } from "../../providers/user/user";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 /**
  * Generated class for the PrivateOfficePage page.
@@ -20,10 +21,26 @@ export class PrivateOfficePage {
 
   progresses;
 
+  gender;
+  
+  myForm : FormGroup;
+  customeValidation;
+
+  data ={
+    "spiritualName": "",
+    "fullName" : "",
+    "Status" : "",
+    "Email" : "",
+    "Password" : "",
+    "PhoneNumber" : "",
+    "gender" : ""
+  }
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public userP: UserProvider
+    public userP: UserProvider,
+    private formBuilder: FormBuilder
   ) {
     this.progresses = UserProvider.getUserGoals().map(a => {
       return {
@@ -34,6 +51,26 @@ export class PrivateOfficePage {
 
     this.achivements = UserProvider.getUserGoals().filter(a => a.achivement > 0);
     console.log(this.achivements);
+
+    this.myForm = formBuilder.group({
+              
+      spiritualName : ['', Validators.required],
+      fullName : ['', Validators.required],
+      Status : [this.data.Status != ''],
+      Email: ['', [ Validators.required, Validators.email]],
+      Password: ['', [Validators.required, Validators.pattern(".{8,}")]],
+      PhoneNumber: ['', [Validators.required, Validators.pattern(".{10,}")]],
+      gender: ['', Validators.required],
+  });
+
+  }
+
+  goAllPracticesPage(){
+    if(this.myForm.valid){
+      // Do Some
+    } else{
+      this.customeValidation = false;
+    }
   }
 
   goGoalsPage() {
