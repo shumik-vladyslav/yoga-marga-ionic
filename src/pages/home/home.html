@@ -46,46 +46,6 @@
 
           </ion-col>
 
-          <!-- <ion-col col-4 class="border-r col-between" no-padding>
-
-            <ion-row>
-              <ion-col col-12>
-                <ion-item text-center no-padding>
-                  <img class="img-icon" src="/assets/icon/svg/lichniy-kabinet/dostizhenie-prostiraniya.svg" alt="">
-                </ion-item>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col col-12>
-                <ion-item text-center no-padding class="min-height-default">
-                  <p ion-text class="fs-16 text-wrap">День практики</p>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-
-          </ion-col>
-          
-          <ion-col (click)="goToAsana2()" col-4 class="col-between" no-padding>
-
-            <ion-row>
-              <ion-col col-12>
-                <ion-item text-center no-padding>
-                  <img class="img-icon" src="/assets/icon/svg/main-page/asani.svg" alt="">
-                </ion-item>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col col-12>
-                <ion-item text-center no-padding class="min-height-default">
-                  <p ion-text class="fs-16 text-wrap">Ассаны</p>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-
-          </ion-col> -->
-
         </ion-row>
       </ion-grid>
     </ion-card-content>
@@ -107,85 +67,35 @@
   </h1>
 
   <ion-card no-margin class="full-width box-shadow">
-    <ion-card-content no-padding padding-vertical>
-      <ion-grid>
-        <ion-row justify-content-center>
-          <ion-col col-4 class="border-r col-between" no-padding>
-
-            <ion-row>
-              <ion-col col-12>
-                <ion-item text-center no-padding>
-                  <!-- <ion-icon>
-                    <svg-icon src="/assets/icon/svg/kompleksy/moe-utro.svg" [stretch]="true" [svgStyle]="{'height.px':50}">
-                    </svg-icon>
-                  </ion-icon> -->
-                  <img class="img-icon" src="/assets/icon/svg/kompleksy/moe-utro.svg">
-                </ion-item>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col col-12>
-                <ion-item text-center no-padding class="min-height-default">
-                  <!-- <ion-icon name="ios-hand-outline" ion-text class=""></ion-icon> -->
-                  <p ion-text class="fs-16 text-wrap">Мантра Ом</p>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-
-          </ion-col>
-          <ion-col col-4 class="border-r col-between" no-padding>
-
-            <ion-row>
-              <ion-col col-12>
-                <ion-item text-center no-padding>
-                  <!-- <ion-icon>
-                    <svg-icon src="/assets/icon/svg/kompleksy/den-praktiki.svg" [stretch]="true" [svgStyle]="{'height.px':50}">
-                    </svg-icon>
-                  </ion-icon> -->
-                  <img class="img-icon" src="/assets/icon/svg/kompleksy/den-praktiki.svg" alt="">
-                </ion-item>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col col-12>
-                <ion-item text-center no-padding class="min-height-default">
-                  <!-- <ion-icon name="ios-hand-outline" ion-text class=""></ion-icon> -->
-                  <p ion-text class="fs-16 text-wrap">Мантра Ом</p>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-
-          </ion-col>
-          <ion-col col-4 class="col-between" no-padding>
-
-            <ion-row>
-              <ion-col col-12>
-                <ion-item text-center no-padding>
-                  <!-- <ion-icon>
-                    <svg-icon src="/assets/icon/svg/kompleksy/ritritnii-den.svg" [stretch]="true" [svgStyle]="{'height.px':50}">
-                    </svg-icon>
-                  </ion-icon> -->
-                  <img class="img-icon" src="/assets/icon/svg/kompleksy/ritritnii-den.svg">
-                </ion-item>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col col-12>
-                <ion-item text-center no-padding class="min-height-default">
-                  <!-- <ion-icon name="ios-hand-outline" ion-text class=""></ion-icon> -->
-                  <p ion-text class="fs-16 text-wrap">Мантра Ом</p>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card-content>
-  </ion-card>
+      <ion-card-content no-padding padding-vertical>
+          <p ion-text text-center class="fs-16 text-wrap" *ngIf="!complexes || complexes.length == 0">У Вас пока нет комплексов, но Вы можете их создать</p>
+        <ion-grid>
+          <ion-row justify-content-center>
+            
+            <ion-col  col-4 class="border-r col-between" no-padding *ngFor="let cm of complexes | slice:0:3" (click)="goToMyComplex(cm)">
+  
+              <ion-row >
+                <ion-col col-12>
+                  <ion-item text-center no-padding>
+  
+                    <img class="img-icon" [src]="cm.ico" alt="">
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+  
+              <ion-row>
+                <ion-col col-12>
+                  <ion-item text-center no-padding class="min-height-default">
+                    <p ion-text class="fs-16 text-wrap">{{cm.name}}</p>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+  
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
 
   <ion-grid>
     <ion-row justify-content-end>

@@ -1,6 +1,8 @@
+import { PracticePerformancePage } from './../practice-performance/practice-performance';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { AllPracticesPage } from '../all-practices/all-practices';
+import { UserProvider } from '../../providers/user/user';
 
 /**
  * Generated class for the MyComplexsPage page.
@@ -15,8 +17,21 @@ import { AllPracticesPage } from '../all-practices/all-practices';
 })
 
 export class MyComplexsPage {
+  practices;
+  complex;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  isStarted = false;
+  practiceCounter = 0;
+  constructor(public navCtrl: NavController, 
+    public navParams: NavParams,
+    public userP: UserProvider) {
+    this.complex = navParams.get('complex');
+    const gp = UserProvider.getGlobalPractices() || [];
+
+    this.practices = []
+    for (const val of this.complex.practices) {
+      this.practices.push(gp[val]);
+    }
   }
   
   goAllPracticesPage(){
@@ -27,4 +42,20 @@ export class MyComplexsPage {
     console.log('ionViewDidLoad MyComplexsPage');
   }
 
+  switchState() {
+    this.isStarted = !this.isStarted;
+    if (this.isStarted) {
+      this.navCtrl.push(PracticePerformancePage,{practice: this.practices[this.practiceCounter]});
+    }
+  }
+
+  ionViewWillEnter() {
+    if (this.isStarted) {
+      this.practiceCounter++;
+      if ( this.practiceCounter >= this.practices.length) {
+        return this.navCtrl.pop();
+      }
+      this.navCtrl.push(PracticePerformancePage,{practice: this.practices[this.practiceCounter]});
+    }
+  }
 }

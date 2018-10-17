@@ -17,16 +17,14 @@
     <ion-card-content no-padding padding-vertical>
       <ion-grid>
         <ion-row justify-content-center>
-          <ion-col (click)="goToMyComplex()" col-4 class="border-r col-between" no-padding>
+            <p ion-text text-center class="fs-16 text-wrap" *ngIf="!presets || presets.length == 0">Общих комплексов пока нет. </p>
+          <ion-col (click)="goToMyComplex(pr)" col-4 class="border-r col-between" no-padding *ngFor="let pr of presets">
 
             <ion-row>
               <ion-col col-12>
                 <ion-item text-center no-padding>
-                  <!-- <ion-icon>
-                      <svg-icon src="/assets/icon/svg/main-page/om.svg" [stretch]="true" [svgStyle]="{'height.px':50}">
-                      </svg-icon>
-                    </ion-icon> -->
-                  <img class="img-icon" src="/assets/icon/svg/main-page/om.svg" alt="">
+
+                  <img class="img-icon" [src]="pr.ico" alt="">
                 </ion-item>
               </ion-col>
             </ion-row>
@@ -34,56 +32,7 @@
             <ion-row>
               <ion-col col-12>
                 <ion-item text-center no-padding class="min-height-default">
-                  <!-- <ion-icon name="ios-hand-outline" ion-text class=""></ion-icon> -->
-                  <p ion-text class="fs-16 text-wrap">Мантра Ом</p>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-
-          </ion-col>
-          <ion-col col-4 class="border-r col-between" no-padding>
-
-            <ion-row>
-              <ion-col col-12>
-                <ion-item text-center no-padding>
-                  <!-- <ion-icon>
-                      <svg-icon src="/assets/icon/svg/lichniy-kabinet/dostizhenie-prostiraniya.svg" [stretch]="true" [svgStyle]="{'height.px':50}">
-                      </svg-icon>
-                    </ion-icon> -->
-                  <img class="img-icon" src="/assets/icon/svg/lichniy-kabinet/dostizhenie-prostiraniya.svg" alt="">
-                </ion-item>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col col-12>
-                <ion-item text-center no-padding class="min-height-default">
-                  <!-- <ion-icon name="ios-hand-outline" ion-text class=""></ion-icon> -->
-                  <p ion-text class="fs-16 text-wrap">День практики</p>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-
-          </ion-col>
-          <ion-col col-4 class="col-between" no-padding>
-
-            <ion-row>
-              <ion-col col-12>
-                <ion-item text-center no-padding>
-                  <!-- <ion-icon>
-                      <svg-icon src="/assets/icon/svg/main-page/asani.svg" [stretch]="true" [svgStyle]="{'height.px':50}">
-                      </svg-icon>
-                    </ion-icon> -->
-                  <img class="img-icon" src="/assets/icon/svg/main-page/asani.svg" alt="">
-                </ion-item>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col col-12>
-                <ion-item text-center no-padding class="min-height-default">
-                  <!-- <ion-icon name="ios-hand-outline" ion-text class=""></ion-icon> -->
-                  <p ion-text class="fs-16 text-wrap">Ассаны</p>
+                  <p ion-text class="fs-16 text-wrap">{{pr.name}}</p>
                 </ion-item>
               </ion-col>
             </ion-row>
@@ -108,42 +57,68 @@
   <h1>
     Личные комплексы
   </h1>
-
   <ion-card no-margin class="full-width box-shadow">
+      <ion-card-content no-padding padding-vertical>
+          <p ion-text text-center class="fs-16 text-wrap" *ngIf="!complexes || complexes.length == 0">У Вас пока нет комплексов, но Вы можете их создать</p>
+        <ion-grid>
+          <ion-row justify-content-center>
+            
+            <ion-col  col-4 class="border-r col-between" no-padding *ngFor="let cm of complexes" (click)="goToMyComplex(cm)">
+  
+              <ion-row >
+                <ion-col col-12>
+                  <ion-item text-center no-padding>
+  
+                    <img class="img-icon" [src]="cm.ico" alt="">
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+  
+              <ion-row>
+                <ion-col col-12>
+                  <ion-item text-center no-padding class="min-height-default">
+                    <p ion-text class="fs-16 text-wrap">{{cm.name}}</p>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+  
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+
+  <!-- <ion-card no-margin class="full-width box-shadow">
     <ion-card-content no-padding padding-vertical>
       <ion-grid>
         <ion-row justify-content-center>
-          <ion-col col-12>
-            <p ion-text text-center class="fs-16 text-wrap">У Вас пока нет комплексов, но Вы можете их создать</p>
             
-            <ion-col *ngIf="yourNewComplex" col-4 class="border-r col-between" no-padding>
-                <ion-row>
-                  <ion-col col-12>
-                    <ion-item text-center no-padding>
-                      <!-- <ion-icon>
-                          <svg-icon src="/assets/icon/svg/lichniy-kabinet/dostizhenie-prostiraniya.svg" [stretch]="true" [svgStyle]="{'height.px':50}">
-                          </svg-icon>
-                        </ion-icon> -->
-                      <img class="img-icon" src="/assets/icon/svg/lichniy-kabinet/dostizhenie-prostiraniya.svg" alt="">
-                    </ion-item>
-                  </ion-col>
-                </ion-row>
-    
-                <ion-row>
-                  <ion-col col-12>
-                    <ion-item text-center no-padding class="min-height-default">
-                      <!-- <ion-icon name="ios-hand-outline" ion-text class=""></ion-icon> -->
-                      <p ion-text class="fs-16 text-wrap">День практики</p>
-                    </ion-item>
-                  </ion-col>
-                </ion-row>
-              </ion-col>
+          <ion-col col-1 *ngFor="let c of complexes">
+           
+            <ion-col  col-4 class="border-r col-between" no-padding >
+              <ion-row>
+                <ion-col col-12>
+                  <ion-item text-center no-padding>
+                    <img class="img-icon" [src]="c.ico" alt="">
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col col-12>
+                  <ion-item text-center no-padding class="min-height-default">
+                    
+                    <p ion-text class="fs-16 text-wrap">{{c.name}}</p>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-col>
 
           </ion-col>
         </ion-row>
       </ion-grid>
     </ion-card-content>
-  </ion-card>
+  </ion-card> -->
 
   <ion-grid>
     <ion-row justify-content-end>

@@ -72,6 +72,18 @@ export class UserProvider {
 
   static getUser = () => UserProvider.user;
 
+  static getComplexes() {
+    const pr = UserProvider.globalPractices;
+    const cm = UserProvider.user.complexes;
+    
+    if(!cm) return undefined;
+    
+    for (const val of cm) {
+      val.ico = pr[val.practices[0]].ico;
+    }
+    return cm;
+  }
+
   static getUserGoals() {
     const result = [];
     const goals = UserProvider.user.goals;

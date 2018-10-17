@@ -136,11 +136,16 @@ export class CreateComplexPage {
   }
 
   submit() {
-    const tmp = {};
-    tmp[`complexes`] = {
+    let com = UserProvider.getComplexes();
+
+    const tmp = {
+      complexes: com || []
+    };
+
+    tmp.complexes.push ({
       name: this.name,
-      practices: this.complexPractices
-    }
+      practices: Object.keys(this.complexPractices)
+    })
 
     this.afs
       .doc(`users/${this.authP.getUserId()}`)

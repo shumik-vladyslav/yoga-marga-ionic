@@ -7,6 +7,7 @@ import { Template_3Page } from '../template-3/template-3';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { UserProvider } from '../../providers/user/user';
+import { MyComplexsPage } from '../my-complexs/my-complexs';
 
 @Component({
   selector: 'page-home',
@@ -14,7 +15,7 @@ import { UserProvider } from '../../providers/user/user';
 })
 
 export class HomePage {
-
+  complexes;
   practices$: Observable<any>;
 
   achivements;
@@ -26,7 +27,7 @@ export class HomePage {
       this.practices$ = this.afs.collection('practices').valueChanges();
       this.achivements = UserProvider.getUserGoals().filter(a => a.achivement > 0).slice(0,3);
       console.log(this.achivements);
-      
+      this.complexes = UserProvider.getComplexes();
   }
   
   onClickPractice(practice) {
@@ -49,5 +50,8 @@ export class HomePage {
   goToAsana2(){
     this.navCtrl.setRoot(Template_3Page);
   }
-  
+ 
+  goToMyComplex(complex) {
+    this.navCtrl.push(MyComplexsPage, {complex: complex});
+  }
 }
