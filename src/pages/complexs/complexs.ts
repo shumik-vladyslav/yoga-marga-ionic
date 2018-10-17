@@ -21,7 +21,7 @@ export class ComplexsPage {
   }
 
   goCreateComplexPage() {
-    this.navCtrl.setRoot(CreateComplexPage);
+    this.navCtrl.push(CreateComplexPage);
   }
 
   goToMyComplex() {

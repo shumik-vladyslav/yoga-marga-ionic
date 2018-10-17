@@ -1,10 +1,10 @@
 <ion-header>
-  <ion-navbar>
-    <button ion-button ion-text color="white" class="pos-a btn-back" (click)="goComplexsPage()">
-        <span class="arrow arrow-back"></span>
-      </button>
+  <ion-toolbar>
+    <button ion-button ion-text color="white" class="pos-a btn-back" navPop>
+      <span class="arrow arrow-back"></span>
+    </button>
     <p text-center ion-text color="white" class="header-title">Практики</p>
-  </ion-navbar>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
@@ -14,7 +14,7 @@
         <ion-row class="m-t-10">
           <ion-col col-12>
             <ion-item no-padding class="input-style input-bg">
-              <ion-input text-center placeholder="Введите название комплекса" color="gray" clearInput></ion-input>
+              <ion-input text-center placeholder="Введите название комплекса" color="gray" clearInput [(ngModel)]="name"></ion-input>
             </ion-item>
             <p padding-horizontal text-center ion-text class="text-coment">
               Пожалуйста, назовите свой новый комплекс
@@ -22,7 +22,29 @@
           </ion-col>
 
         </ion-row>
-        <ion-row>
+
+        <div *ngFor="let group of groups">
+            <ion-row>
+              <ion-col>
+                <h3 text-center>
+                    {{group[0]}}
+                </h3>
+              </ion-col>
+            </ion-row>
+            <ion-row nowrap *ngFor="let pract of group[1];let i = index">
+              <ion-item id="radio-style ios" class="width-default radio-style">
+                <ion-toggle (ionChange)="onToggle(pract.id,$event.checked)"></ion-toggle>
+                <!-- [(ngModel)]="eItem.checkId" -->
+              </ion-item>
+              <p padding-horizontal text-left ion-text text-wrap class="m-l-20 fs-15">
+                  {{pract.name}}
+              </p>
+            </ion-row>
+  
+          </div>
+
+
+        <!-- <ion-row>
           <ion-col>
             <h3 text-center>
               Утрение практики
@@ -40,33 +62,18 @@
         <ion-row>
           <ion-col>
             <h3 text-center>
-              Вечерние практики
-            </h3>
-          </ion-col>
-        </ion-row>
-        <ion-row nowrap *ngFor="let eItem of eveningData">
-            <ion-item id="radio-style ios" class="width-default radio-style">
-              <ion-toggle [(ngModel)]="eItem.checkId"></ion-toggle>
-            </ion-item>
-            <p padding-horizontal text-left ion-text text-wrap class="m-l-20 fs-15">
-              {{eItem.name}}
-            </p>
-          </ion-row>
-        <ion-row>
-          <ion-col>
-            <h3 text-center>
               Медитативные практики
             </h3>
           </ion-col>
         </ion-row>
         <ion-row nowrap *ngFor="let medItem of meditativeData">
-            <ion-item id="radio-style ios" class="width-default radio-style">
-              <ion-toggle [(ngModel)]="medItem.checkId"></ion-toggle>
-            </ion-item>
-            <p padding-horizontal text-left ion-text text-wrap class="m-l-20 fs-15">
-              {{medItem.name}}
-            </p>
-          </ion-row>
+          <ion-item id="radio-style ios" class="width-default radio-style">
+            <ion-toggle [(ngModel)]="medItem.checkId"></ion-toggle>
+          </ion-item>
+          <p padding-horizontal text-left ion-text text-wrap class="m-l-20 fs-15">
+            {{medItem.name}}
+          </p>
+        </ion-row>
         <ion-row>
           <ion-col>
             <h3 text-center>
@@ -75,15 +82,17 @@
           </ion-col>
         </ion-row>
         <ion-row nowrap *ngFor="let rItem of ritualData">
-            <ion-item id="radio-style ios" class="width-default radio-style">
-              <ion-toggle [(ngModel)]="rItem.checkId"></ion-toggle>
-            </ion-item>
-            <p padding-horizontal text-left ion-text text-wrap class="m-l-20 fs-15">
-              {{rItem.name}}
-            </p>
-          </ion-row>
+          <ion-item id="radio-style ios" class="width-default radio-style">
+            <ion-toggle [(ngModel)]="rItem.checkId"></ion-toggle>
+          </ion-item>
+          <p padding-horizontal text-left ion-text text-wrap class="m-l-20 fs-15">
+            {{rItem.name}}
+          </p>
+        </ion-row> -->
+
       </ion-col>
-      <button text-capitalize class="height-50 btn-sing-up p-l-20 p-r-20 width-default btn-hover">Создать комплекс</button>
+      <button text-capitalize class="height-50 btn-sing-up p-l-20 p-r-20 width-default btn-hover"
+      (click)="submit()">Создать комплекс</button>
     </ion-row>
   </ion-grid>
 </ion-content>

@@ -115,7 +115,7 @@
     </ion-row>
   </ion-grid>
 
-  <h1>
+  <!-- <h1>
     Достижения
   </h1>
   <ion-card no-margin class="full-width box-shadow">
@@ -131,7 +131,7 @@
         </ion-row>
       </ion-grid>
     </ion-card-content>
-  </ion-card>
+  </ion-card> -->
 
   <!-- <ion-title text-center margin-bottom></ion-title> -->
   <h1 class="m-b-40 m-t-40">
@@ -143,7 +143,11 @@
         <ion-row justify-content-center>
           <ion-col class="border-r custom-col" col-4 no-padding *ngFor="let p of progresses">
             <ion-item text-center no-padding>
+              <img [src]="p.ico" class="img-icon">
               <p ion-text class="value-goals text-wrap m-t-0">{{p.name}}</p>
+              <p>{{+p.achivement}}</p> 
+              <p>из</p>
+              <p>{{+p.goal}}</p>
               <progress-chart [progress]="p.val"></progress-chart>
               <!-- <img class="sm-icon" src="/assets/icon/svg/kompleksy/moe-utro.svg" alt="">
               <h1 class="lable-goals" ion-text color="primary">10 000</h1>

@@ -44,6 +44,7 @@ export class PracticePerformancePage {
   ) {
     this.practice = this.navParams.get("practice");
     this.resorePracticeSettings();
+    
     this.getImgUrls().then();
   }
 
@@ -52,6 +53,19 @@ export class PracticePerformancePage {
       `users/${this.authP.getUserId()}/practices/${this.practice.id}/`
     );
 
+    this.afStorage
+      .ref(`practices/${this.practice.id}/text.pdf`)
+      .getDownloadURL()
+      .toPromise().then(
+        url => this.practice.text = url
+      ).catch (err => console.log(err))
+
+    // this.fileCacheP.getFileUrl(this.practice.id, 'text.pdf').then(
+    //   url => {
+    //     console.log('promice', url);
+    //     this.practice.text = url;
+    //   }
+    // )
     this.afs
       .doc(`users/${this.authP.getUserId()}`)
       .get()
@@ -86,25 +100,29 @@ export class PracticePerformancePage {
       })
       .catch(err => console.log("err", err));
   }
-
-  // if files not cached urls is firebase storage urls
-  // else native file urls
-  getFilesUrls() {
+  
+  opentText () {
 
   }
 
+  // if files not cached urls is firebase storage urls
+  // else native file urls
+  getFilesUrls() {}
+
   async getImgUrls() {
-    console.log('getImgUrls starts working');
-    
+    console.log("getImgUrls starts working");
+
     // TODO save images uris specific to device
     if (this.practice.exercises) {
-
       for (let i = 1; ; i++) {
         try {
-          const cacheUrl = await this.fileCacheP.getFileUrl(this.practice.id,`s${i}.jpg`);
+          const cacheUrl = await this.fileCacheP.getFileUrl(
+            this.practice.id,
+            `s${i}.jpg`
+          );
           console.log(cacheUrl);
-          
-          if (cacheUrl && cacheUrl != '') {
+
+          if (cacheUrl && cacheUrl != "") {
             this.imgUrls.push(cacheUrl);
             continue;
           }
@@ -116,14 +134,27 @@ export class PracticePerformancePage {
           if (!url) break;
           this.imgUrls.push(url);
 
-          this.fileCacheP.saveFile(url, this.practice.id, `s${i}.jpg`)
+          this.fileCacheP.saveFile(url, this.practice.id, `s${i}.jpg`);
         } catch (err) {
           break;
         }
       }
-    }
+    } else {
+      this.practice.img = await this.fileCacheP.getFileUrl(this.practice.id, `1.jpg`);
 
-    console.log(this.imgUrls);
+      try {
+        if (!this.practice.img) {
+          const url = await this.afStorage
+            .ref(`practices/${this.practice.id}/1.jpg`)
+            .getDownloadURL()
+            .toPromise();
+          this.fileCacheP.saveFile(url, this.practice.id, `1.jpg`);
+          this.practice.img = url;
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
   }
 
   onTimeForExerciseChange() {
@@ -190,13 +221,15 @@ export class PracticePerformancePage {
     this.savePracticeSettings();
     this.startTime = Date.now();
     this.timer = new Date(this.practice.userSpec.praktikaTime * 60000);
-    
+
     const subs = interval(
       Math.round(this.practice.userSpec.praktikaTime * 60000)
     ).subscribe(val => {
       console.log("subs", val);
       this.timespan = this.practice.userSpec.praktikaTime;
-      subs.unsubscribe();
+      for (const val of this.subscriptions) {
+        val.unsubscribe();
+      }
       if (this.practice.exercises && this.practice.exercises.length > 0) return;
       return this.presentPrompt();
     });
@@ -289,14 +322,19 @@ export class PracticePerformancePage {
       }
 
       if (data.maxAchievement) {
-        practiceRes.maxAchievement =
-          practiceRes.maxAchievement < data.maxAchievement
+        if (!practiceRes.maxAchievement) {
+          practiceRes.maxAchievement = data.maxAchievement;
+        } else {
+          practiceRes.maxAchievement =
+          (practiceRes.maxAchievement < data.maxAchievement)
             ? +data.maxAchievement
             : practiceRes.maxAchievement;
+        }
+
       }
     }
 
-    practiceRes.timespan = (practiceRes.timespan || 0) + this.timespan;
+    practiceRes.timespan = (practiceRes.timespan || 0) + +this.timespan;
 
     const tmp = {};
     tmp[`practices.${this.practice.id}`] = practiceRes;

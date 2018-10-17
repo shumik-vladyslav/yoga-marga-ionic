@@ -22,19 +22,19 @@ export class PrivateOfficePage {
   progresses;
 
   gender;
-  
-  myForm : FormGroup;
+
+  myForm: FormGroup;
   customeValidation;
 
-  data ={
-    "spiritualName": "",
-    "fullName" : "",
-    "Status" : "",
-    "Email" : "",
-    "Password" : "",
-    "PhoneNumber" : "",
-    "gender" : ""
-  }
+  data = {
+    spiritualName: "",
+    fullName: "",
+    Status: "",
+    Email: "",
+    Password: "",
+    PhoneNumber: "",
+    gender: ""
+  };
 
   constructor(
     public navCtrl: NavController,
@@ -42,33 +42,40 @@ export class PrivateOfficePage {
     public userP: UserProvider,
     private formBuilder: FormBuilder
   ) {
+    const globalPractices = UserProvider.getGlobalPractices();
+    console.log('global practices', globalPractices);
+    
     this.progresses = UserProvider.getUserGoals().map(a => {
       return {
         val: Math.round((a.achivement / a.goal) * 100),
-        name: a.name
+        name: a.name,
+        ico: globalPractices[a.id].ico,
+        goal: a.goal,
+        achivement: a.achivement
       };
     });
 
-    this.achivements = UserProvider.getUserGoals().filter(a => a.achivement > 0);
-    console.log(this.achivements);
+    console.log(this.progresses);
+    
+    this.achivements = UserProvider.getUserGoals().filter(
+      a => a.achivement > 0
+    );
 
     this.myForm = formBuilder.group({
-              
-      spiritualName : ['', Validators.required],
-      fullName : ['', Validators.required],
-      Status : [this.data.Status != ''],
-      Email: ['', [ Validators.required, Validators.email]],
-      Password: ['', [Validators.required, Validators.pattern(".{8,}")]],
-      PhoneNumber: ['', [Validators.required, Validators.pattern(".{10,}")]],
-      gender: ['', Validators.required],
-  });
-
+      spiritualName: ["", Validators.required],
+      fullName: ["", Validators.required],
+      Status: [this.data.Status != ""],
+      Email: ["", [Validators.required, Validators.email]],
+      Password: ["", [Validators.required, Validators.pattern(".{8,}")]],
+      PhoneNumber: ["", [Validators.required, Validators.pattern(".{10,}")]],
+      gender: ["", Validators.required]
+    });
   }
 
-  goAllPracticesPage(){
-    if(this.myForm.valid){
+  goAllPracticesPage() {
+    if (this.myForm.valid) {
       // Do Some
-    } else{
+    } else {
       this.customeValidation = false;
     }
   }
