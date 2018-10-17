@@ -34,7 +34,7 @@
 
       </ion-col>
     </ion-row>
-    
+
     <ion-row *ngIf="practice.userSpec?.maxAchievement || practice.userSpec?.timespan || practice.userSpec?.amountCounter">
       <ion-card no-margin class="full-width box-shadow">
         <ion-card-content no-padding padding-vertical>
@@ -45,9 +45,11 @@
                   <p ion-text text-center text-wrap color="gray" class="height-50">
                     Колличество
                   </p>
-                  <p>
-                    {{practice.userSpec?.amountCounter}}
-                  </p>
+                  <div class="df ai-c jc-c">
+                    <div class="info-value-box">
+                      {{practice.userSpec?.amountCounter}}
+                    </div>
+                  </div>
                 </ion-item>
               </ion-col> -->
 
@@ -66,16 +68,14 @@
 
               <!--  -->
               <ion-col col-lg-6 col-sm-6 col-xs-12 *ngIf="practice.userSpec?.maxAchievement">
-                <ion-item no-padding>
-                  <p ion-text text-center text-wrap color="gray" class="height-50">
-                    Лучший результат
-                  </p>
-                  <div class="df ai-c jc-c">
-                    <div class="info-value-box">
-                      {{practice.userSpec?.maxAchievement}}
-                    </div>
+                <p ion-text text-center text-wrap color="gray" class="height-50">
+                  Лучший результат
+                </p>
+                <div class="df ai-c jc-c">
+                  <div class="info-value-box">
+                    {{practice.userSpec?.maxAchievement}}
                   </div>
-                </ion-item>
+                </div>
               </ion-col>
 
               <ion-col col-lg-6 col-sm-6 col-xs-12 *ngIf="practice.userSpec?.timespan">
