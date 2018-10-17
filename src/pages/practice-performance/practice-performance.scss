@@ -9,5 +9,7 @@ page-practice-performance {
         color: white;
       } 
     }
-    
+    .none-border .item-inner{
+      border: none !important;
+  }
 }
