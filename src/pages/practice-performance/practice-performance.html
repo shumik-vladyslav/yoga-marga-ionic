@@ -54,18 +54,15 @@
               </ion-col> -->
 
               <ion-col col-lg-6 col-sm-6 col-xs-12 *ngIf="practice.userSpec?.amountCounter">
-                  <ion-item no-padding>
-                    <p ion-text text-center text-wrap color="gray" class="height-50">
-                        Колличество
-                    </p>
-                    <div class="df ai-c jc-c">
-                      <div class="info-value-box">
-                          {{practice.userSpec?.amountCounter}}
-                      </div>
-                    </div>
-                  </ion-item>
-                </ion-col>
-
+                <p ion-text text-center text-wrap color="gray" class="height-50">
+                  Колличество
+                </p>
+                <div class="df ai-c jc-c">
+                  <div class="info-value-box">
+                    {{practice.userSpec?.amountCounter}}
+                  </div>
+                </div>
+              </ion-col>
               <!--  -->
               <ion-col col-lg-6 col-sm-6 col-xs-12 *ngIf="practice.userSpec?.maxAchievement">
                 <p ion-text text-center text-wrap color="gray" class="height-50">
@@ -111,8 +108,10 @@
                 </p>
                 <ion-item text-center no-padding>
                   <ion-item no-padding class="input-style input-goals input-teamplate">
-                    <ion-input [(ngModel)]="practice.userSpec.praktikaTime" *ngIf="!isStarted" text-center color="gray" (ngModelChange)="onPraktikaTimeChange()"></ion-input>
-                    <ion-input [value]="timer| date:'mm:ss'" *ngIf="isStarted" disabled text-center color="gray" (ngModelChange)="onPraktikaTimeChange()"></ion-input>
+                    <ion-input [(ngModel)]="practice.userSpec.praktikaTime" *ngIf="!isStarted" text-center color="gray"
+                      (ngModelChange)="onPraktikaTimeChange()"></ion-input>
+                    <ion-input [value]="timer| date:'mm:ss'" *ngIf="isStarted" disabled text-center color="gray"
+                      (ngModelChange)="onPraktikaTimeChange()"></ion-input>
                   </ion-item>
                   <p margin-top ion-text text-wrap class="fs-14 text-wrap m-t-0 m-b-20 letter-spacing-2">
                     МИНУТ
@@ -176,7 +175,8 @@
 
   <ion-grid>
     <ion-row justify-content-center>
-      <button icon-center margin-top margin-bottom class="button-custom m-r-0 btn-sm-width" (click)="start()" [class.active]="isStarted">
+      <button icon-center margin-top margin-bottom class="button-custom m-r-0 btn-sm-width" (click)="start()"
+        [class.active]="isStarted">
         {{isStarted?'Закончить практику':'Начать практику'}}
       </button>
     </ion-row>

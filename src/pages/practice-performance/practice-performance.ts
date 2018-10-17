@@ -248,6 +248,8 @@ export class PracticePerformancePage {
       }
     });
 
+    this.pomniSubs = subs1;
+
     if (this.practice.exercises) {
       if (this.timeForExercise) {
         this.practice.timeForExercise = this.timeForExercise;
@@ -267,7 +269,7 @@ export class PracticePerformancePage {
     this.subscriptions.push(subs1);
     this.subscriptions.push(subs2);
   }
-
+pomniSubs;
   presentPrompt() {
     const inputsArr = [];
     if (this.practice.isAmountCounter) {
@@ -346,5 +348,18 @@ export class PracticePerformancePage {
       .catch(err => console.log("err", err));
 
     this.navCtrl.pop();
+  }
+
+  ionViewWillEnter() {
+    console.log('ionViewWillEnter' );
+    
+    if (this.isStarted) {
+      this.pomniSubs.unsubscribe();
+      console.log('ionViewWillEnter isStarted true' );
+      for (const val of this.subscriptions) {
+        val.unsubscribe();
+      }
+      this.savePracticeResult().then();
+    }
   }
 }

@@ -92,6 +92,7 @@ export class ExercisePerformancePage {
       val => {
         subs.unsubscribe();
         this.nextExercise();
+        new Audio('assets/sound/gong.mp3').play();
       }
     )
     this.subscriptions.push(subs);
@@ -158,9 +159,17 @@ export class ExercisePerformancePage {
   }
 
   saveTimeForExercise() {
-    const path = `exercises.${this.exerciseCounter}.timespan`;
-    const tmp = {};
-    tmp[path] = +this.exercise.timespan;
+    console.log('set time for pract');
+    
+    // this.practice.userSpec.exercises
+    // const path = `exercises;
+
+    let tmpArr = new Array(this.practice.exercises.length);
+    tmpArr= tmpArr.fill(+this.exercise.timespan);
+    const tmp = {
+      exercises: this.practice.userSpec.exercises || tmpArr
+    };
+    tmp.exercises[this.exerciseCounter] = (tmp.exercises[this.exerciseCounter] || 0)+ +this.exercise.timespan;
 
     this.afs.doc(`users/${this.authP.getUserId()}/practices/${this.practice.id}/`)
       .update(tmp)
@@ -192,7 +201,7 @@ export class ExercisePerformancePage {
       .then(res => console.log('res', res))
       .catch(err => console.log('err', err))
 
-    // this.navCtrl.pop();
-    this.navCtrl.setRoot(HomePage);
+    this.navCtrl.pop();
+    // this.navCtrl.setRoot(HomePage);
   }
 }

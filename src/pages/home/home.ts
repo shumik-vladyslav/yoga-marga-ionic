@@ -17,7 +17,8 @@ import { MyComplexsPage } from '../my-complexs/my-complexs';
 export class HomePage {
   complexes;
   practices$: Observable<any>;
-
+  
+  progresses;
   achivements;
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -28,6 +29,26 @@ export class HomePage {
       this.achivements = UserProvider.getUserGoals().filter(a => a.achivement > 0).slice(0,3);
       console.log(this.achivements);
       this.complexes = UserProvider.getComplexes();
+
+
+      const globalPractices = UserProvider.getGlobalPractices();
+      console.log('global practices', globalPractices);
+      
+      this.progresses = UserProvider.getUserGoals().map(a => {
+        return {
+          val: Math.round((a.achivement / a.goal) * 100),
+          name: a.name,
+          ico: globalPractices[a.id].ico,
+          goal: a.goal,
+          achivement: a.achivement
+        };
+      });
+  
+      console.log(this.progresses);
+      
+      this.achivements = UserProvider.getUserGoals().filter(
+        a => a.achivement > 0
+      );
   }
   
   onClickPractice(practice) {

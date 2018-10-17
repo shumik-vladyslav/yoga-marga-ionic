@@ -112,31 +112,23 @@
     Достижения
   </h1>
   <ion-card no-margin class="full-width box-shadow">
-    <ion-card-content no-padding padding-vertical>
-      <ion-grid>
-        <ion-row justify-content-center>
-          <ion-col col-4 no-padding *ngFor="let a of achivements">
-            <ion-item text-center no-padding>
-              <h1 class="" ion-text color="primary" class="fs-30">{{a.achivement}}</h1>
-              <p margin-top ion-text class="fs-16 text-wrap">{{a.name}}</p>
-            </ion-item>
-          </ion-col>
-          <!-- <ion-col col-4 no-padding>
-            <ion-item text-center no-padding>
-              <h1 class="" ion-text color="primary" class="fs-30">10 080</h1>
-              <p margin-top ion-text class="fs-16 text-wrap">Сделано простираний</p>
-            </ion-item>
-          </ion-col>
-          <ion-col col-4 no-padding>
-            <ion-item text-center no-padding>
-              <h1 class="" ion-text color="primary" class="fs-30">1 080</h1>
-              <p margin-top ion-text class="fs-16 text-wrap">Виполнено комплексов</p>
-            </ion-item>
-          </ion-col> -->
-        </ion-row>
-      </ion-grid>
-    </ion-card-content>
-  </ion-card>
+      <ion-card-content no-padding padding-vertical>
+        <ion-grid>
+          <ion-row justify-content-center>
+            <ion-col class="border-r custom-col" col-4 no-padding *ngFor="let p of progresses">
+              <ion-item text-center no-padding>
+                <img [src]="p.ico" class="img-icon">
+                <p ion-text class="value-goals text-wrap m-t-0">{{p.name}}</p>
+                <p>{{+p.achivement}}</p> 
+                <p>из</p>
+                <p>{{+p.goal}}</p>
+                <progress-chart [progress]="p.val"></progress-chart>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
 
   <ion-grid>
     <ion-row justify-content-end>

@@ -1,3 +1,79 @@
 page-home {
-
+    .sm-icon{
+        width: 30px;
+        margin: auto;
+        margin-bottom: 10px;
+    }
+    .input-row-office{
+        display: flex;
+        min-width: 173px;
+        align-items: center;
+    }
+    .input-perivat-office{
+        max-width: 400px;
+        min-height: 1.4rem !important;
+    }
+    .icon-input{
+        margin-right: 30px;
+        width: 20px;
+        @include media-breakpoint('xs'){
+            margin-right: 10px;
+        }
+    }
+    .row-input-outer{
+        flex-wrap: nowrap;
+        margin-left: 65px;
+        margin-bottom: 20px;
+        @include media-breakpoint('xs'){
+            flex-wrap: wrap;
+            margin-left: 0px;
+        }
+    }
+    .lable-goals{
+        font-size: 16px !important;
+        color: color($colors, text-light) !important;
+        font-weight: bold;
+    }
+    .value-goals{
+        font-size: 14px;
+        margin-top: 0;
+    }
+    .img-icon-office{
+        width: 40px;
+        height: 40px;
+        margin: auto;
+    }
+    ion-col.custom-col > ion-item > div.item-inner > div > ion-label{
+        margin: 0 !important;
+        min-height: 360px;
+        display: flex;
+        flex-flow: column;
+        justify-content: space-between;
+    }
+    .custome-select > div.item-inner > div > ion-select{
+        padding: 7px 8px 8px 0px;
+        width: 100%;
+        max-width: 100%;
+    }
+    .button-custom{
+        &.error{
+            background: #ffffff;
+            border: 2px solid #f53d3d !important;
+            color: #f53d3d;
+            span{
+                border-top: 2px solid #f53d3d;
+                border-right: 2px solid #f53d3d;
+            }
+            &:hover{
+                background: #f53d3d;
+                border: 2px solid #f53d3d !important;
+                color: #ffffff; 
+            }
+        }
+    }
+    .error-validation > .item-inner{
+        border-left: none !important;
+        border-right: none !important;
+        border-top: none !important;
+    }
 }
