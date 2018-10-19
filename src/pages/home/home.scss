@@ -36,7 +36,12 @@ page-home {
     }
     .value-goals{
         font-size: 14px;
-        margin-top: 0;
+        margin-top: 5px !important;
+        min-height: 56px;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 5px !important;
     }
     .img-icon-office{
         width: 40px;
@@ -45,7 +50,6 @@ page-home {
     }
     ion-col.custom-col > ion-item > div.item-inner > div > ion-label{
         margin: 0 !important;
-        min-height: 360px;
         display: flex;
         flex-flow: column;
         justify-content: space-between;
@@ -58,22 +62,31 @@ page-home {
     .button-custom{
         &.error{
             background: #ffffff;
-            border: 2px solid #f53d3d !important;
-            color: #f53d3d;
+            border: 1px solid color($colors, danger) !important;
+            color: color($colors, danger);
             span{
-                border-top: 2px solid #f53d3d;
-                border-right: 2px solid #f53d3d;
+                border-top: 1px solid color($colors, danger);
+                border-right: 1px solid color($colors, danger);
             }
             &:hover{
-                background: #f53d3d;
-                border: 2px solid #f53d3d !important;
+                background: color($colors, danger);
+                border: 1px solid color($colors, danger) !important;
                 color: #ffffff; 
             }
         }
     }
     .error-validation > .item-inner{
+        border: 1px solid color($colors, danger) !important;
         border-left: none !important;
         border-right: none !important;
         border-top: none !important;
+    }
+    .btn-sing-up.error{
+        border: 1px solid color($colors, danger) !important;
+        color: color($colors, danger);
+        &:hover{
+            background: color($colors, danger);
+            color: #ffffff;
+        }
     }
 }
