@@ -37,10 +37,10 @@
             </ion-select>
           </ion-item>
           <ion-item [ngClass]="{'error-validation': (myForm.controls['Password'].invalid) && (customeValidation === false)}" no-padding class="input-style">
-            <ion-input [(ngModel)]="data.Password" formControlName="Password" text-left placeholder="Пароль" clearInput></ion-input>
+            <ion-input [(ngModel)]="data.Password" formControlName="Password" text-left placeholder="Пароль" type="password" clearInput></ion-input>
           </ion-item>
           <ion-item [ngClass]="{'error-validation': ((data.RepeatPassword !== data.Password) && (customeValidation === false)) || ((myForm.controls['RepeatPassword'].invalid) && (customeValidation === false))}" no-padding class="input-style">
-            <ion-input [(ngModel)]="data.RepeatPassword" formControlName="RepeatPassword" text-left placeholder="Потвердите пароль" clearInput></ion-input>
+            <ion-input [(ngModel)]="data.RepeatPassword" formControlName="RepeatPassword" text-left placeholder="Потвердите пароль" type="password" clearInput></ion-input>
           </ion-item>
         </form>
         <button [ngClass]="{'error': (myForm.invalid) &&   (customeValidation === false)}" full text-capitalize class="height-100 btn-sing-up btn-hover" (click)="goSingIn()">Зарегестрироваться</button>
