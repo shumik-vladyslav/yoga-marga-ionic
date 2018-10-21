@@ -21,6 +21,7 @@ import { AngularFireStorage } from "@angular/fire/storage";
   templateUrl: "practice-performance.html"
 })
 export class PracticePerformancePage {
+  window = window;
   practice;
 
   isStarted = false;
@@ -33,6 +34,7 @@ export class PracticePerformancePage {
   imgUrls = [];
   timeForExercise;
 
+  url$;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -45,7 +47,15 @@ export class PracticePerformancePage {
     this.practice = this.navParams.get("practice");
     this.resorePracticeSettings();
     
-    this.getImgUrls().then();
+    // this.getImgUrls().then();
+
+    this.url$ = this.fileCacheP.getUrl(`practices/${this.practice.id}/1.jpg`);
+
+    this.fileCacheP.getUrl(`practices/${this.practice.id}/1.jpg`).subscribe(
+      res => console.log('~True',res),
+      err => console.log('~Err', err)
+      
+    )
   }
 
   resorePracticeSettings() {
@@ -66,6 +76,7 @@ export class PracticePerformancePage {
     //     this.practice.text = url;
     //   }
     // )
+
     this.afs
       .doc(`users/${this.authP.getUserId()}`)
       .get()
@@ -140,6 +151,7 @@ export class PracticePerformancePage {
         }
       }
     } else {
+      // getUrl(path)
       this.practice.img = await this.fileCacheP.getFileUrl(this.practice.id, `1.jpg`);
 
       try {

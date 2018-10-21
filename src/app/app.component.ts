@@ -127,7 +127,6 @@ export class MyApp {
       // TODO Init current user
 
       this.afAuth.authState.subscribe((user: firebase.User) => {
-        console.log("auth provicer current user", user);
         if (user) {
           UserProvider.Init(this.afs, user.email).then(res => {
             this.rootPage = HomePage;

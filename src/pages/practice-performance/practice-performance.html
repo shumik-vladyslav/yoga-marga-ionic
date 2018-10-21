@@ -11,7 +11,8 @@
       <span class="arrow arrow-back"></span>
     </button>
     <p text-right ion-text color="white" class="header-title">
-      <a [href]="practice?.text"><img class="header-icon" width="25px" height="25px" src="/assets/icon/svg/header/text.svg"></a>
+        <!-- [href]="practice?.text"  -->
+      <button (click)="window.open(practice?.text,'_system', 'location=yes')"><img class="header-icon" width="25px" height="25px" src="/assets/icon/svg/header/text.svg"></button>
       <img class="header-icon" width="25px" height="25px" src="/assets/icon/svg/header/audio.svg">
   </ion-toolbar>
 </ion-header>
@@ -24,7 +25,7 @@
           {{practice.name}}
         </h1>
         <div [innerHTML]="practice?.shortDescription"></div>
-        <img [src]="practice?.img" *ngIf="practice?.img">
+        <img [src]="imgurl" *ngIf="url$ | async as imgurl">
         <ion-row justify-content-center class="m-b-10 img-sm-wrap">
           <!-- class="img-sm-wrap-inside" [ngStyle]="{'background-image': 'url(' + item.url + ')'}" -->
           <div *ngFor="let url of imgUrls">

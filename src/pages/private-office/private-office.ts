@@ -1,8 +1,10 @@
+import { HomePage } from './../home/home';
 import { Component } from "@angular/core";
 import { NavController, NavParams } from "ionic-angular";
 import { GoalsPage } from "../goals/goals";
 import { UserProvider } from "../../providers/user/user";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { AngularFirestore } from "@angular/fire/firestore";
 
 /**
  * Generated class for the PrivateOfficePage page.
@@ -36,11 +38,13 @@ export class PrivateOfficePage {
     gender: ""
   };
 
+  user 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public userP: UserProvider,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    afs: AngularFirestore
   ) {
     const globalPractices = UserProvider.getGlobalPractices();
     console.log('global practices', globalPractices);
@@ -61,14 +65,16 @@ export class PrivateOfficePage {
       a => a.achivement > 0
     );
 
+    const user = UserProvider.getUser();
+    
     this.myForm = formBuilder.group({
-      spiritualName: ["", Validators.required],
-      fullName: ["", Validators.required],
-      Status: [this.data.Status != ""],
-      Email: ["", [Validators.required, Validators.email]],
-      Password: ["", [Validators.required, Validators.pattern(".{8,}")]],
-      PhoneNumber: ["", [Validators.required, Validators.pattern(".{10,}")]],
-      gender: ["", Validators.required]
+      spiritual_name: [user.spiritual_name || "", Validators.required],
+      full_name: [user.full_name || "", Validators.required],
+      status: [user.status || this.data.Status != "", Validators.required],
+      // email: [user.email || "", [Validators.required, Validators.email]],
+      // password: [user.password || "", [Validators.required, Validators.pattern(".{8,}")]],
+      phone: [user.phone || "", [Validators.pattern(".{10,}")]],
+      gender: [user.gender || "", Validators.required]
     });
   }
 
@@ -86,5 +92,14 @@ export class PrivateOfficePage {
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad PrivateOfficePage");
+  }
+
+  submit() {
+    
+    if(this.myForm.valid) {
+      UserProvider.updateUser(this.myForm.value)
+      .then(res => this.navCtrl.setRoot(HomePage))
+      .catch(err => console.log('error', err));
+    }
   }
 }

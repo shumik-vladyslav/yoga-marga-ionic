@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { AngularFirestore } from "@angular/fire/firestore";
@@ -15,6 +16,9 @@ export class UserProvider {
   static id: any;
   static userStatic;
   static globalPractices;
+
+  static afs: AngularFirestore;
+  static uid;
   constructor() {
     console.log("Hello UserProvider Provider");
   }
@@ -22,9 +26,8 @@ export class UserProvider {
   static stepFlag = false;
 
   static Init(afs: AngularFirestore, userId): Promise<any> {
-    
-
-
+    this.afs = afs;
+    this.uid = userId;
     return new Promise<any>((resolve,reject) => {
       afs
       .doc(`users/${userId}`)
@@ -72,6 +75,9 @@ export class UserProvider {
 
   static getUser = () => UserProvider.user;
 
+  static updateUser (patch): Promise<void> {
+    return this.afs.doc(`users/${this.uid}`).update(patch);
+  }
   static getComplexes() {
     const pr = UserProvider.globalPractices;
     const cm = UserProvider.user.complexes;
