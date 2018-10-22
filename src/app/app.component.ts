@@ -66,22 +66,22 @@ export class MyApp {
         icon: "/assets/icon/svg/navigation/icon-nav4.svg",
         component: SettingsPage
       },
-      {
-        title: "Дхарма-вичара",
-        icon: "/assets/icon/svg/navigation/icon-nav5.svg",
-        component: SignUpPage
-      },
-      {
-        title: "Выйти",
-        icon: "/assets/icon/svg/navigation/icon-nav6.svg",
-        component: SignUpPage
-      },
+      // {
+      //   title: "Дхарма-вичара",
+      //   icon: "/assets/icon/svg/navigation/icon-nav5.svg",
+      //   component: SignUpPage
+      // },
+      // {
+      //   title: "Выйти",
+      //   icon: "/assets/icon/svg/navigation/icon-nav6.svg",
+      //   component: SignUpPage
+      // },
       // { title: "", icon: "", component: "" },
-      {
-        title: "sing-in",
-        icon: "/assets/icon/svg/navigation/icon-nav3.svg",
-        component: SingInPage
-      },
+      // {
+      //   title: "sing-in",
+      //   icon: "/assets/icon/svg/navigation/icon-nav3.svg",
+      //   component: SingInPage
+      // },
       // {
       //   title: "sing-up",
       //   icon: "/assets/icon/svg/navigation/icon-nav3.svg",
@@ -122,6 +122,15 @@ export class MyApp {
     this.authP.getInstance();
   }
 
+  signOut() {
+    this.afAuth.auth.signOut().then(
+      res => {
+        this.nav.setRoot(SingInPage);
+        this.menyIsEnabled = false;
+      }
+    )
+  }
+  menyIsEnabled;
   initializeApp() {
     this.platform.ready().then(() => {
       // TODO Init current user
@@ -130,11 +139,13 @@ export class MyApp {
         if (user) {
           UserProvider.Init(this.afs, user.email).then(res => {
             this.rootPage = HomePage;
+            this.menyIsEnabled = true;
             this.statusBar.styleDefault();
             this.splashScreen.hide();
           });
         } else {
           this.rootPage = SingInPage;
+          this.menyIsEnabled = false;
         }
 
         this.statusBar.styleDefault();

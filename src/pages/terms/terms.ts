@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { SettingsPage } from '../settings/settings';
+import { UserProvider } from '../../providers/user/user';
 
 /**
  * Generated class for the TermsPage page.
@@ -15,7 +16,11 @@ import { SettingsPage } from '../settings/settings';
 })
 
 export class TermsPage {
-
+  
+  ionViewCanEnter() {
+    return UserProvider.user?true:false;
+  }
+  
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
   

@@ -1,4 +1,4 @@
-<ion-menu [content]="content">
+<ion-menu [content]="content" [enabled]="menyIsEnabled">
   <ion-header>
     <!-- <ion-toolbar>
       <h3 no-margin padding-left ion-text color="white">Menu</h3>
@@ -38,6 +38,13 @@
           {{p.title}}
         </button>
       </div>
+      <button class="bg-none sidebar-item" menuClose (click)="signOut()">
+          <ion-icon menuClose class="icon-sidebar-item">
+              <svg-icon src="/assets/icon/svg/navigation/icon-nav6.svg" [stretch]="true" [svgStyle]="{'height.px':17}">
+              </svg-icon>
+            </ion-icon>
+        Выйти
+      </button>
     </ion-list>
   </ion-content>
 

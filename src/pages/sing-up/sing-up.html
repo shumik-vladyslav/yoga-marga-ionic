@@ -27,20 +27,25 @@
             <ion-input [(ngModel)]="data.fullName" formControlName="fullName" text-left placeholder="Ф.И.О." clearInput></ion-input>
           </ion-item>
           <ion-item [ngClass]="{'error-validation': (myForm.controls['Email'].invalid) && (customeValidation === false)}" no-padding class="input-style">
-            <ion-input [(ngModel)]="data.Email" formControlName="Email" text-left placeholder="Email" clearInput></ion-input>
+            <ion-input  type="email" [(ngModel)]="data.Email" formControlName="Email" text-left placeholder="Email" clearInput></ion-input>
           </ion-item>
           <ion-item [ngClass]="{'error-validation': (myForm.controls['gender'].invalid) && (customeValidation === false)}" no-padding class="input-style p-l-input-17">
             <ion-label>Статус</ion-label>
-            <ion-select [(ngModel)]="data.gender" formControlName="gender">
+            <!-- <ion-select [(ngModel)]="data.gender" formControlName="gender">
               <ion-option value="f">Статус 1</ion-option>
               <ion-option value="m">Статус 1</ion-option>
-            </ion-select>
+            </ion-select> -->
+            <ion-select [(ngModel)]="data.Status" formControlName="Status">
+                <ion-option value="grihastha">Грихастха</ion-option>
+                <ion-option value="carma-sanyasy">Карма-Саньяси</ion-option>
+                <ion-option value="purna-sanyasy">Пурна-Саньяси</ion-option>
+              </ion-select>
           </ion-item>
           <ion-item [ngClass]="{'error-validation': (myForm.controls['Password'].invalid) && (customeValidation === false)}" no-padding class="input-style">
-            <ion-input [(ngModel)]="data.Password" formControlName="Password" text-left placeholder="Пароль" type="password" clearInput></ion-input>
+            <ion-input type="password" [(ngModel)]="data.Password" formControlName="Password" text-left placeholder="Пароль" type="password" clearInput></ion-input>
           </ion-item>
           <ion-item [ngClass]="{'error-validation': ((data.RepeatPassword !== data.Password) && (customeValidation === false)) || ((myForm.controls['RepeatPassword'].invalid) && (customeValidation === false))}" no-padding class="input-style">
-            <ion-input [(ngModel)]="data.RepeatPassword" formControlName="RepeatPassword" text-left placeholder="Потвердите пароль" type="password" clearInput></ion-input>
+            <ion-input type="password" [(ngModel)]="data.RepeatPassword" formControlName="RepeatPassword" text-left placeholder="Потвердите пароль" type="password" clearInput></ion-input>
           </ion-item>
         </form>
         <button [ngClass]="{'error': (myForm.invalid) &&   (customeValidation === false)}" full text-capitalize class="height-100 btn-sing-up btn-hover" (click)="signUp()">Зарегестрироваться</button>

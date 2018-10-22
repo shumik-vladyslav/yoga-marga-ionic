@@ -76,6 +76,10 @@ export class CreateComplexPage {
   name;
   complexPractices = {};
 
+  ionViewCanEnter() {
+    return UserProvider.user?true:false;
+  }
+  
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,

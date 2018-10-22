@@ -1,8 +1,8 @@
 <ion-header>
   <ion-navbar>
-    <button ion-button menuToggle ion-text color="white" class="pos-a">
+    <!-- <button ion-button menuToggle ion-text color="white" class="pos-a">
       <ion-icon name="menu" class="fs-30"></ion-icon>
-    </button>
+    </button> -->
     <p text-center ion-text color="white" class="header-title">Авторизация</p>
   </ion-navbar>
 </ion-header>
@@ -19,11 +19,11 @@
         <form novalidate [formGroup]="myForm">
 
           <ion-item [ngClass]="{'error-validation': (myForm.controls['Email'].invalid) && (customeValidation === false)}" no-padding class="input-style">
-            <ion-input formControlName="Email" text-left placeholder="e-mail" color="gray" clearInput [(ngModel)]="email"></ion-input>
+            <ion-input type="email" formControlName="Email" text-left placeholder="e-mail" color="gray" clearInput [(ngModel)]="email"></ion-input>
           </ion-item>
           
           <ion-item [ngClass]="{'error-validation': (myForm.controls['Password'].invalid) &&   (customeValidation === false)}" no-padding class="input-style">
-            <ion-input formControlName="Password" text-left placeholder="пароль" clearInput [(ngModel)]="password"></ion-input>
+            <ion-input type="password" formControlName="Password" text-left placeholder="пароль" clearInput [(ngModel)]="password"></ion-input>
           </ion-item>
 
         </form>

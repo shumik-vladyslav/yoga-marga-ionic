@@ -85,6 +85,6 @@
     <plugin name="cordova-plugin-file" spec="^6.0.1" />
     <allow-navigation href="http://192.168.1.4:8101" sessionid="35027736" />
     <plugin name="cordova-sqlite-storage" spec="^2.4.0" />
-    <allow-navigation href="http://192.168.1.3:8100" sessionid="ae330efa" />
+    <allow-navigation href="http://192.168.1.3:8100" sessionid="83da66ec" />
     <engine name="ios" spec="4.5.5" />
 </widget>

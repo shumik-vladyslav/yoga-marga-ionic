@@ -3,6 +3,7 @@ import { NavController, NavParams } from "ionic-angular";
 import { PrivateOfficePage } from "../private-office/private-office";
 import { AngularFirestore, DocumentSnapshot } from "@angular/fire/firestore";
 import { AuthProvider } from "../../providers/auth/auth";
+import { UserProvider } from "../../providers/user/user";
 
 /**
  * Generated class for the GoalsPage page.
@@ -24,7 +25,10 @@ export class GoalsPage {
     anuloma_viloma: '',
     sahita_kumbhaka: ''
   };
-
+  ionViewCanEnter() {
+    return UserProvider.user?true:false;
+  }
+  
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,

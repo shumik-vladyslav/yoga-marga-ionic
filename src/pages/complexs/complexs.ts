@@ -27,7 +27,10 @@ export class ComplexsPage {
       this.complexes = UserProvider.getComplexes();
       console.log('this.complexes' ,this.complexes);
   }
-
+  
+  ionViewCanEnter() {
+    return UserProvider.user?true:false;
+  }
   goCreateComplexPage() {
     this.navCtrl.push(CreateComplexPage);
   }

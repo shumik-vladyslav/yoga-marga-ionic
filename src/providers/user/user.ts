@@ -12,7 +12,7 @@ import { AuthProvider } from "../auth/auth";
 */
 @Injectable()
 export class UserProvider {
-  static user: any = {};
+  static user;
   static id: any;
   static userStatic;
   static globalPractices;
@@ -79,6 +79,7 @@ export class UserProvider {
     return this.afs.doc(`users/${this.uid}`).update(patch);
   }
   static getComplexes() {
+    if (!this.user) return null;
     const pr = UserProvider.globalPractices;
     const cm = UserProvider.user.complexes;
     
@@ -91,6 +92,7 @@ export class UserProvider {
   }
 
   static getUserGoals() {
+    if (!this.user) return null;
     const result = [];
     const goals = UserProvider.user.goals;
     const practices = UserProvider.user.practices;
@@ -120,9 +122,13 @@ export class UserProvider {
     return result;
   }
 
-  static getUserPractices = () => UserProvider.user.practices;
+  static getUserPractices(){
+    if (!UserProvider.user) return null;
+    return UserProvider.user.practices;
+  }
 
   static getUserPractAchievement() {
+    if (!UserProvider.user) return null;
     const result = [];
     const practices = UserProvider.user.practices;
     console.log("practices", practices);

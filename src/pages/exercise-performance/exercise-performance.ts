@@ -6,6 +6,7 @@ import { AngularFireStorage } from '@angular/fire/storage';
 import { AuthProvider } from '../../providers/auth/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { HomePage } from '../home/home';
+import { UserProvider } from '../../providers/user/user';
 
 /**
  * Generated class for the ExercisePerformancePage page.
@@ -121,6 +122,10 @@ export class ExercisePerformancePage {
 
   }
 
+  ionViewCanEnter() {
+    return UserProvider.user?true:false;
+  }
+  
   saveTimeForExercise() {
     console.log('set time for pract');
     

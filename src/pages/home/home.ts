@@ -18,6 +18,14 @@ export class HomePage {
   complexes;
   practices$: Observable<any>;
   
+  ionViewCanEnter() {
+    console.log('canenter user provider', UserProvider.user);
+    
+    // if 
+    // return false;
+    return UserProvider.user?true:false;
+  }
+  
   progresses;
   achivements;
   constructor(public navCtrl: NavController,

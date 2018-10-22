@@ -86,7 +86,7 @@ export class FileCacheProvider {
       .ref(path)
       .getDownloadURL()
       .pipe(
-        take(1),
+        // take(1),
         tap(async val => {
           try {
             const filesystemInfo = await this.fileTransfer.download(val,`${this.file.dataDirectory}filecache/${path}`);

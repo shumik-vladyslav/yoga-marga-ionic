@@ -38,6 +38,10 @@ export class PrivateOfficePage {
     gender: ""
   };
 
+  ionViewCanEnter() {
+    return UserProvider.user?true:false;
+  }
+  
   user 
   constructor(
     public navCtrl: NavController,

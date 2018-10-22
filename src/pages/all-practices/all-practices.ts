@@ -1,3 +1,4 @@
+import { UserProvider } from './../../providers/user/user';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { MorningPracticePage } from '../morning-practice/morning-practice';
@@ -25,10 +26,14 @@ export class AllPracticesPage {
   practices;
   groupingPractices;
 
+  ionViewCanEnter() {
+    return UserProvider.user?true:false;
+  }
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private afs: AngularFirestore
+    private afs: AngularFirestore,
   ) {
     const subs = this.afs.collection('practices').valueChanges().subscribe(
       practices => {
