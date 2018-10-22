@@ -17,7 +17,7 @@
         <ion-row justify-content-center class="m-b-10 img-wrap-big">
           <span (click)="back()" class="arrow-slide arrow-left"></span>
           <div class="img-sm-wrap-inside">
-            <img [src]="url" alt="">
+            <img [src]="url" alt="" *ngIf="url">
           </div>
           <span (click)="skip()" class="arrow-slide arrow-right"></span>
         </ion-row>

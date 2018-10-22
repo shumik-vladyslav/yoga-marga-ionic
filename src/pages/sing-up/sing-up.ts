@@ -100,11 +100,6 @@ export class SignUpPage {
   }
 
   goSingIn() {
-    if (this.myForm.valid) {
-      this.navCtrl.setRoot(SingInPage);
-    } else {
-      this.customeValidation = false;
-    }
-    console.log(this.myForm);
+    this.navCtrl.setRoot(SingInPage);
   }
 }

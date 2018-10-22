@@ -77,11 +77,11 @@ export class MyApp {
         component: SignUpPage
       },
       // { title: "", icon: "", component: "" },
-      // {
-      //   title: "sing-in",
-      //   icon: "/assets/icon/svg/navigation/icon-nav3.svg",
-      //   component: SingInPage
-      // },
+      {
+        title: "sing-in",
+        icon: "/assets/icon/svg/navigation/icon-nav3.svg",
+        component: SingInPage
+      },
       // {
       //   title: "sing-up",
       //   icon: "/assets/icon/svg/navigation/icon-nav3.svg",

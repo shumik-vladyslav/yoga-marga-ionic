@@ -34,7 +34,7 @@ export class PracticePerformancePage {
   imgUrls = [];
   timeForExercise;
 
-  url$;
+  url;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -47,14 +47,18 @@ export class PracticePerformancePage {
     this.practice = this.navParams.get("practice");
     this.resorePracticeSettings();
     
-    // this.getImgUrls().then();
-
-    this.url$ = this.fileCacheP.getUrl(`practices/${this.practice.id}/1.jpg`);
+    
+    this.fileCacheP.getUrl(`practices/${this.practice.id}/m.jpg`).subscribe(
+      url => this.url = url,
+      err => {
+        console.log(err);
+        this.url = null;
+      }
+    )
 
     this.fileCacheP.getUrl(`practices/${this.practice.id}/1.jpg`).subscribe(
       res => console.log('~True',res),
       err => console.log('~Err', err)
-      
     )
   }
 

@@ -1,5 +1,5 @@
 import { Observable, of } from "rxjs";
-import { tap, map } from "rxjs/operators";
+import { tap, map, take } from "rxjs/operators";
 
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
@@ -86,19 +86,18 @@ export class FileCacheProvider {
       .ref(path)
       .getDownloadURL()
       .pipe(
-        tap(val => {
-          this.in_memory[path] = val;
-          this.file
-            .writeFile(
-              this.file.dataDirectory,
-              "cachedUrls",
-              JSON.stringify(this.in_memory),
-              { replace: true }
-            )
-            .then(res => console.log("file writed"))
-            .catch(err => console.log("write error"));
+        take(1),
+        tap(async val => {
+          try {
+            const filesystemInfo = await this.fileTransfer.download(val,`${this.file.dataDirectory}filecache/${path}`);
+            this.in_memory[path] = normalizeURL(filesystemInfo.nativeURL);
+            await this.file.writeFile(this.file.dataDirectory,"cachedUrls",JSON.stringify(this.in_memory),
+              { replace: true });
+          } catch (err) { 
+            console.log('File caching Error', err);
+          }
         })
-      );
+      )
   }
 
   claerCache() {}

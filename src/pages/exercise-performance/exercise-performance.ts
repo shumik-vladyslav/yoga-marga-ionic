@@ -1,3 +1,4 @@
+import { FileCacheProvider } from './../../providers/file-cache/file-cache';
 import { interval } from 'rxjs';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
@@ -37,13 +38,11 @@ export class ExercisePerformancePage {
     public navParams: NavParams,
     private afs: AngularFirestore,
     private authP: AuthProvider,
-    private afStorage: AngularFireStorage
+    private afStorage: AngularFireStorage,
+    private fileCashe: FileCacheProvider
   ) {
     this.startTime = Date.now();
-
     this.practice = this.navParams.get('practice');
-    console.log(this.practice);
-
     this.nextExercise();
   }
 
@@ -55,9 +54,6 @@ export class ExercisePerformancePage {
 
   nextExercise() {
     if (this.exerciseCounter >= this.practice.exercises.length) {
-      // todo save results;
-      // todo goto start page
-      // this.navCtrl.pop();
       return this.savePracticeResultAndExit();
     }
 
@@ -65,9 +61,15 @@ export class ExercisePerformancePage {
     // get exercise
     this.exercise = this.practice.exercises[this.exerciseCounter];
 
-    this.getImgUrls(this.exercise.imgsIds).then(
-      res => this.rotateExerciseImages()
-    );
+    if (this.exercise.hasImg) {
+      this.fileCashe.getUrl(`practices/${this.practice.id}/${this.exerciseCounter}.jpg`).subscribe(
+        url => this.url = url,
+        err => console.log(err)
+      )
+    } else {
+      this.url = null;
+    }
+    
 
     if (this.practice.userSpec &&
       this.practice.userSpec.exercises &&
@@ -78,7 +80,8 @@ export class ExercisePerformancePage {
       this.exercise.timespan = this.practice.timeForExercise;
     }
     this.timer = new Date(this.exercise.timespan * 60000);
-        // for decrise practicaTime counter
+    
+    // for decrise practicaTime counter
     const subs2 = interval(1000).subscribe(val => {
       console.log("subs2", val);
       this.timer -= 1000;
@@ -86,8 +89,7 @@ export class ExercisePerformancePage {
         subs2.unsubscribe();
       }
     });
-    console.log('exercise timespan', this.exercise.timespan);
-    
+
     const subs = interval(this.exercise.timespan * 60 * 1000).subscribe(
       val => {
         subs.unsubscribe();
@@ -109,45 +111,6 @@ export class ExercisePerformancePage {
     for (const val of this.subscriptions) {
       val.unsubscribe();
     }
-  }
-
-  rotateExerciseImages() {
-    if (!this.exercise.imgsIds && this.exercise.imgsIds.length>0) return;
-    if (this.exercise.imgsIds.length == 1) {
-      this.url = this.exercise.imgsUrls[0];
-      return;
-    } else {
-      this.url = this.exercise.imgsUrls[0];
-      return;
-    }
-
-    // let showImgCounter = 0;
-    // const showImgTime = this.exercise.timespan / this.exercise.imgsIds.length * 60 * 1000;
-    // const sub = interval(showImgTime).subscribe( 
-    //   val => {
-    //     console.log('show img interval', val);
-    //     this.url = this.exercise.imgsUrls[showImgCounter];
-    //     showImgCounter++;
-    //     if (showImgCounter >= this.exercise.imgsIds.length) {
-    //       sub.unsubscribe;
-    //     }
-    //   }
-    // )
-    // this.subscriptions.push(sub);
-  }
-
-  async getImgUrls(ids) {
-    if (!ids) return;
-    this.exercise.imgsUrls = [];
-    for (const id of this.exercise.imgsIds) {
-      try {
-        const url = await this.afStorage.ref(`practices/${this.practice.id}/${id}.jpg`).getDownloadURL().toPromise();
-        this.exercise.imgsUrls.push(url);
-      } catch (err) {
-        console.log(err);
-      }
-    }
-
   }
 
   back() {

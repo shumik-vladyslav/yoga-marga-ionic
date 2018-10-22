@@ -49,13 +49,13 @@
     <ion-card-content no-padding padding-vertical>
       <ion-grid>
         <ion-row justify-content-center>
-          <ion-col col-4 class="border-r col-between" no-padding *ngFor="let pract of practices" navPush="PracticePerformancePage"
-            [navParams]="{practice: pract}">
-
+          <ion-col col-4 class="border-r col-between" no-padding *ngFor="let pract of practices" [navPush]="pract.active === false?'':'PracticePerformancePage'"
+            [navParams]="{practice: pract}" [class.inactive]="pract.active===false">
+ 
             <ion-row>
               <ion-col col-12>
                 <ion-item text-center no-padding>
-                  <img class="img-icon" [src]="pract.ico" alt="">
+                  <img class="img-icon" [src]="pract.ico" alt="" >
                 </ion-item>
               </ion-col>
             </ion-row>

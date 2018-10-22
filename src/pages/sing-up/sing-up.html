@@ -44,6 +44,12 @@
           </ion-item>
         </form>
         <button [ngClass]="{'error': (myForm.invalid) &&   (customeValidation === false)}" full text-capitalize class="height-100 btn-sing-up btn-hover" (click)="signUp()">Зарегестрироваться</button>
+        <p  text-center ion-text class="m-t-40">
+            Есть аккаунт? 
+            <button class="bg-none" (click)="goSingIn()">
+              Зайти
+            </button>
+          </p>
       </ion-col>
     </ion-row>
   </ion-grid>
