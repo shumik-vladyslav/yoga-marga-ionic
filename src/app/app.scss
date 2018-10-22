@@ -394,7 +394,7 @@ span.arrow-back{
 .button-custom {
   float: right;
   display: block;
-  min-width: 180px;
+  min-width: 200px;
   margin: 20px 20px 0 0;
   font-family: 'gilroymedium';
   font-size: 16px;
@@ -409,6 +409,7 @@ span.arrow-back{
   align-items: center;
   justify-content: center;
   transition: all 0.5s;
+  white-space: nowrap;
   &:hover{
     background: color($colors,primary);
     color: color($colors, white);
@@ -573,10 +574,5 @@ ion-item > div.item-inner{
 @media screen and (min-width: 500px) {
   .mr-md-50{
     margin-right: 50px !important;
-  }
-}
-@media screen and (max-width: 500px) {
-  .btn-sm-width{
-    width: 150px !important;
   }
 }
