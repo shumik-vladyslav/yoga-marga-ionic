@@ -1,3 +1,4 @@
+import { HomePage } from './../home/home';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { TermsPage } from '../terms/terms';
@@ -15,8 +16,10 @@ import { UserProvider } from '../../providers/user/user';
   templateUrl: 'settings.html',
 })
 export class SettingsPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  msg;
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams) {
   }
   
   ionViewCanEnter() {
@@ -31,4 +34,11 @@ export class SettingsPage {
     console.log('ionViewDidLoad SettingsPage');
   }
 
+  submit() {
+    console.log('submit');
+    if(this.msg && this.msg !=='')
+    UserProvider.sendFeedback(this.msg).then(
+      res => this.navCtrl.setRoot(HomePage)
+    )
+  }
 }

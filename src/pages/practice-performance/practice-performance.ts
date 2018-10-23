@@ -62,6 +62,19 @@ export class PracticePerformancePage {
     return UserProvider.user?true:false;
   }
   
+  onChangeMetronome() {
+    if (this.practice.userSpec.metronomeFlag === false) {
+      this.metronomeSubscription.unsubscribe();
+    } else if (this.isStarted) {
+      this.metronomeSubscription = interval(1000).subscribe(val => {
+        console.log("metronomeSubscription", val);
+        //todo audio
+      });
+  
+      this.subscriptions.push(this.metronomeSubscription);
+    }
+  }
+
   resorePracticeSettings() {
 
     this.fileCacheP.getUrl(`practices/${this.practice.id}/text.pdf`).subscribe(
@@ -158,6 +171,7 @@ export class PracticePerformancePage {
   }
 
   timer;
+  metronomeSubscription;
   start() {
     console.log(this.practice);
 
@@ -219,6 +233,13 @@ export class PracticePerformancePage {
       this.timer -= 1000;
     });
 
+
+    this.metronomeSubscription = interval(1000).subscribe(val => {
+      console.log("metronomeSubscription", val);
+      //todo audio
+    });
+
+    this.subscriptions.push(this.metronomeSubscription);
     this.subscriptions.push(subs);
     this.subscriptions.push(subs1);
     this.subscriptions.push(subs2);

@@ -11,7 +11,7 @@
       <span class="arrow arrow-back"></span>
     </button>
     <p text-right ion-text color="white" class="header-title">
-        <!-- [href]="practice?.text"  -->
+      <!-- [href]="practice?.text"  -->
       <button (click)="openTextInBrowser()">
         <img class="header-icon" width="25px" height="25px" src="/assets/icon/svg/header/text.svg">
       </button>
@@ -136,6 +136,18 @@
                   </ion-item>
                   <p padding-horizontal color="text-light" text-wrap text-left ion-text text-capitalize class="m-0 p-0 fs-13 letter-spacing-2 lable-radio-box">
                     Постоянное напоминание
+                  </p>
+                </ion-row>
+
+                <ion-row nowrap align-items-center *ngIf="practice.hasMetronome">
+                  <!-- <pre>
+                    {{practice | json}}
+                  </pre> -->
+                  <ion-item id="radio-style ios" class="width-default radio-style">
+                    <ion-toggle [(ngModel)]="practice.userSpec.metronomeFlag" (ngModelChange)="onChangeMetronome()"></ion-toggle>
+                  </ion-item>
+                  <p padding-horizontal color="text-light" text-wrap text-left ion-text text-capitalize class="m-0 p-0 fs-13 letter-spacing-2 lable-radio-box">
+                    Метроном
                   </p>
                 </ion-row>
               </ion-item>

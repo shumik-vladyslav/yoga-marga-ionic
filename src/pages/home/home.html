@@ -17,7 +17,7 @@
         <ion-row justify-content-center>
           <!--  -->
           <ion-col col-4 class="border-r col-between" no-padding *ngFor="let p of practices$ | async | slice:0:3"
-            navPush="PracticePerformancePage" [navParams]="{practice: p}">
+          [navPush]="p.active === false?'':'PracticePerformancePage'" [navParams]="{practice: p}" [class.inactive]="p.active===false">
             <!-- (click)="onClickPractice(p)" -->
             <!-- <pre>
               {{practices | json}}

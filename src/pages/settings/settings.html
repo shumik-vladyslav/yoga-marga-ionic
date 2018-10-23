@@ -29,7 +29,7 @@
         <ion-row justify-content-center>
           <ion-col col-12 no-padding>
             <ion-item no-padding class="input-text-area">
-              <ion-textarea text-left placeholder="" color="gray" clearInput></ion-textarea>
+              <ion-textarea text-left placeholder="" color="gray" clearInput [(ngModel)]="msg"></ion-textarea>
             </ion-item>
           </ion-col>
         </ion-row>
@@ -39,7 +39,7 @@
 
   <ion-grid>
     <ion-row justify-content-center>
-      <button icon-center margin-top margin-bottom class="button-custom mr-md-50 btn-sm-width">
+      <button icon-center margin-top margin-bottom class="button-custom mr-md-50 btn-sm-width" (click)="submit()">
         <!-- <ion-icon name="ios-book-outline"></ion-icon> -->
         Отправить
       </button>

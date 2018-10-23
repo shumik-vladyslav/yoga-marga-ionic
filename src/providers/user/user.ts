@@ -19,6 +19,7 @@ export class UserProvider {
 
   static afs: AngularFirestore;
   static uid;
+  
   constructor() {
     console.log("Hello UserProvider Provider");
   }
@@ -78,6 +79,21 @@ export class UserProvider {
   static updateUser (patch): Promise<void> {
     return this.afs.doc(`users/${this.uid}`).update(patch);
   }
+
+  static sendFeedback (msg): Promise<any> {
+    console.log(JSON.stringify({
+      timestamp: Date.now(),
+      user: this.uid,
+      msg: msg
+    }));
+    
+    return this.afs.collection(`feedbacks`).add({
+      timestamp: Date.now(),
+      user: this.uid,
+      msg: msg
+    })
+  }
+
   static getComplexes() {
     if (!this.user) return null;
     const pr = UserProvider.globalPractices;
