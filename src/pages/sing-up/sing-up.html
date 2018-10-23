@@ -14,7 +14,7 @@
 
         <!-- Logo mabe be a Svg file -->
 
-        <ion-img class="img-sing-up" src="/assets/logo/logo.jpg"></ion-img>
+        <ion-img class="img-sing-up m-t-20" src="/assets/logo/logo.jpg"></ion-img>
         <p padding-horizontal text-center ion-text>
           Для использования приложения, пожалуйста, зарегестрируйтесь!
         </p>
@@ -29,7 +29,7 @@
           <ion-item [ngClass]="{'error-validation': (myForm.controls['Email'].invalid) && (customeValidation === false)}" no-padding class="input-style">
             <ion-input  type="email" [(ngModel)]="data.Email" formControlName="Email" text-left placeholder="Email" clearInput></ion-input>
           </ion-item>
-          <ion-item [ngClass]="{'error-validation': (myForm.controls['gender'].invalid) && (customeValidation === false)}" no-padding class="input-style p-l-input-17">
+          <ion-item [ngClass]="{'error-validation': (myForm.controls['Status'].invalid) && (customeValidation === false) }" no-padding class="input-style p-l-input-17">
             <ion-label>Статус</ion-label>
             <!-- <ion-select [(ngModel)]="data.gender" formControlName="gender">
               <ion-option value="f">Статус 1</ion-option>
@@ -48,7 +48,7 @@
             <ion-input type="password" [(ngModel)]="data.RepeatPassword" formControlName="RepeatPassword" text-left placeholder="Потвердите пароль" type="password" clearInput></ion-input>
           </ion-item>
         </form>
-        <button [ngClass]="{'error': (myForm.invalid) &&   (customeValidation === false)}" full text-capitalize class="height-100 btn-sing-up btn-hover" (click)="signUp()">Зарегестрироваться</button>
+        <button [ngClass]="{'error': (myForm.invalid) && (customeValidation === false)}" full text-capitalize class="height-100 btn-sing-up btn-hover" (click)="signUp()">Зарегестрироваться</button>
         <p  text-center ion-text class="m-t-40">
             Есть аккаунт? 
             <button class="bg-none" (click)="goSingIn()">

@@ -36,12 +36,11 @@ export class SignUpPage {
       {
         spiritualName: ["", Validators.required],
         fullName: ["", Validators.required],
-        Status: [this.data.Status != ""],
+        Status: ["", Validators.required],
         Email: ["", [Validators.required, Validators.email]],
         // Password : ['', [ Validators.required, Validators.pattern("(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}")]],
         Password: ["", [Validators.required, Validators.pattern(".{8,}")]],
         RepeatPassword: ["", Validators.required],
-        gender: ["", Validators.required]
       },
       { validator: this.matchingPasswords("Password", "RepeatPassword") }
     );
@@ -96,6 +95,7 @@ export class SignUpPage {
         });
     } else {
       console.log("form is invalid");
+      this.customeValidation = false;
     }
   }
 
