@@ -1,3 +1,4 @@
+import { SignUpPage } from './../pages/sing-up/sing-up';
 import { AngularFirestore } from "@angular/fire/firestore";
 import { UserProvider } from "./../providers/user/user";
 import { AuthProvider } from "./../providers/auth/auth";
@@ -7,7 +8,6 @@ import { StatusBar } from "@ionic-native/status-bar";
 import { SplashScreen } from "@ionic-native/splash-screen";
 
 import { HomePage } from "../pages/home/home";
-import { SignUpPage } from "../pages/sing-up/sing-up";
 import { SingInPage } from "../pages/sing-in/sing-in";
 import { ComplexsPage } from "../pages/complexs/complexs";
 import { MyComplexsPage } from "../pages/my-complexs/my-complexs";
@@ -19,6 +19,7 @@ import { Template_3Page } from "../pages/template-3/template-3";
 import { Template_4Page } from "../pages/template-4/template-4";
 import { LoadScreenPage } from "../pages/load-screen/load-screen";
 import { AngularFireAuth } from "@angular/fire/auth";
+import { PracticeSearchPage } from '../pages/practice-search/practice-search';
 
 @Component({
   templateUrl: "app.html"
@@ -65,6 +66,11 @@ export class MyApp {
         title: "Настройки",
         icon: "/assets/icon/svg/navigation/icon-nav4.svg",
         component: SettingsPage
+      },
+      {
+        title: "Найти практику",
+        icon: "/assets/icon/svg/navigation/icon-nav4.svg",
+        component: PracticeSearchPage
       },
       // {
       //   title: "Дхарма-вичара",
@@ -144,8 +150,12 @@ export class MyApp {
             this.splashScreen.hide();
           });
         } else {
-          this.rootPage = SingInPage;
-          this.menyIsEnabled = false;
+          this.afAuth.auth.signOut().then(
+            _ => {
+              this.rootPage = SingInPage;
+              this.menyIsEnabled = false;
+            }
+          )
         }
 
         this.statusBar.styleDefault();

@@ -7,6 +7,8 @@ import { AlertController } from "ionic-angular";
 import { AngularFirestore, DocumentSnapshot } from "@angular/fire/firestore";
 import { AuthProvider } from "../../providers/auth/auth";
 import { AngularFireStorage } from "@angular/fire/storage";
+import { UserProvider } from "../../providers/user/user";
+
 
 /**
  * Generated class for the PracticePerformancePage page.
@@ -22,10 +24,12 @@ import { AngularFireStorage } from "@angular/fire/storage";
 })
 export class PracticePerformancePage {
   practice;
-
+  url;
+  metronomeSubscription;
   isStarted = false;
   subscriptions = [];
   audio = new Audio("assets/sound/pomni.mp3");
+  metronomAudio = new Audio("assets/sound/tuk.mp3");
   startTime = 0;
 
   // Время выполнения практики
@@ -44,28 +48,42 @@ export class PracticePerformancePage {
   ) {
     this.practice = this.navParams.get("practice");
     this.resorePracticeSettings();
-    
-    this.getImgUrls().then();
   }
 
+  onChangeMetronome() {
+    if (this.practice.userSpec.metronomeFlag === false) {
+      this.metronomeSubscription.unsubscribe();
+    } else if (this.isStarted) {
+      this.metronomeSubscription = interval(1000).subscribe(val => {
+        console.log("metronomeSubscription", val);
+        new Audio("assets/sound/tuk.mp3").play();
+      });
+  
+      this.subscriptions.push(this.metronomeSubscription);
+    }
+  }
+
+
   resorePracticeSettings() {
-    console.log(
-      `users/${this.authP.getUserId()}/practices/${this.practice.id}/`
-    );
 
-    this.afStorage
-      .ref(`practices/${this.practice.id}/text.pdf`)
-      .getDownloadURL()
-      .toPromise().then(
-        url => this.practice.text = url
-      ).catch (err => console.log(err))
+    this.fileCacheP.getUrl(`practices/${this.practice.id}/m.jpg`).subscribe(
+      url => this.url = url,
+      err => {
+        console.log('error get url for anuloma viloma',JSON.stringify(err));
+        this.url = null;
+      }
+    )
 
-    // this.fileCacheP.getFileUrl(this.practice.id, 'text.pdf').then(
-    //   url => {
-    //     console.log('promice', url);
-    //     this.practice.text = url;
-    //   }
-    // )
+
+    this.fileCacheP.getUrl(`practices/${this.practice.id}/text.pdf`).subscribe(
+      url => this.practice.text = url,
+      err => {
+        console.log('text err',JSON.stringify(err));
+        this.url = null;
+      }
+    )
+
+
     this.afs
       .doc(`users/${this.authP.getUserId()}`)
       .get()
@@ -103,58 +121,6 @@ export class PracticePerformancePage {
   
   opentText () {
 
-  }
-
-  // if files not cached urls is firebase storage urls
-  // else native file urls
-  getFilesUrls() {}
-
-  async getImgUrls() {
-    console.log("getImgUrls starts working");
-
-    // TODO save images uris specific to device
-    if (this.practice.exercises) {
-      for (let i = 1; ; i++) {
-        try {
-          const cacheUrl = await this.fileCacheP.getFileUrl(
-            this.practice.id,
-            `s${i}.jpg`
-          );
-          console.log(cacheUrl);
-
-          if (cacheUrl && cacheUrl != "") {
-            this.imgUrls.push(cacheUrl);
-            continue;
-          }
-
-          const url = await this.afStorage
-            .ref(`practices/${this.practice.id}/s${i}.jpg`)
-            .getDownloadURL()
-            .toPromise();
-          if (!url) break;
-          this.imgUrls.push(url);
-
-          this.fileCacheP.saveFile(url, this.practice.id, `s${i}.jpg`);
-        } catch (err) {
-          break;
-        }
-      }
-    } else {
-      this.practice.img = await this.fileCacheP.getFileUrl(this.practice.id, `1.jpg`);
-
-      try {
-        if (!this.practice.img) {
-          const url = await this.afStorage
-            .ref(`practices/${this.practice.id}/1.jpg`)
-            .getDownloadURL()
-            .toPromise();
-          this.fileCacheP.saveFile(url, this.practice.id, `1.jpg`);
-          this.practice.img = url;
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    }
   }
 
   onTimeForExerciseChange() {
@@ -265,11 +231,32 @@ export class PracticePerformancePage {
       this.timer -= 1000;
     });
 
+    if (this.practice.userSpec.metronomeFlag) {
+      this.metronomeSubscription = interval(1000).subscribe(val => {
+        console.log("metronomeSubscription", val);
+        // this.metronomAudio.play();
+        new Audio("assets/sound/tuk.mp3").play();
+      });
+  
+      this.subscriptions.push(this.metronomeSubscription);
+    }
+
     this.subscriptions.push(subs);
     this.subscriptions.push(subs1);
     this.subscriptions.push(subs2);
   }
-pomniSubs;
+ 
+  pomniSubs;
+
+  openTextInBrowser() {
+    console.log('~text', this.practice.text);
+    
+    if (this.practice.text) {
+      window.open(this.practice.text,'_system', 'location=yes')
+    }
+  }
+
+
   presentPrompt() {
     const inputsArr = [];
     if (this.practice.isAmountCounter) {
@@ -362,4 +349,5 @@ pomniSubs;
       this.savePracticeResult().then();
     }
   }
+  
 }

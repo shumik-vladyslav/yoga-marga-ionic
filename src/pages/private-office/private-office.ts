@@ -55,13 +55,13 @@ export class PrivateOfficePage {
     
     this.progresses = UserProvider.getUserGoals().map(a => {
       return {
-        val: Math.round((a.achivement / a.goal) * 100),
+        val: Math.round(((+a.achivement) / (+a.goal)) * 100),
         name: a.name,
         ico: globalPractices[a.id].ico,
         goal: a.goal,
         achivement: a.achivement
       };
-    });
+    }).filter(a => +a.goal);
 
     console.log(this.progresses);
     

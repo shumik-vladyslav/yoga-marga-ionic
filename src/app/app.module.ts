@@ -1,3 +1,4 @@
+import { PracticeSearchPageModule } from './../pages/practice-search/practice-search.module';
 import { ProgressChartDirective } from './../directives/progress-chart/progress-chart';
 import { ExercisePerformancePageModule } from './../pages/exercise-performance/exercise-performance.module';
 import { PracticePerformancePageModule } from './../pages/practice-performance/practice-performance.module';
@@ -46,6 +47,7 @@ import { FileCacheProvider } from '../providers/file-cache/file-cache';
 import { FileTransfer } from '@ionic-native/file-transfer';
 import { UserProvider } from '../providers/user/user';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { PracticeSearchPage } from '../pages/practice-search/practice-search';
 
 @NgModule({
   declarations: [
@@ -89,7 +91,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     HttpClientModule,
     ExercisePerformancePageModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PracticeSearchPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -113,7 +116,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     Template_3Page,
     Template_4Page,
     LoadScreenPage,
-    ProgressChartDirective
+    ProgressChartDirective,
+    PracticeSearchPage
   ],
   providers: [
     AngularFireStorage,

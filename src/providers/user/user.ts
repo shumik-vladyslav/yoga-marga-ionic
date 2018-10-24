@@ -12,7 +12,7 @@ import { AuthProvider } from "../auth/auth";
 */
 @Injectable()
 export class UserProvider {
-  static user;
+  static user:any = {};
   static id: any;
   static userStatic;
   static globalPractices;
@@ -95,7 +95,7 @@ export class UserProvider {
   }
 
   static getComplexes() {
-    if (!this.user) return null;
+    
     const pr = UserProvider.globalPractices;
     const cm = UserProvider.user.complexes;
     
@@ -108,11 +108,11 @@ export class UserProvider {
   }
 
   static getUserGoals() {
-    if (!this.user) return null;
+    
     const result = [];
     const goals = UserProvider.user.goals;
     const practices = UserProvider.user.practices;
-
+    if(!goals || !practices) return [];
     for (const key in goals) {
       if (goals.hasOwnProperty(key)) {
         const goal = goals[key];
@@ -139,12 +139,10 @@ export class UserProvider {
   }
 
   static getUserPractices(){
-    if (!UserProvider.user) return null;
     return UserProvider.user.practices;
   }
 
   static getUserPractAchievement() {
-    if (!UserProvider.user) return null;
     const result = [];
     const practices = UserProvider.user.practices;
     console.log("practices", practices);

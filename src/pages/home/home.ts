@@ -36,12 +36,11 @@ export class HomePage {
     ) {
       this.practices$ = this.afs.collection('practices').valueChanges().pipe(map(
         (practices:any) => {
-          console.log(JSON.stringify(practices));
-          
           return practices.filter(p => p.active !== false) 
           // return practices;
         }
       ));
+
       this.achivements = UserProvider.getUserGoals().filter(a => a.achivement > 0).slice(0,3);
       console.log(this.achivements);
       this.complexes = UserProvider.getComplexes();
@@ -58,7 +57,7 @@ export class HomePage {
           goal: a.goal,
           achivement: a.achivement
         };
-      });
+      }).filter(a => +a.goal);
   
       console.log(this.progresses);
       

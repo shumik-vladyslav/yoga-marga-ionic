@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { SignUpPage } from '../sing-up/sing-up';
 import { HomePage } from '../home/home';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -29,7 +29,8 @@ export class SingInPage {
     public navCtrl: NavController, 
     public navParams: NavParams,
     public afAuth: AngularFireAuth,
-    public formBuilder: FormBuilder
+    public formBuilder: FormBuilder,
+    private alertCtrl: AlertController
   ) {
       this.myForm = formBuilder.group({
               
@@ -37,6 +38,15 @@ export class SingInPage {
         Password: ['', [Validators.required, Validators.pattern(".{8,}")]],
       
       });
+  }
+
+  presentAlert(title, message) {
+    let alert = this.alertCtrl.create({
+      title: title,
+      subTitle: message,
+      buttons: ["Закрыть"]
+    });
+    alert.present();
   }
 
   goSingUp(){
@@ -53,6 +63,7 @@ export class SingInPage {
       this.navCtrl.setRoot(HomePage);
     } catch (err) {
       console.log(err);
+      this.presentAlert('Ошибка', err);
     }
   }
 

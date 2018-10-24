@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { NavController, NavParams } from "ionic-angular";
+import { NavController, NavParams, AlertController } from "ionic-angular";
 import { PrivateOfficePage } from "../private-office/private-office";
 import { AngularFirestore, DocumentSnapshot } from "@angular/fire/firestore";
 import { AuthProvider } from "../../providers/auth/auth";
@@ -17,36 +17,38 @@ import { UserProvider } from "../../providers/user/user";
   templateUrl: "goals.html"
 })
 export class GoalsPage {
-  goals:any = {
-    om: '',
-    om_dram: '',
-    prostiraniya: '',
-    chandaly: '',
-    anuloma_viloma: '',
-    sahita_kumbhaka: ''
+  goals: any = {
+    om: "",
+    om_dram: "",
+    prostiraniya: "",
+    chandaly: "",
+    anuloma_viloma: "",
+    sahita_kumbhaka: ""
   };
   ionViewCanEnter() {
-    return UserProvider.user?true:false;
+    return UserProvider.user ? true : false;
   }
-  
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private afs: AngularFirestore,
-    private authP: AuthProvider
+    private authP: AuthProvider,
+    private alertCtrl: AlertController
   ) {
-    this.afs.doc(`users/${this.authP.getUserId()}`).get().subscribe(
-      docSnap => {
+    this.afs
+      .doc(`users/${this.authP.getUserId()}`)
+      .get()
+      .subscribe(docSnap => {
         if (!docSnap.exists) return;
         const data = docSnap.data();
         console.log(data);
-        if(data.goals) {
+        if (data.goals) {
           this.goals = data.goals;
-        } 
-      }
-    )
+        }
+      });
   }
-  
+
   onChangeGoal(practiceId, value) {
     console.log(practiceId, value);
     this.goals[practiceId] = value;
@@ -75,10 +77,24 @@ export class GoalsPage {
     }
   }
 
+  presentAlert(title, message) {
+    let alert = this.alertCtrl.create({
+      title: title,
+      subTitle: message,
+      buttons: ["Закрыть"]
+    });
+    alert.present();
+  }
+
   async submit() {
-    const tmp = {};
-    tmp[`goals`] = this.goals;
-    await this.afs.doc(`users/${this.authP.getUserId()}`).update(tmp);
+    try {
+      const tmp = {};
+      tmp[`goals`] = this.goals;
+      await this.afs.doc(`users/${this.authP.getUserId()}`).update(tmp);
+      this.presentAlert('Сохранено', 'Цели сохранены');
+    } catch (err) {
+      this.presentAlert('Ошибка', err);
+    }
   }
 
   goPrivateOfficePage() {

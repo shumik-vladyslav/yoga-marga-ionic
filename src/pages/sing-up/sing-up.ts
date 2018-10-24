@@ -1,6 +1,6 @@
 import { AngularFireStorage } from "@angular/fire/storage";
 import { Component } from "@angular/core";
-import { NavController, NavParams } from "ionic-angular";
+import { NavController, NavParams, AlertController } from "ionic-angular";
 import { SingInPage } from "../sing-in/sing-in";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { AngularFireAuth } from "@angular/fire/auth";
@@ -30,7 +30,8 @@ export class SignUpPage {
     public navParams: NavParams,
     private formBuilder: FormBuilder,
     public afAuth: AngularFireAuth,
-    private afs: AngularFirestore
+    private afs: AngularFirestore,
+    private alertCtrl: AlertController
   ) {
     this.myForm = formBuilder.group(
       {
@@ -44,6 +45,15 @@ export class SignUpPage {
       },
       { validator: this.matchingPasswords("Password", "RepeatPassword") }
     );
+  }
+
+  presentAlert(title, message) {
+    let alert = this.alertCtrl.create({
+      title: title,
+      subTitle: message,
+      buttons: ["Закрыть"]
+    });
+    alert.present();
   }
 
   customeValidation;
@@ -72,14 +82,6 @@ export class SignUpPage {
         .then(auth => {
           console.log(JSON.stringify(auth.user));
           if (auth.user) {
-            // {"spiritualName":"Opa","fullName":"Opa","Status":false,
-            // "Email":"Opa@gmail.com","Password":"11111111","RepeatPassword":"11111111","gender":"f"}
-            console.log(JSON.stringify({
-              spiritual_name: this.myForm.value.spiritualName,
-              full_name: this.myForm.value.fullName,
-              status: this.myForm.value.Status,
-              id: auth.user.uid
-            }));
             
             this.afs
               .doc(`users/${auth.user.email}`)
@@ -94,7 +96,7 @@ export class SignUpPage {
           }
         });
     } else {
-      console.log("form is invalid");
+      this.presentAlert('Ошибка', 'Проверьте правильность полей');
       this.customeValidation = false;
     }
   }
