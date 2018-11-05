@@ -13,6 +13,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule,AngularFireStorage } from '@angular/fire/storage';
 import { File } from '@ionic-native/file';
 import { IonicStorageModule } from '@ionic/storage';
+import { Calendar } from '@ionic-native/calendar'
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -74,6 +75,7 @@ import { PracticeSearchPage } from '../pages/practice-search/practice-search';
     ProgressChartDirective
   ],
   imports: [
+    // Calendar,
     BrowserModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(

@@ -170,7 +170,8 @@
         <ion-row justify-content-center>
           <ion-col class="border-r custom-col" col-4 no-padding *ngFor="let p of progresses">
             <ion-item text-center no-padding>
-              <img [src]="p.ico" class="img-icon">
+              <img [src]="p.ico" class="img-icon"
+              [ngStyle]="{'-webkit-mask': 'url(' + p.ico + ') no-repeat 50% 50%','mask': 'url(' + p.ico + ') no-repeat 50% 50%'}">
               <p ion-text class="value-goals text-wrap m-t-0">{{p.name}}</p>
               <p>{{+p.achivement}}</p>
               <p>из</p>

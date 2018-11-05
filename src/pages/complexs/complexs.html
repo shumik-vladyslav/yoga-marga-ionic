@@ -18,13 +18,14 @@
       <ion-grid>
         <ion-row justify-content-center>
             <p ion-text text-center class="fs-16 text-wrap" *ngIf="!presets || presets.length == 0">Общих комплексов пока нет. </p>
-          <ion-col (click)="goToMyComplex(pr)" col-4 class="border-r col-between" no-padding *ngFor="let pr of presets">
+          <ion-col (click)="goToMyComplex(p)" col-4 class="border-r col-between" no-padding *ngFor="let p of presets">
 
             <ion-row>
               <ion-col col-12>
                 <ion-item text-center no-padding>
 
-                  <img class="img-icon" [src]="pr.ico" alt="">
+                  <img class="img-icon" [src]="p.ico" 
+                  [ngStyle]="{'-webkit-mask': 'url(' + p.ico + ') no-repeat 50% 50%','mask': 'url(' + p.ico + ') no-repeat 50% 50%'}">
                 </ion-item>
               </ion-col>
             </ion-row>
@@ -32,7 +33,7 @@
             <ion-row>
               <ion-col col-12>
                 <ion-item text-center no-padding class="min-height-default">
-                  <p ion-text class="fs-16 text-wrap">{{pr.name}}</p>
+                  <p ion-text class="fs-16 text-wrap">{{p.name}}</p>
                 </ion-item>
               </ion-col>
             </ion-row>
@@ -69,7 +70,8 @@
                 <ion-col col-12>
                   <ion-item text-center no-padding>
   
-                    <img class="img-icon" [src]="cm.ico" alt="">
+                    <img class="img-icon" [src]="cm.ico" 
+                    [ngStyle]="{'-webkit-mask': 'url(' + cm.ico + ') no-repeat 50% 50%','mask': 'url(' + cm.ico + ') no-repeat 50% 50%'}">
                   </ion-item>
                 </ion-col>
               </ion-row>
