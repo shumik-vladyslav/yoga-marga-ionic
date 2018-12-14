@@ -46,7 +46,7 @@ export class HomePage {
       this.complexes = UserProvider.getComplexes();
 
 
-      const globalPractices = UserProvider.getGlobalPractices();
+      const globalPractices = UserProvider.globalPractices;
       console.log('global practices', globalPractices);
       
       this.progresses = UserProvider.getUserGoals().map(a => {

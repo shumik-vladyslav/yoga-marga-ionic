@@ -26,7 +26,7 @@ export class MyComplexsPage {
     public navParams: NavParams,
     public userP: UserProvider) {
     this.complex = navParams.get('complex');
-    const gp = UserProvider.getGlobalPractices() || [];
+    const gp = UserProvider.globalPractices || [];
 
     this.practices = []
     for (const val of this.complex.practices) {

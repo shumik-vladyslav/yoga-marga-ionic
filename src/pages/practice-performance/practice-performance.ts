@@ -29,13 +29,15 @@ export class PracticePerformancePage {
   isStarted = false;
   subscriptions = [];
   audio = new Audio("assets/sound/pomni.mp3");
-  metronomAudio = new Audio("assets/sound/tuk.mp3");
+  metronomAudio = new Audio("assets/sound/zvuk-metronoma.mp3");
   startTime = 0;
 
   // Время выполнения практики
   timespan = 0;
   imgUrls = [];
   timeForExercise;
+
+  metronom_sound = new Audio("assets/sound/zvuk-metronoma.mp3");
 
   constructor(
     public navCtrl: NavController,
@@ -52,14 +54,9 @@ export class PracticePerformancePage {
 
   onChangeMetronome() {
     if (this.practice.userSpec.metronomeFlag === false) {
-      this.metronomeSubscription.unsubscribe();
+      this.metronom_sound.pause();
     } else if (this.isStarted) {
-      this.metronomeSubscription = interval(1000).subscribe(val => {
-        console.log("metronomeSubscription", val);
-        new Audio("assets/sound/tuk.mp3").play();
-      });
-  
-      this.subscriptions.push(this.metronomeSubscription);
+      this.metronom_sound.play();
     }
   }
 
@@ -232,13 +229,7 @@ export class PracticePerformancePage {
     });
 
     if (this.practice.userSpec.metronomeFlag) {
-      this.metronomeSubscription = interval(1000).subscribe(val => {
-        console.log("metronomeSubscription", val);
-        // this.metronomAudio.play();
-        new Audio("assets/sound/tuk.mp3").play();
-      });
-  
-      this.subscriptions.push(this.metronomeSubscription);
+      this.metronom_sound.play();
     }
 
     this.subscriptions.push(subs);

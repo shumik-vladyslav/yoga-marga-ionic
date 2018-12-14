@@ -131,7 +131,8 @@ import { PracticeSearchPage } from '../pages/practice-search/practice-search';
     FileCacheProvider,
     FileTransfer,
     File,
-    UserProvider
+    UserProvider,
+    Calendar
   ]
 })
 export class AppModule {}

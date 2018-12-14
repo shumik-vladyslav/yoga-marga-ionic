@@ -50,7 +50,7 @@ export class PrivateOfficePage {
     private formBuilder: FormBuilder,
     afs: AngularFirestore
   ) {
-    const globalPractices = UserProvider.getGlobalPractices();
+    const globalPractices = UserProvider.globalPractices;
     console.log('global practices', globalPractices);
     
     this.progresses = UserProvider.getUserGoals().map(a => {
