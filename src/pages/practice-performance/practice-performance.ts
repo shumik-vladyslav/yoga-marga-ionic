@@ -80,6 +80,13 @@ export class PracticePerformancePage {
       }
     )
 
+    this.fileCacheP.getUrl(`practices/${this.practice.id}/audio`).subscribe(
+      url => this.practice.audio = new Audio(url),
+      err => {
+        console.log('text err',JSON.stringify(err));
+        this.url = null;
+      }
+    )
 
     this.afs
       .doc(`users/${this.authP.getUserId()}`)
@@ -118,6 +125,19 @@ export class PracticePerformancePage {
   
   opentText () {
 
+  }
+
+ 
+  audioState = false;
+  onToggleAudio() {
+    if (this.practice.audio) {
+      if (this.audioState) {
+        this.practice.audio.play()
+      } else {
+        this.practice.audio.pause()
+      }
+      
+    }
   }
 
   onTimeForExerciseChange() {
