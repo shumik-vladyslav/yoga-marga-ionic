@@ -51,6 +51,8 @@ import { UserProvider } from '../providers/user/user';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { PracticeSearchPage } from '../pages/practice-search/practice-search';
 
+import { DocumentViewer } from '@ionic-native/document-viewer';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -97,6 +99,7 @@ import { PracticeSearchPage } from '../pages/practice-search/practice-search';
     ReactiveFormsModule,
     PracticeSearchPageModule,
     ActivationWarningPageModule,
+    DocumentViewer
   ],
   bootstrap: [IonicApp],
   entryComponents: [

@@ -7,6 +7,7 @@ import { AuthProvider } from '../../providers/auth/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { HomePage } from '../home/home';
 import { UserProvider } from '../../providers/user/user';
+import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-viewer';
 
 /**
  * Generated class for the ExercisePerformancePage page.
@@ -40,11 +41,53 @@ export class ExercisePerformancePage {
     private afs: AngularFirestore,
     private authP: AuthProvider,
     private afStorage: AngularFireStorage,
-    private fileCashe: FileCacheProvider
+    private fileCashe: FileCacheProvider,
+    private fileCacheP: FileCacheProvider,
+    private document: DocumentViewer
   ) {
     this.startTime = Date.now();
     this.practice = this.navParams.get('practice');
     this.nextExercise();
+
+    this.fileCacheP.getUrl(`practices/${this.practice.id}/text.pdf`).subscribe(
+      url => this.practice.text = url,
+      err => {
+        console.log('text err',JSON.stringify(err));
+        this.url = null;
+      }
+    )
+
+    this.fileCacheP.getUrl(`practices/${this.practice.id}/audio`).subscribe(
+      url => this.practice.audio = new Audio(url),
+      err => {
+        console.log('text err',JSON.stringify(err));
+        this.url = null;
+      }
+    )
+  }
+
+  opentText () {
+
+    if(this.practice.text) {
+      const options: DocumentViewerOptions = {
+        title: 'Описание практики'
+      }
+      this.document.viewDocument(this.practice.text, 'application/pdf', options)
+    } 
+    
+  }
+
+ 
+  audioState = false;
+  onToggleAudio() {
+    if (this.practice.audio) {
+      if (this.audioState) {
+        this.practice.audio.play()
+      } else {
+        this.practice.audio.pause()
+      }
+      
+    }
   }
 
   ionViewWillUnload() {

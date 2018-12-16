@@ -8,6 +8,7 @@ import { AngularFirestore, DocumentSnapshot } from "@angular/fire/firestore";
 import { AuthProvider } from "../../providers/auth/auth";
 import { AngularFireStorage } from "@angular/fire/storage";
 import { UserProvider } from "../../providers/user/user";
+import { DocumentViewer, DocumentViewerOptions } from "@ionic-native/document-viewer";
 
 
 /**
@@ -46,7 +47,8 @@ export class PracticePerformancePage {
     private afs: AngularFirestore,
     private authP: AuthProvider,
     private afStorage: AngularFireStorage,
-    private fileCacheP: FileCacheProvider
+    private fileCacheP: FileCacheProvider,
+    private document: DocumentViewer
   ) {
     this.practice = this.navParams.get("practice");
     this.resorePracticeSettings();
@@ -125,6 +127,13 @@ export class PracticePerformancePage {
   
   opentText () {
 
+    if(this.practice.text) {
+      const options: DocumentViewerOptions = {
+        title: 'Описание практики'
+      }
+      this.document.viewDocument(this.practice.text, 'application/pdf', options)
+    } 
+    
   }
 
  
