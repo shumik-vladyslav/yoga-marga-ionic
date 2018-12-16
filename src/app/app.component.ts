@@ -1,3 +1,4 @@
+import { ActivationWarningPage } from './../pages/activation-warning/activation-warning';
 import { SignUpPage } from './../pages/sing-up/sing-up';
 import { AngularFirestore } from "@angular/fire/firestore";
 import { UserProvider } from "./../providers/user/user";
@@ -13,11 +14,6 @@ import { ComplexsPage } from "../pages/complexs/complexs";
 import { MyComplexsPage } from "../pages/my-complexs/my-complexs";
 import { PrivateOfficePage } from "../pages/private-office/private-office";
 import { SettingsPage } from "../pages/settings/settings";
-import { Template_1Page } from "../pages/template-1/template-1";
-import { Template_2Page } from "../pages/template-2/template-2";
-import { Template_3Page } from "../pages/template-3/template-3";
-import { Template_4Page } from "../pages/template-4/template-4";
-import { LoadScreenPage } from "../pages/load-screen/load-screen";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { PracticeSearchPage } from '../pages/practice-search/practice-search';
 
@@ -63,7 +59,7 @@ export class MyApp {
         component: PrivateOfficePage
       },
       {
-        title: "Настройки",
+        title: "Обратная связь",
         icon: "/assets/icon/svg/navigation/icon-nav4.svg",
         component: SettingsPage
       },
@@ -72,6 +68,11 @@ export class MyApp {
         icon: "/assets/icon/svg/navigation/icon-nav4.svg",
         component: PracticeSearchPage
       },
+      // {
+      //   title: "Предупреждение",
+      //   icon: "/assets/icon/svg/navigation/icon-nav4.svg",
+      //   component: ActivationWarningPage
+      // },
       // {
       //   title: "Дхарма-вичара",
       //   icon: "/assets/icon/svg/navigation/icon-nav5.svg",
@@ -144,8 +145,14 @@ export class MyApp {
       this.afAuth.authState.subscribe((user: firebase.User) => {
         if (user) {
           UserProvider.Init(this.afs, user.email).then(res => {
-            this.rootPage = HomePage;
-            this.menyIsEnabled = true;
+            console.log('user init', res);
+            if (res && res.active && res.active == true ) {
+              this.rootPage = HomePage;
+              this.menyIsEnabled = true;
+            } else {
+              this.rootPage = ActivationWarningPage;
+              this.menyIsEnabled = false;
+            }
             this.statusBar.styleDefault();
             this.splashScreen.hide();
           });

@@ -1,3 +1,4 @@
+import { filter } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
@@ -14,7 +15,6 @@ import { AuthProvider } from "../auth/auth";
 export class UserProvider {
   static user:any = {};
   static id: any;
-  static userStatic;
   static globalPractices;
 
   static afs: AngularFirestore;
@@ -26,6 +26,12 @@ export class UserProvider {
 
   static stepFlag = false;
 
+  // static userPractices() {
+  //   return this.user.practices.filter(
+  //     p => p.active !== false && UserProvider.arraysHasIntersection(UserProvider.user.groups, p.groups)
+  //     )
+  // }
+
   static Init(afs: AngularFirestore, userId): Promise<any> {
     this.afs = afs;
     this.uid = userId;
@@ -35,17 +41,17 @@ export class UserProvider {
       .snapshotChanges()
       .subscribe(action => {
         
-        if (UserProvider.stepFlag) {
-          resolve();
-        } else {
-          UserProvider.stepFlag = true;
-        }
-        
         const docSnapshot = action.payload;
 
         if (!docSnapshot.exists) return;
         UserProvider.id = docSnapshot.id;
         UserProvider.user = docSnapshot.data();
+
+        if (UserProvider.stepFlag) {
+          resolve(UserProvider.user);
+        } else {
+          UserProvider.stepFlag = true;
+        }
       });
 
     afs
@@ -54,7 +60,7 @@ export class UserProvider {
       .subscribe(value => {
         
         if (UserProvider.stepFlag) {
-          resolve();
+          resolve(UserProvider.user);
         } else {
           UserProvider.stepFlag = true;
         }
@@ -69,9 +75,33 @@ export class UserProvider {
       });
     }); 
   }
-
+  
+  static arraysHasIntersection(arr1, arr2) {
+    if (!arr1 && !arr2) {
+      return true;
+    } else if (!arr1) {
+      return false;
+    } else if (!arr2) {
+      return false;
+    } 
+    const res = arr1.filter(value => -1 !== arr2.indexOf(value));
+    return res.length > 0
+  }
+  
   static getGlobalPractices() {
-    return UserProvider.globalPractices;
+    const res = {};
+    const ps = UserProvider.globalPractices;
+
+    for (const p in ps) {
+      if (ps.hasOwnProperty(p)) {
+        const item = ps[p];
+        if (this.arraysHasIntersection(item.groups, this.user.groups)) {
+          res[p] = item;
+        }
+      }
+    }
+    // return UserProvider.globalPractices.filter(p => this.arraysHasIntersection(p.groups, this.user.groups));
+    return res;
   }
 
   static getUser = () => UserProvider.user;
@@ -108,13 +138,14 @@ export class UserProvider {
   }
 
   static getUserGoals() {
-    
     const result = [];
+    const gps = this.getGlobalPractices();
     const goals = UserProvider.user.goals;
     const practices = UserProvider.user.practices;
     if(!goals || !practices) return [];
     for (const key in goals) {
       if (goals.hasOwnProperty(key)) {
+        if(!gps[key]) continue;
         const goal = goals[key];
         let achivement;
         if (practices[key]) {
@@ -147,8 +178,10 @@ export class UserProvider {
     const practices = UserProvider.user.practices;
     console.log("practices", practices);
 
+    const gps = this.getGlobalPractices();
     for (const id in practices) {
       if (practices.hasOwnProperty(id)) {
+        if(!gps[id]) continue;
         const practice = practices[id];
         result.push({
           id: id,

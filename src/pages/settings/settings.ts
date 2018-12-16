@@ -1,6 +1,6 @@
 import { HomePage } from './../home/home';
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { TermsPage } from '../terms/terms';
 import { UserProvider } from '../../providers/user/user';
 
@@ -19,7 +19,8 @@ export class SettingsPage {
   msg;
   constructor(
     public navCtrl: NavController, 
-    public navParams: NavParams) {
+    public navParams: NavParams,
+    private alertCtrl: AlertController) {
   }
   
   ionViewCanEnter() {
@@ -34,11 +35,20 @@ export class SettingsPage {
     console.log('ionViewDidLoad SettingsPage');
   }
 
+  presentAlert() {
+    let alert = this.alertCtrl.create({
+      title: 'Успешно',
+      subTitle: 'Сообщение отправлено',
+      buttons: ['Ок']
+    });
+    alert.present();
+  }
+
   submit() {
     console.log('submit');
     if(this.msg && this.msg !=='')
     UserProvider.sendFeedback(this.msg).then(
-      res => this.navCtrl.setRoot(HomePage)
+      res => this.presentAlert()
     )
   }
 }

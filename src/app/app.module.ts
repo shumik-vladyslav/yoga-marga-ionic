@@ -1,3 +1,4 @@
+import { ActivationWarningPageModule } from './../pages/activation-warning/activation-warning.module';
 import { PracticeSearchPageModule } from './../pages/practice-search/practice-search.module';
 import { ProgressChartDirective } from './../directives/progress-chart/progress-chart';
 import { ExercisePerformancePageModule } from './../pages/exercise-performance/exercise-performance.module';
@@ -94,7 +95,8 @@ import { PracticeSearchPage } from '../pages/practice-search/practice-search';
     ExercisePerformancePageModule,
     FormsModule,
     ReactiveFormsModule,
-    PracticeSearchPageModule
+    PracticeSearchPageModule,
+    ActivationWarningPageModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -119,7 +121,8 @@ import { PracticeSearchPage } from '../pages/practice-search/practice-search';
     Template_4Page,
     LoadScreenPage,
     ProgressChartDirective,
-    PracticeSearchPage
+    PracticeSearchPage,
+    SettingsPage
   ],
   providers: [
     AngularFireStorage,

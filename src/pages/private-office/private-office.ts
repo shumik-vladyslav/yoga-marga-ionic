@@ -57,7 +57,7 @@ export class PrivateOfficePage {
       return {
         val: Math.round(((+a.achivement) / (+a.goal)) * 100),
         name: a.name,
-        ico: globalPractices[a.id].ico,
+        ico: globalPractices[a.id]?globalPractices[a.id].ico:'',
         goal: a.goal,
         achivement: a.achivement
       };

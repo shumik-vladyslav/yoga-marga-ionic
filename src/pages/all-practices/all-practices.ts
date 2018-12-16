@@ -37,7 +37,15 @@ export class AllPracticesPage {
   ) {
     const subs = this.afs.collection('practices').valueChanges().subscribe(
       practices => {
-        this.practices = practices;
+        const ps = UserProvider.getGlobalPractices();
+        const res = [];
+        for (const key in ps) {
+          if (ps.hasOwnProperty(key)) {
+            const p = ps[key];
+            res.push(p);
+          }
+        }
+        this.practices = res;
         this.groupPracticesBy();
       },
       err => console.log(err)

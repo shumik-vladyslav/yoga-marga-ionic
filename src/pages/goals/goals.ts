@@ -20,10 +20,10 @@ export class GoalsPage {
   goals: any = {
     om: "",
     om_dram: "",
-    prostiraniya: "",
+    // prostiraniya: "",
     chandaly: "",
     anuloma_viloma: "",
-    sahita_kumbhaka: ""
+    // sahita_kumbhaka: ""
   };
   ionViewCanEnter() {
     return UserProvider.user ? true : false;

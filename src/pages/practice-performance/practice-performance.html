@@ -99,7 +99,7 @@
                   <ion-item no-padding class="input-style input-goals input-teamplate">
                     <ion-input [(ngModel)]="practice.userSpec.praktikaTime" *ngIf="!isStarted" text-center color="gray"
                       (ngModelChange)="onPraktikaTimeChange()"></ion-input>
-                    <ion-input [value]="timer| date:'mm:ss'" *ngIf="isStarted" disabled text-center color="gray"
+                    <ion-input [value]="timer| date:'mm:ss'" *ngIf="isStarted" text-center color="gray"
                       (ngModelChange)="onPraktikaTimeChange()"></ion-input>
                   </ion-item>
                   <p margin-top ion-text text-wrap class="fs-14 text-wrap m-t-0 m-b-20 letter-spacing-2">
@@ -155,7 +155,7 @@
             </ion-card>
           </ion-col>
 
-          <ion-item no-padding *ngIf="practice.exercises">
+          <ion-item no-padding *ngIf="practice.exercises && practice.exercises.length > 0">
             <p ion-text text-center text-wrap color="gray" class="m-b-20">
               Установите время для каждого упражнения
             </p>

@@ -29,7 +29,7 @@ export class PracticePerformancePage {
   isStarted = false;
   subscriptions = [];
   audio = new Audio("assets/sound/pomni.mp3");
-  metronomAudio = new Audio("assets/sound/zvuk-metronoma.mp3");
+  // metronomAudio = new Audio("assets/sound/zvuk-metronoma.mp3");
   startTime = 0;
 
   // Время выполнения практики
@@ -121,14 +121,14 @@ export class PracticePerformancePage {
   }
 
   onTimeForExerciseChange() {
-    if (!this.practice.exercises) return;
+    if (!this.practice.exercises || this.practice.exercises.length == 0) return;
 
     const tmp = (+this.timeForExercise || 0) * this.practice.exercises.length;
     this.practice.userSpec.praktikaTime = Math.round(tmp * 10) / 10;
   }
 
   onPraktikaTimeChange() {
-    if (!this.practice.exercises) return;
+    if (!this.practice.exercises || this.practice.exercises.length == 0) return;
     const tmp =
       (+this.practice.userSpec.praktikaTime || 0) /
       this.practice.exercises.length;
@@ -173,12 +173,14 @@ export class PracticePerformancePage {
     this.isStarted = !this.isStarted;
 
     if (!this.isStarted) {
+      this.metronom_sound.pause();
       this.timespan = Math.round((Date.now() - this.startTime) / 1000 / 3600);
       if (this.practice.isAmountCounter || this.practice.isMaxAchievement) {
         this.presentPrompt();
       } else {
         this.savePracticeResult();
       }
+      return;
     }
 
     this.savePracticeSettings();
@@ -213,7 +215,7 @@ export class PracticePerformancePage {
 
     this.pomniSubs = subs1;
 
-    if (this.practice.exercises) {
+    if (this.practice.exercises && this.practice.exercises.length > 0) {
       if (this.timeForExercise) {
         this.practice.timeForExercise = this.timeForExercise;
       }

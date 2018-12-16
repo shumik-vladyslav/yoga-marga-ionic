@@ -18,7 +18,7 @@ import { filter, map } from 'rxjs/operators';
 export class HomePage {
   complexes;
   practices$: Observable<any>;
-  
+  practices;
   ionViewCanEnter() {
     console.log('canenter user provider', UserProvider.user);
     
@@ -34,10 +34,11 @@ export class HomePage {
     private afs: AngularFirestore,
     private userP: UserProvider
     ) {
+      // this.practices = UserProvider.userPractices();
       this.practices$ = this.afs.collection('practices').valueChanges().pipe(map(
         (practices:any) => {
-          return practices.filter(p => p.active !== false) 
-          // return practices;
+          return practices.filter(
+            p => p.active !== false && UserProvider.arraysHasIntersection(UserProvider.user.groups, p.groups))
         }
       ));
 
@@ -53,7 +54,7 @@ export class HomePage {
         return {
           val: Math.round((a.achivement / a.goal) * 100),
           name: a.name,
-          ico: globalPractices[a.id].ico,
+          ico: globalPractices[a.id]?globalPractices[a.id].ico:'',
           goal: a.goal,
           achivement: a.achivement
         };
