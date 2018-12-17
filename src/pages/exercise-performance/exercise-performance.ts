@@ -9,7 +9,7 @@ import { HomePage } from '../home/home';
 import { UserProvider } from '../../providers/user/user';
 import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-viewer';
 import { FileTransfer } from '@ionic-native/file-transfer';
-
+import { File, IWriteOptions } from "@ionic-native/file";
 /**
  * Generated class for the ExercisePerformancePage page.
  *
