@@ -7,14 +7,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { AngularSvgIconModule } from 'angular-svg-icon';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule,AngularFireStorage } from '@angular/fire/storage';
 import { File } from '@ionic-native/file';
 import { IonicStorageModule } from '@ionic/storage';
-import { Calendar } from '@ionic-native/calendar'
+import { Calendar } from '@ionic-native/calendar';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -37,9 +37,8 @@ import { TermsPage } from '../pages/terms/terms';
 import { Template_1Page } from '../pages/template-1/template-1';
 import { Template_2Page } from '../pages/template-2/template-2';
 import { Template_3Page } from '../pages/template-3/template-3';
-import { Template_4Page } from '../pages/template-4/template-4';
+import { Template_4Page } from '../pages/template-4/template-4'; 
 import { LoadScreenPage } from '../pages/load-screen/load-screen';
-
 
 import { SettingsProvider } from '../providers/shared-services-settings/shared-services-settings';
 import { config } from '../config';
@@ -99,7 +98,6 @@ import { DocumentViewer } from '@ionic-native/document-viewer';
     ReactiveFormsModule,
     PracticeSearchPageModule,
     ActivationWarningPageModule,
-    DocumentViewer
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -138,7 +136,8 @@ import { DocumentViewer } from '@ionic-native/document-viewer';
     FileTransfer,
     File,
     UserProvider,
-    Calendar
+    Calendar,
+    DocumentViewer
   ]
 })
 export class AppModule {}

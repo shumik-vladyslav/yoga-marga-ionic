@@ -1,7 +1,7 @@
 import { FileCacheProvider } from "./../../providers/file-cache/file-cache";
 import { ExercisePerformancePage } from "./../exercise-performance/exercise-performance";
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams } from "ionic-angular";
+import { IonicPage, NavController, NavParams, Platform } from "ionic-angular";
 import { interval } from "rxjs";
 import { AlertController } from "ionic-angular";
 import { AngularFirestore, DocumentSnapshot } from "@angular/fire/firestore";
@@ -9,7 +9,8 @@ import { AuthProvider } from "../../providers/auth/auth";
 import { AngularFireStorage } from "@angular/fire/storage";
 import { UserProvider } from "../../providers/user/user";
 import { DocumentViewer, DocumentViewerOptions } from "@ionic-native/document-viewer";
-
+import { FileTransfer } from "@ionic-native/file-transfer";
+import { File, IWriteOptions } from "@ionic-native/file";
 
 /**
  * Generated class for the PracticePerformancePage page.
@@ -48,7 +49,10 @@ export class PracticePerformancePage {
     private authP: AuthProvider,
     private afStorage: AngularFireStorage,
     private fileCacheP: FileCacheProvider,
-    private document: DocumentViewer
+    private document: DocumentViewer,
+    private file: File, 
+    private transfer: FileTransfer, 
+    private platform: Platform
   ) {
     this.practice = this.navParams.get("practice");
     this.resorePracticeSettings();
@@ -126,24 +130,35 @@ export class PracticePerformancePage {
   }
   
   opentText () {
-
+    console.log('text', this.practice.text);
     if(this.practice.text) {
-      const options: DocumentViewerOptions = {
-        title: 'Описание практики'
-      }
-      this.document.viewDocument(this.practice.text, 'application/pdf', options)
+
+      let path = null;
+ 
+    if (this.platform.is('ios')) {
+      path = this.file.dataDirectory;
+    } else if (this.platform.is('android')) {
+      path = this.file.dataDirectory;
+    }
+ 
+    const transfer = this.transfer.create();
+    transfer.download(this.practice.text, path + this.practice.id + '.pdf').then(entry => {
+      let url = entry.toURL();
+      this.document.viewDocument(url, 'application/pdf', {});
+    });
     } 
-    
   }
 
  
   audioState = false;
   onToggleAudio() {
     if (this.practice.audio) {
-      if (this.audioState) {
+      if (!this.audioState) {
         this.practice.audio.play()
+        this.audioState = true;
       } else {
         this.practice.audio.pause()
+        this.audioState = false;
       }
       
     }
@@ -203,7 +218,7 @@ export class PracticePerformancePage {
 
     if (!this.isStarted) {
       this.metronom_sound.pause();
-      this.timespan = Math.round((Date.now() - this.startTime) / 1000 / 3600);
+      this.timespan = (Date.now() - this.startTime) / 1000 / 60;
       if (this.practice.isAmountCounter || this.practice.isMaxAchievement) {
         this.presentPrompt();
       } else {

@@ -1,13 +1,14 @@
 import { FileCacheProvider } from './../../providers/file-cache/file-cache';
 import { interval } from 'rxjs';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { AuthProvider } from '../../providers/auth/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { HomePage } from '../home/home';
 import { UserProvider } from '../../providers/user/user';
 import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-viewer';
+import { FileTransfer } from '@ionic-native/file-transfer';
 
 /**
  * Generated class for the ExercisePerformancePage page.
@@ -43,7 +44,10 @@ export class ExercisePerformancePage {
     private afStorage: AngularFireStorage,
     private fileCashe: FileCacheProvider,
     private fileCacheP: FileCacheProvider,
-    private document: DocumentViewer
+    private document: DocumentViewer,
+    private file: File, 
+    private transfer: FileTransfer, 
+    private platform: Platform
   ) {
     this.startTime = Date.now();
     this.practice = this.navParams.get('practice');
@@ -53,7 +57,6 @@ export class ExercisePerformancePage {
       url => this.practice.text = url,
       err => {
         console.log('text err',JSON.stringify(err));
-        this.url = null;
       }
     )
 
@@ -61,30 +64,40 @@ export class ExercisePerformancePage {
       url => this.practice.audio = new Audio(url),
       err => {
         console.log('text err',JSON.stringify(err));
-        this.url = null;
       }
     )
   }
 
   opentText () {
-
+    console.log('text', this.practice.text);
     if(this.practice.text) {
-      const options: DocumentViewerOptions = {
-        title: 'Описание практики'
-      }
-      this.document.viewDocument(this.practice.text, 'application/pdf', options)
+
+      let path = null;
+ 
+    if (this.platform.is('ios')) {
+      path = this.file.dataDirectory;
+    } else if (this.platform.is('android')) {
+      path = this.file.dataDirectory;
+    }
+ 
+    const transfer = this.transfer.create();
+    transfer.download(this.practice.text, path + this.practice.id + '.pdf').then(entry => {
+      let url = entry.toURL();
+      this.document.viewDocument(url, 'application/pdf', {});
+    });
     } 
-    
   }
 
  
   audioState = false;
   onToggleAudio() {
     if (this.practice.audio) {
-      if (this.audioState) {
+      if (!this.audioState) {
         this.practice.audio.play()
+        this.audioState = true;
       } else {
         this.practice.audio.pause()
+        this.audioState = false;
       }
       
     }
@@ -105,9 +118,16 @@ export class ExercisePerformancePage {
     // get exercise
     this.exercise = this.practice.exercises[this.exerciseCounter];
 
-    if (this.exercise.hasImg) {
+    console.log('asany- 1');
+    if(this.practice[`ex_img${this.exerciseCounter}`]) {
+      this.url = this.practice[`ex_img${this.exerciseCounter}`]
+    } else if (this.exercise.hasImg) {
       this.fileCashe.getUrl(`practices/${this.practice.id}/${this.exerciseCounter}.jpg`).subscribe(
-        url => this.url = url,
+        url => {
+          this.url = url;
+          console.log(`practices/${this.practice.id}/${this.exerciseCounter}.jpg`, url);
+          
+        },
         err => console.log(err)
       )
     } else {
@@ -190,7 +210,7 @@ export class ExercisePerformancePage {
 
   async savePracticeResultAndExit(data = null) {
     let practiceRes = this.practice.userSpec;
-    console.log('practiceRes', practiceRes);
+    console.log('Save pract ex res', practiceRes);
 
     if (data) {
       if (data.amountCounter) {
@@ -201,7 +221,8 @@ export class ExercisePerformancePage {
         practiceRes.maxAchievement = (practiceRes.maxAchievement < data.maxAchievement) ? +data.maxAchievement : practiceRes.maxAchievement;
       }
     }
-
+    // Math.round(
+    this.timespan = (Date.now() - this.startTime) / 1000 / 60;
     practiceRes.timespan = (+practiceRes.timespan || 0) + this.timespan;
 
     const tmp = {};
