@@ -89,7 +89,8 @@ export class SignUpPage {
                 spiritual_name: this.myForm.value.spiritualName,
                 full_name: this.myForm.value.fullName,
                 status: this.myForm.value.Status,
-                id: auth.user.uid
+                id: auth.user.uid,
+                email: auth.user.email
               })
               .then(res => console.log("user extra data saved"))
               .catch(err => console.log("user saving extra data error", err));
