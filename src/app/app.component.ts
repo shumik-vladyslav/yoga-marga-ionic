@@ -1,7 +1,7 @@
 import { ActivationWarningPage } from './../pages/activation-warning/activation-warning';
 import { SignUpPage } from './../pages/sing-up/sing-up';
 import { AngularFirestore } from "@angular/fire/firestore";
-import { UserProvider } from "./../providers/user/user";
+import { UserProvider } from "./../providers/user/user"; 
 import { AuthProvider } from "./../providers/auth/auth";
 import { Component, ViewChild } from "@angular/core";
 import { Nav, Platform } from "ionic-angular";
@@ -16,6 +16,8 @@ import { PrivateOfficePage } from "../pages/private-office/private-office";
 import { SettingsPage } from "../pages/settings/settings";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { PracticeSearchPage } from '../pages/practice-search/practice-search';
+import { ImgCacheService } from '../directives/ng-imgcache/img-cache.service';
+
 
 @Component({
   templateUrl: "app.html"
@@ -37,7 +39,8 @@ export class MyApp {
     public authP: AuthProvider,
     private userP: UserProvider,
     private afs: AngularFirestore,
-    public afAuth: AngularFireAuth
+    public afAuth: AngularFireAuth,
+    public imgCache: ImgCacheService
   ) {
     this.initializeApp();
 
@@ -167,6 +170,13 @@ export class MyApp {
 
         this.statusBar.styleDefault();
         this.splashScreen.hide();
+      });
+
+      // Ensure you init once the platform is ready.
+      this.imgCache.init({
+        debug: true,
+        // useDataURI: true,
+        skipURIencoding: true
       });
     });
   }

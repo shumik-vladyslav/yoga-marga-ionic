@@ -52,6 +52,9 @@ import { PracticeSearchPage } from '../pages/practice-search/practice-search';
 
 import { DocumentViewer } from '@ionic-native/document-viewer';
 
+import { ImgCacheModule } from '../directives/ng-imgcache/img-cache.module';
+
+
 @NgModule({
   declarations: [
     MyApp,
@@ -98,6 +101,7 @@ import { DocumentViewer } from '@ionic-native/document-viewer';
     ReactiveFormsModule,
     PracticeSearchPageModule,
     ActivationWarningPageModule,
+    ImgCacheModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

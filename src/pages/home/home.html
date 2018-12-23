@@ -30,8 +30,10 @@
                     <svg-icon src="/assets/icon/svg/main-page/om.svg" [stretch]="true" [svgStyle]="{'height.px':50}">
                     </svg-icon>
                   </ion-icon> -->
+                  <img img-cache img-cache-src="{{p.ico}}" #img style="display:none">
                   <img class="img-icon"
-                  [ngStyle]="{'-webkit-mask': 'url(' + p.ico + ') no-repeat 50% 50%','mask': 'url(' + p.ico + ') no-repeat 50% 50%'}">
+                  [ngStyle]="{'-webkit-mask': 'url(' + img.src + ') no-repeat 50% 50%','mask': 'url(' + img.src + ') no-repeat 50% 50%'}">
+
                 </ion-item>
               </ion-col>
             </ion-row>
