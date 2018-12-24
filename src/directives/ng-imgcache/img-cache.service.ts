@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as ImgCache from 'imgcache.js';
 import { File, IWriteOptions } from "@ionic-native/file";
+import { Nav, Platform } from 'ionic-angular';
 
 export interface ImgCacheConfig {
   debug?: boolean,                 /* call the log method ? */
@@ -19,6 +20,10 @@ export interface ImgCacheConfig {
 @Injectable()
 export class ImgCacheService {
   private promise: Promise<{}>;
+
+  constructor( private platform: Platform) {
+
+  }
 
   init(config: ImgCacheConfig = {}) {
     Object.assign(ImgCache.options, config);
@@ -69,19 +74,18 @@ export class ImgCacheService {
 
   private replaceWithCached(url: string): Promise<string> {
     return new Promise((resolve, reject) => {
-      ImgCache.getCachedFileURL(
-        url,
-        (src, dest) => {
-          const file = new File();
-              const cacheFileUrl = dest.replace('cdvfile://localhost/persistent/', file.documentsDirectory);
-              const localServerFileUrl = cacheFileUrl.replace('file://', 'http://localhost:8080/_file_');
-              //localServerFileUrl contains the loadable url
-              console.log('cached url', localServerFileUrl);
-              resolve(localServerFileUrl);
-          // resolve(dest)
-        },
-        () => reject(new Error('Could not replace with cached file'))
-      );
+      ImgCache.getCachedFileBase64Data(url, (src, dest) => {
+        // console.log('dest',dest);
+        return resolve(dest);
+      })
+      // ImgCache.getCachedFileURL(
+      //   url,
+      //   (src, dest) => {
+      //       console.log('dest',dest);
+      //       return resolve(dest);
+      //   },
+      //   () => reject(new Error('Could not replace with cached file'))
+      // );
     });
   }
 }

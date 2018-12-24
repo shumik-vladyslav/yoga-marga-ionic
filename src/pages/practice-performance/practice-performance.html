@@ -27,7 +27,11 @@
           {{practice.name}}
         </h1>
         <div [innerHTML]="practice?.shortDescription"></div>
-        <img [src]="url" *ngIf="url">
+        <!-- <img img-cache img-cache-src="{{practice.text}}"  #text style="display:none" *ngIf="practice.text"> -->
+        <!-- <img img-cache img-cache-src="{{practice.audio}}" style="display:none" *ngIf="practice.audio"> -->
+
+        <img img-cache img-cache-src="{{practice.img}}" #img class="img-icon" style="display:none" *ngIf="practice.img">
+        <img *ngIf="practice.img" class="img-icon" [ngStyle]="{'-webkit-mask': 'url(' + img.src + ') no-repeat 50% 50%','mask': 'url(' + img.src + ') no-repeat 50% 50%'}">
         <ion-row justify-content-center class="m-b-10 img-sm-wrap">
           <!-- class="img-sm-wrap-inside" [ngStyle]="{'background-image': 'url(' + item.url + ')'}" -->
           <div *ngFor="let url of imgUrls">

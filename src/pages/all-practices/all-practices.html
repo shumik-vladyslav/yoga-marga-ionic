@@ -47,11 +47,9 @@
               <ion-row>
                 <ion-col col-12>
                   <ion-item text-center no-padding>
-                      <img img-cache img-cache-src="{{pract.ico}}" #img style="display:none">
-                      <img class="img-icon"
-                      [ngStyle]="{'-webkit-mask': 'url(' + img.src + ') no-repeat 50% 50%','mask': 'url(' + img.src + ') no-repeat 50% 50%'}">
-
-                    <!-- <img class="img-icon" [ngStyle]="{'-webkit-mask': 'url(' + pract.ico + ') no-repeat 50% 50%','mask': 'url(' + pract.ico + ') no-repeat 50% 50%'}"> -->
+                      <img img-cache img-cache-src="{{pract.ico}}" #img class="img-icon" style="display:none">
+                      <img class="img-icon" [ngStyle]="{'-webkit-mask': 'url(' + img.src + ') no-repeat 50% 50%','mask': 'url(' + img.src + ') no-repeat 50% 50%'}">
+                      
                   </ion-item>
                 </ion-col>
               </ion-row>
@@ -74,8 +72,10 @@
 
     <ion-grid>
       <ion-row justify-content-end>
-        <button icon-start margin-top margin-bottom class="button-custom mr-md-50 btn-sm-width" [navPush]="'PracticesListPage'"
-          [navParams]="{practices: group[1], title: group[0]}">
+          <!-- [navPush]="'PracticesListPage'"  [navParams]="{practices: group[1], title: group[0]}" -->
+        <button icon-start margin-top margin-bottom class="button-custom mr-md-50 btn-sm-width" 
+        
+          (click)="onMorePractices(group[1], group[0])">
           <!-- (click)="goMorningPracticePage()" -->
           <!-- <ion-icon name="ios-book-outline"></ion-icon> -->
           Больше практик

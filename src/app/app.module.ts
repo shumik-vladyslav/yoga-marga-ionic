@@ -1,3 +1,4 @@
+import { PracticesListPageModule } from './../pages/practices-list/practices-list.module';
 import { ActivationWarningPageModule } from './../pages/activation-warning/activation-warning.module';
 import { PracticeSearchPageModule } from './../pages/practice-search/practice-search.module';
 import { ProgressChartDirective } from './../directives/progress-chart/progress-chart';
@@ -101,7 +102,8 @@ import { ImgCacheModule } from '../directives/ng-imgcache/img-cache.module';
     ReactiveFormsModule,
     PracticeSearchPageModule,
     ActivationWarningPageModule,
-    ImgCacheModule
+    ImgCacheModule,
+    PracticesListPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

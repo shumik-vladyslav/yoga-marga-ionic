@@ -7,6 +7,7 @@ import { MeditativePracticesPage } from '../meditative-practices/meditative-prac
 import { SlicePipe } from '@angular/common';
 import { groupBy } from 'rxjs/internal/operators/groupBy';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { PracticesListPage } from '../practices-list/practices-list';
 
 /**
  * Generated class for the AllPracticesPage page.
@@ -53,7 +54,11 @@ export class AllPracticesPage {
 
     this.subscriptions.push(subs);
   }
-
+  onMorePractices(practices, title) {
+    
+    this.navCtrl.push(PracticesListPage, {practices: practices, title: title});
+    
+  }
   /**
    * Util function for array grouping
    * @param xs source array

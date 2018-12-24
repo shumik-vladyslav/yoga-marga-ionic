@@ -50,13 +50,15 @@
       <ion-grid>
         <ion-row justify-content-center>
           <ion-col col-4 class="border-r col-between" no-padding *ngFor="let pract of practices" [navPush]="pract.active === false?'':'PracticePerformancePage'"
-            [navParams]="{practice: pract}" [class.inactive]="pract.active===false">
+            [navParams]="{practice: pract}" [class.inactive]="pract.active===false"
+            >
  
             <ion-row>
               <ion-col col-12>
-                <ion-item text-center no-padding>
-                  <img class="img-icon"
-                  [ngStyle]="{'-webkit-mask': 'url(' + pract.ico + ') no-repeat 50% 50%','mask': 'url(' + pract.ico + ') no-repeat 50% 50%'}" >
+                <ion-item text-center no-padding  *ngIf="pract.ico">
+                    <!-- style="display:none" -->
+                    <img img-cache img-cache-src="{{pract.ico}}" #img class="img-icon" style="display:none">
+                    <img class="img-icon" [ngStyle]="{'-webkit-mask': 'url(' + img.src + ') no-repeat 50% 50%','mask': 'url(' + img.src + ') no-repeat 50% 50%'}">
                 </ion-item>
               </ion-col>
             </ion-row>

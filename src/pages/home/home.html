@@ -26,14 +26,8 @@
             <ion-row>
               <ion-col col-12>
                 <ion-item text-center no-padding>
-                  <!-- <ion-icon>
-                    <svg-icon src="/assets/icon/svg/main-page/om.svg" [stretch]="true" [svgStyle]="{'height.px':50}">
-                    </svg-icon>
-                  </ion-icon> -->
-                  <img img-cache img-cache-src="{{p.ico}}" #img style="display:none">
-                  <img class="img-icon"
-                  [ngStyle]="{'-webkit-mask': 'url(' + img.src + ') no-repeat 50% 50%','mask': 'url(' + img.src + ') no-repeat 50% 50%'}">
-
+                    <img img-cache img-cache-src="{{p.ico}}" #img class="img-icon" style="display:none">
+                    <img class="img-icon" [ngStyle]="{'-webkit-mask': 'url(' + img.src + ') no-repeat 50% 50%','mask': 'url(' + img.src + ') no-repeat 50% 50%'}">
                 </ion-item>
               </ion-col>
             </ion-row>
@@ -80,7 +74,8 @@
               <ion-row >
                 <ion-col col-12>
                   <ion-item text-center no-padding>
-                    <img class="img-icon" [ngStyle]="{'-webkit-mask': 'url(' + cm.ico  + ') no-repeat 50% 50%','mask': 'url(' +cm.ico  + ') no-repeat 50% 50%'}">
+                      <img img-cache img-cache-src="{{cm.ico}}" #img1 class="img-icon" style="display:none">
+                      <img class="img-icon" [ngStyle]="{'-webkit-mask': 'url(' + img1.src + ') no-repeat 50% 50%','mask': 'url(' + img1.src + ') no-repeat 50% 50%'}">
                   </ion-item>
                 </ion-col>
               </ion-row>
@@ -119,7 +114,8 @@
           <ion-row justify-content-center>
             <ion-col class="border-r custom-col" col-4 no-padding *ngFor="let p of progresses">
               <ion-item text-center no-padding>
-                <img class="img-icon" [ngStyle]="{'-webkit-mask': 'url(' + p.ico  + ') no-repeat 50% 50%','mask': 'url(' +p.ico  + ') no-repeat 50% 50%'}">
+                  <img img-cache img-cache-src="{{p.ico}}"  #img2 class="img-icon" style="display:none">
+                  <img class="img-icon" [ngStyle]="{'-webkit-mask': 'url(' + img2.src + ') no-repeat 50% 50%','mask': 'url(' + img2.src + ') no-repeat 50% 50%'}">
                 <p ion-text class="value-goals text-wrap m-t-0">{{p.name}}</p>
                 <p>{{+p.achivement}}</p> 
                 <p>из</p>

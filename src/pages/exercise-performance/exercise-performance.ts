@@ -10,6 +10,7 @@ import { UserProvider } from '../../providers/user/user';
 import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-viewer';
 import { FileTransfer } from '@ionic-native/file-transfer';
 import { File, IWriteOptions } from "@ionic-native/file";
+import { ImgCacheService } from '../../directives/ng-imgcache/img-cache.service';
 /**
  * Generated class for the ExercisePerformancePage page.
  *
@@ -47,59 +48,90 @@ export class ExercisePerformancePage {
     private document: DocumentViewer,
     private file: File, 
     private transfer: FileTransfer, 
-    private platform: Platform
+    private platform: Platform,
+    private imgCahce: ImgCacheService
   ) {
     this.startTime = Date.now();
-    this.practice = this.navParams.get('practice');
+    this.practice = {};
+    Object.assign(this.practice, this.navParams.get("practice"));
+
     this.nextExercise();
+    // this.imgCahce
+    //   .init({
+    //     // debug:true,
+    //     skipURIencoding: true
+    //   })
+    //   .then(_ => {
+    //     if (this.practice.audio) {
+    //       this.imgCahce.fetchFromCache(this.practice.audio).then(url => {
+    //         this.practice.audio = new Audio(url);
+    //         this.practice.audio.addEventListener(
+    //           "ended",
+    //           function() {
+    //             this.currentTime = 0;
+    //             this.play();
+    //           },
+    //           false
+    //         );
+    //       });
+    //     }
 
-    this.fileCacheP.getUrl(`practices/${this.practice.id}/text.pdf`).subscribe(
-      url => this.practice.text = url,
-      err => {
-        console.log('text err',JSON.stringify(err));
-      }
-    )
-
-    this.fileCacheP.getUrl(`practices/${this.practice.id}/audio`).subscribe(
-      url => this.practice.audio = new Audio(url),
-      err => {
-        console.log('text err',JSON.stringify(err));
-      }
-    )
+    //   });
   }
 
-  opentText () {
-    console.log('text', this.practice.text);
-    if(this.practice.text) {
-
-      let path = null;
- 
-    if (this.platform.is('ios')) {
-      path = this.file.dataDirectory;
-    } else if (this.platform.is('android')) {
-      path = this.file.dataDirectory;
+  opentText() {
+    if (this.practice.text) {
+      this.fetchTextFileUriFromCache().then(uri =>
+        this.document.viewDocument(
+          uri,
+          "application/pdf",
+          {},
+          null,
+          null,
+          err => this.openPdfErrorHandler(err),
+          err => this.openPdfErrorHandler(err)
+        )
+      );
     }
- 
-    const transfer = this.transfer.create();
-    transfer.download(this.practice.text, path + this.practice.id + '.pdf').then(entry => {
-      let url = entry.toURL();
-      this.document.viewDocument(url, 'application/pdf', {});
-    });
-    } 
   }
 
+  openPdfErrorHandler(err) {
+    console.log("error", JSON.stringify(err));
+    localStorage.removeItem("text_" + this.practice.text);
+  } 
+
+  fetchTextFileUriFromCache(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const fileUri = localStorage.getItem("text_" + this.practice.text);
+      if (fileUri) {
+        console.log("Use cached text file");
+        return resolve(fileUri);
+      }
+      let path = this.file.dataDirectory;
+      const transfer = this.transfer.create();
+      transfer
+        .download(this.practice.text, path + this.practice.id + ".pdf")
+        .then(entry => {
+          let url = entry.toURL();
+          console.log("Cache text file"); 
+          localStorage.setItem("text_" + this.practice.text, url);
+          return resolve(url);
+        });
+    });
+  }
  
   audioState = false;
   onToggleAudio() {
     if (this.practice.audio) {
       if (!this.audioState) {
-        this.practice.audio.play()
+        console.log("audio play");
+        this.practice.audio.play();
         this.audioState = true;
       } else {
-        this.practice.audio.pause()
+        console.log("audio pause");
+        this.practice.audio.pause();
         this.audioState = false;
       }
-      
     }
   }
 
@@ -174,6 +206,9 @@ export class ExercisePerformancePage {
     console.log('Ecercise performance ionViewWillLeave');
     for (const val of this.subscriptions) {
       val.unsubscribe();
+    }
+    if (this.practice.audio) {
+      this.practice.audio.pause();
     }
   }
 

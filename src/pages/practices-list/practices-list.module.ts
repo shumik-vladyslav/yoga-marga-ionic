@@ -1,3 +1,4 @@
+import { ImgCacheModule } from '../../directives/ng-imgcache/img-cache.module';
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { PracticesListPage } from './practices-list';
@@ -7,6 +8,7 @@ import { PracticesListPage } from './practices-list';
     PracticesListPage,
   ],
   imports: [
+    ImgCacheModule,
     IonicPageModule.forChild(PracticesListPage),
   ],
 })

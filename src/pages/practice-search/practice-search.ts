@@ -1,3 +1,4 @@
+import { PracticePerformancePage } from './../practice-performance/practice-performance';
 import { filter } from "rxjs/operators";
 import { UserProvider } from "./../../providers/user/user";
 import { Component } from "@angular/core";
@@ -50,6 +51,11 @@ export class PracticeSearchPage {
     );
   }
 
+  // [navPush]="p.active === false?'':'PracticePerformancePage'" [navParams]="{practice: p}" 
+  onPractice(p) {
+    if (!p.active) return;
+    this.navCtrl.push(PracticePerformancePage, {practice: p})
+  }
   getCalender() {
     var startDateTimeISO = this.buildISODate(this.startDate, this.startTime);
     var enddateTimeISO = this.buildISODate(this.endDate, this.endTime);

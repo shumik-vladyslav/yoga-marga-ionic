@@ -1,3 +1,4 @@
+import { DocumentViewer } from "@ionic-native/document-viewer";
 import { FileCacheProvider } from "./../../providers/file-cache/file-cache";
 import { ExercisePerformancePage } from "./../exercise-performance/exercise-performance";
 import { Component } from "@angular/core";
@@ -8,9 +9,9 @@ import { AngularFirestore, DocumentSnapshot } from "@angular/fire/firestore";
 import { AuthProvider } from "../../providers/auth/auth";
 import { AngularFireStorage } from "@angular/fire/storage";
 import { UserProvider } from "../../providers/user/user";
-import { DocumentViewer, DocumentViewerOptions } from "@ionic-native/document-viewer";
 import { FileTransfer } from "@ionic-native/file-transfer";
 import { File, IWriteOptions } from "@ionic-native/file";
+import { ImgCacheService } from "../../directives/ng-imgcache/img-cache.service";
 
 /**
  * Generated class for the PracticePerformancePage page.
@@ -31,7 +32,7 @@ export class PracticePerformancePage {
   isStarted = false;
   subscriptions = [];
   audio = new Audio("assets/sound/pomni.mp3");
-  // metronomAudio = new Audio("assets/sound/zvuk-metronoma.mp3");
+
   startTime = 0;
 
   // Время выполнения практики
@@ -49,13 +50,42 @@ export class PracticePerformancePage {
     private authP: AuthProvider,
     private afStorage: AngularFireStorage,
     private fileCacheP: FileCacheProvider,
-    private document: DocumentViewer,
-    private file: File, 
-    private transfer: FileTransfer, 
-    private platform: Platform
+    private file: File,
+    private transfer: FileTransfer,
+    private platform: Platform,
+    private imgCahce: ImgCacheService,
+    private document: DocumentViewer
   ) {
-    this.practice = this.navParams.get("practice");
-    this.resorePracticeSettings();
+    this.practice = {};
+    Object.assign(this.practice, this.navParams.get("practice"));
+
+    this.imgCahce
+      .init({
+        // debug:true,
+        skipURIencoding: true
+      })
+      .then(_ => {
+        // if (this.practice.text) {
+        // this.imgCahce.fetchFromCache(this.practice.text).then(url => {
+        //   this.practice.text = url;
+        // });
+        // }
+        if (this.practice.audio) {
+          this.imgCahce.fetchFromCache(this.practice.audio).then(url => {
+            this.practice.audio = new Audio(url);
+            this.practice.audio.addEventListener(
+              "ended",
+              function() {
+                this.currentTime = 0;
+                this.play();
+              },
+              false
+            );
+          });
+        }
+
+        this.resorePracticeSettings();
+      });
   }
 
   onChangeMetronome() {
@@ -66,34 +96,7 @@ export class PracticePerformancePage {
     }
   }
 
-
   resorePracticeSettings() {
-
-    this.fileCacheP.getUrl(`practices/${this.practice.id}/m.jpg`).subscribe(
-      url => this.url = url,
-      err => {
-        console.log('error get url for anuloma viloma',JSON.stringify(err));
-        this.url = null;
-      }
-    )
-
-
-    this.fileCacheP.getUrl(`practices/${this.practice.id}/text.pdf`).subscribe(
-      url => this.practice.text = url,
-      err => {
-        console.log('text err',JSON.stringify(err));
-        this.url = null;
-      }
-    )
-
-    this.fileCacheP.getUrl(`practices/${this.practice.id}/audio`).subscribe(
-      url => this.practice.audio = new Audio(url),
-      err => {
-        console.log('text err',JSON.stringify(err));
-        this.url = null;
-      }
-    )
-
     this.afs
       .doc(`users/${this.authP.getUserId()}`)
       .get()
@@ -128,39 +131,60 @@ export class PracticePerformancePage {
       })
       .catch(err => console.log("err", err));
   }
-  
-  opentText () {
-    console.log('text', this.practice.text);
-    if(this.practice.text) {
 
-      let path = null;
- 
-    if (this.platform.is('ios')) {
-      path = this.file.dataDirectory;
-    } else if (this.platform.is('android')) {
-      path = this.file.dataDirectory;
+  opentText() {
+    if (this.practice.text) {
+      this.fetchTextFileUriFromCache().then(uri =>
+        this.document.viewDocument(
+          uri,
+          "application/pdf",
+          {},
+          null,
+          null,
+          err => this.openPdfErrorHandler(err),
+          err => this.openPdfErrorHandler(err)
+        )
+      );
     }
- 
-    const transfer = this.transfer.create();
-    transfer.download(this.practice.text, path + this.practice.id + '.pdf').then(entry => {
-      let url = entry.toURL();
-      this.document.viewDocument(url, 'application/pdf', {});
-    });
-    } 
   }
 
- 
+  openPdfErrorHandler(err) {
+    console.log("error", JSON.stringify(err));
+    localStorage.removeItem("text_" + this.practice.text);
+  } 
+
+  fetchTextFileUriFromCache(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const fileUri = localStorage.getItem("text_" + this.practice.text);
+      if (fileUri) {
+        console.log("Use cached text file");
+        return resolve(fileUri);
+      }
+      let path = this.file.dataDirectory;
+      const transfer = this.transfer.create();
+      transfer
+        .download(this.practice.text, path + this.practice.id + ".pdf")
+        .then(entry => {
+          let url = entry.toURL();
+          console.log("Cache text file"); 
+          localStorage.setItem("text_" + this.practice.text, url);
+          return resolve(url);
+        });
+    });
+  }
+
   audioState = false;
   onToggleAudio() {
     if (this.practice.audio) {
       if (!this.audioState) {
-        this.practice.audio.play()
+        console.log("audio play");
+        this.practice.audio.play();
         this.audioState = true;
       } else {
-        this.practice.audio.pause()
+        console.log("audio pause");
+        this.practice.audio.pause();
         this.audioState = false;
       }
-      
     }
   }
 
@@ -201,12 +225,18 @@ export class PracticePerformancePage {
     for (const val of this.subscriptions) {
       val.unsubscribe();
     }
+    if (this.practice.audio) {
+      this.practice.audio.pause();
+    }
   }
 
   ionViewWillLeave() {
     console.log("Practice performance ionViewWillLeave");
     for (const val of this.subscriptions) {
       val.unsubscribe();
+    }
+    if (this.practice.audio) {
+      this.practice.audio.pause();
     }
   }
 
@@ -218,6 +248,9 @@ export class PracticePerformancePage {
 
     if (!this.isStarted) {
       this.metronom_sound.pause();
+      if (this.practice.audio) {
+        this.practice.audio.pause();
+      }
       this.timespan = (Date.now() - this.startTime) / 1000 / 60;
       if (this.practice.isAmountCounter || this.practice.isMaxAchievement) {
         this.presentPrompt();
@@ -282,17 +315,16 @@ export class PracticePerformancePage {
     this.subscriptions.push(subs1);
     this.subscriptions.push(subs2);
   }
- 
+
   pomniSubs;
 
   openTextInBrowser() {
-    console.log('~text', this.practice.text);
-    
+    console.log("~text", this.practice.text);
+
     if (this.practice.text) {
-      window.open(this.practice.text,'_system', 'location=yes')
+      window.open(this.practice.text, "_system", "location=yes");
     }
   }
-
 
   presentPrompt() {
     const inputsArr = [];
@@ -352,11 +384,10 @@ export class PracticePerformancePage {
           practiceRes.maxAchievement = data.maxAchievement;
         } else {
           practiceRes.maxAchievement =
-          (practiceRes.maxAchievement < data.maxAchievement)
-            ? +data.maxAchievement
-            : practiceRes.maxAchievement;
+            practiceRes.maxAchievement < data.maxAchievement
+              ? +data.maxAchievement
+              : practiceRes.maxAchievement;
         }
-
       }
     }
 
@@ -375,16 +406,15 @@ export class PracticePerformancePage {
   }
 
   ionViewWillEnter() {
-    console.log('ionViewWillEnter' );
-    
+    console.log("ionViewWillEnter");
+
     if (this.isStarted) {
       this.pomniSubs.unsubscribe();
-      console.log('ionViewWillEnter isStarted true' );
+      console.log("ionViewWillEnter isStarted true");
       for (const val of this.subscriptions) {
         val.unsubscribe();
       }
       this.savePracticeResult().then();
     }
   }
-  
 }
