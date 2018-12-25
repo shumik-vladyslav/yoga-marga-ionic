@@ -37,7 +37,6 @@ export class PracticePerformancePage {
 
   // Время выполнения практики
   timespan = 0;
-  imgUrls = [];
   timeForExercise;
 
   metronom_sound = new Audio("assets/sound/zvuk-metronoma.mp3");

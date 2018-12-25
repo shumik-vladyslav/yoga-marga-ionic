@@ -7,76 +7,128 @@
 
 <ion-header>
   <ion-toolbar>
-    <button ion-button navPop ion-text color="white" class="pos-a btn-back" icon-only>
+    <button
+      ion-button
+      navPop
+      ion-text
+      color="white"
+      class="pos-a btn-back"
+      icon-only
+    >
       <span class="arrow arrow-back"></span>
     </button>
     <p text-right ion-text color="white" class="header-title">
       <!-- [href]="practice?.text"  -->
-      <a >
-        <img class="header-icon" width="25px" height="25px" src="/assets/icon/svg/header/text.svg"  (click)="opentText()">
+      <a>
+        <img
+          class="header-icon"
+          width="25px"
+          height="25px"
+          src="/assets/icon/svg/header/text.svg"
+          (click)="opentText()"
+        />
       </a>
-      <img class="header-icon" width="25px" height="25px" src="/assets/icon/svg/header/audio.svg" (click)="onToggleAudio()">
-  </ion-toolbar>
+      <img
+        class="header-icon"
+        width="25px"
+        height="25px"
+        src="/assets/icon/svg/header/audio.svg"
+        (click)="onToggleAudio()"
+      /></p
+  ></ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-grid>
     <ion-row justify-content-center>
       <ion-col col-lg-10 col-xs-12>
-        <h1 ion-text color="primary">
-          {{practice.name}}
-        </h1>
+        <h1 ion-text color="primary">{{ practice.name }}</h1>
         <div [innerHTML]="practice?.shortDescription"></div>
-        <!-- <img img-cache img-cache-src="{{practice.text}}"  #text style="display:none" *ngIf="practice.text"> -->
-        <!-- <img img-cache img-cache-src="{{practice.audio}}" style="display:none" *ngIf="practice.audio"> -->
+        <img
+          img-cache
+          img-cache-src="{{ practice.img }}"
+          *ngIf="practice.img"
+        />
 
-        <img img-cache img-cache-src="{{practice.img}}" #img class="img-icon" style="display:none" *ngIf="practice.img">
-        <img *ngIf="practice.img" class="img-icon" [ngStyle]="{'-webkit-mask': 'url(' + img.src + ') no-repeat 50% 50%','mask': 'url(' + img.src + ') no-repeat 50% 50%'}">
-        <ion-row justify-content-center class="m-b-10 img-sm-wrap">
-          <!-- class="img-sm-wrap-inside" [ngStyle]="{'background-image': 'url(' + item.url + ')'}" -->
-          <div *ngFor="let url of imgUrls">
-            <img [src]="url">
-          </div>
-        </ion-row>
+        <ion-row justify-content-center class="m-b-10 img-sm-wrap"> </ion-row>
       </ion-col>
     </ion-row>
 
-    <ion-row *ngIf="practice.userSpec?.maxAchievement || practice.userSpec?.timespan || practice.userSpec?.amountCounter">
+    <ion-row
+      *ngIf="
+        practice.userSpec?.maxAchievement ||
+        practice.userSpec?.timespan ||
+        practice.userSpec?.amountCounter
+      "
+    >
       <ion-card no-margin class="full-width box-shadow">
         <ion-card-content no-padding padding-vertical>
           <ion-grid>
             <ion-row justify-content-center>
-              <ion-col col-lg-6 col-sm-6 col-xs-12 *ngIf="practice.userSpec?.amountCounter">
-                <p ion-text text-center text-wrap color="gray" class="height-50">
+              <ion-col
+                col-lg-6
+                col-sm-6
+                col-xs-12
+                *ngIf="practice.userSpec?.amountCounter"
+              >
+                <p
+                  ion-text
+                  text-center
+                  text-wrap
+                  color="gray"
+                  class="height-50"
+                >
                   Колличество
                 </p>
                 <div class="df ai-c jc-c">
                   <div class="info-value-box">
-                    {{practice.userSpec?.amountCounter}}
+                    {{ practice.userSpec?.amountCounter }}
                   </div>
                 </div>
               </ion-col>
               <!--  -->
-              <ion-col col-lg-6 col-sm-6 col-xs-12 *ngIf="practice.userSpec?.maxAchievement">
-                <p ion-text text-center text-wrap color="gray" class="height-50">
+              <ion-col
+                col-lg-6
+                col-sm-6
+                col-xs-12
+                *ngIf="practice.userSpec?.maxAchievement"
+              >
+                <p
+                  ion-text
+                  text-center
+                  text-wrap
+                  color="gray"
+                  class="height-50"
+                >
                   Лучший результат
                 </p>
                 <div class="df ai-c jc-c">
                   <div class="info-value-box">
-                    {{practice.userSpec?.maxAchievement}}
+                    {{ practice.userSpec?.maxAchievement }}
                   </div>
                 </div>
               </ion-col>
 
-              <ion-col col-lg-6 col-sm-6 col-xs-12 *ngIf="practice.userSpec?.timespan">
+              <ion-col
+                col-lg-6
+                col-sm-6
+                col-xs-12
+                *ngIf="practice.userSpec?.timespan"
+              >
                 <!-- <ion-card padding no-margin class="full-width box-shadow col-between height-full"> -->
                 <!-- <ion-item no-padding> -->
-                <p ion-text text-center text-wrap color="gray" class="height-50">
+                <p
+                  ion-text
+                  text-center
+                  text-wrap
+                  color="gray"
+                  class="height-50"
+                >
                   Общее время практики в минутах
                 </p>
                 <div class="df ai-c jc-c">
                   <div class="info-value-box">
-                    {{practice.userSpec?.timespan | number:'1.0-0'}}
+                    {{ practice.userSpec?.timespan | number: "1.0-0" }}
                   </div>
                 </div>
 
@@ -92,21 +144,48 @@
     <ion-row justify-content-center>
       <ion-col col-lg-11 col-xs-12>
         <ion-row justify-content-center>
-
           <ion-col col-lg-6 col-sm-6 col-xs-12 *ngIf="practice.userSpec">
-            <ion-card padding no-margin class="full-width box-shadow col-between height-full">
+            <ion-card
+              padding
+              no-margin
+              class="full-width box-shadow col-between height-full"
+            >
               <ion-item no-padding>
-                <p ion-text text-center text-wrap color="gray" class="height-100">
+                <p
+                  ion-text
+                  text-center
+                  text-wrap
+                  color="gray"
+                  class="height-100"
+                >
                   Установите время для выполнения практики
                 </p>
                 <ion-item text-center no-padding>
-                  <ion-item no-padding class="input-style input-goals input-teamplate">
-                    <ion-input [(ngModel)]="practice.userSpec.praktikaTime" *ngIf="!isStarted" text-center color="gray"
-                      (ngModelChange)="onPraktikaTimeChange()"></ion-input>
-                    <ion-input [value]="timer| date:'mm:ss'" *ngIf="isStarted" text-center color="gray"
-                      (ngModelChange)="onPraktikaTimeChange()"></ion-input>
+                  <ion-item
+                    no-padding
+                    class="input-style input-goals input-teamplate"
+                  >
+                    <ion-input
+                      [(ngModel)]="practice.userSpec.praktikaTime"
+                      *ngIf="!isStarted"
+                      text-center
+                      color="gray"
+                      (ngModelChange)="onPraktikaTimeChange()"
+                    ></ion-input>
+                    <ion-input
+                      [value]="timer | date: 'mm:ss'"
+                      *ngIf="isStarted"
+                      text-center
+                      color="gray"
+                      (ngModelChange)="onPraktikaTimeChange()"
+                    ></ion-input>
                   </ion-item>
-                  <p margin-top ion-text text-wrap class="fs-14 text-wrap m-t-0 m-b-20 letter-spacing-2">
+                  <p
+                    margin-top
+                    ion-text
+                    text-wrap
+                    class="fs-14 text-wrap m-t-0 m-b-20 letter-spacing-2"
+                  >
                     МИНУТ
                   </p>
                 </ion-item>
@@ -115,64 +194,150 @@
           </ion-col>
 
           <ion-col col-lg-6 col-sm-6 col-xs-12 *ngIf="practice.userSpec">
-            <ion-card padding no-margin class="full-width box-shadow col-between height-full">
+            <ion-card
+              padding
+              no-margin
+              class="full-width box-shadow col-between height-full"
+            >
               <ion-item no-padding>
-                <p ion-text text-wrap text-center color="gray" class="height-100">
-                  Установите время, через которое Вы услышите настановление о неотвлечении
+                <p
+                  ion-text
+                  text-wrap
+                  text-center
+                  color="gray"
+                  class="height-100"
+                >
+                  Установите время, через которое Вы услышите настановление о
+                  неотвлечении
                 </p>
                 <ion-item text-center no-padding>
-                  <ion-item no-padding class="input-style input-goals input-teamplate">
-                    <ion-input [(ngModel)]="practice.userSpec.pomniTime" text-center placeholder="" color="gray"></ion-input>
+                  <ion-item
+                    no-padding
+                    class="input-style input-goals input-teamplate"
+                  >
+                    <ion-input
+                      [(ngModel)]="practice.userSpec.pomniTime"
+                      text-center
+                      placeholder=""
+                      color="gray"
+                    ></ion-input>
                   </ion-item>
-                  <p margin-top ion-text class="fs-14 text-wrap m-t-0 m-b-20 letter-spacing-2">МИНУТ</p>
+                  <p
+                    margin-top
+                    ion-text
+                    class="fs-14 text-wrap m-t-0 m-b-20 letter-spacing-2"
+                  >
+                    МИНУТ
+                  </p>
                 </ion-item>
                 <ion-row nowrap align-items-center>
-                  <ion-item id="radio-style ios" class="width-default radio-style">
-                    <ion-toggle [(ngModel)]="practice.userSpec.soloPomniFlag" (ngModelChange)="onChangeSolo()"></ion-toggle>
+                  <ion-item
+                    id="radio-style ios"
+                    class="width-default radio-style"
+                  >
+                    <ion-toggle
+                      [(ngModel)]="practice.userSpec.soloPomniFlag"
+                      (ngModelChange)="onChangeSolo()"
+                    ></ion-toggle>
                   </ion-item>
-                  <p padding-horizontal color="text-light" text-wrap text-capitalize text-left ion-text class="m-0 p-0 fs-13 letter-spacing-2 lable-radio-box">
+                  <p
+                    padding-horizontal
+                    color="text-light"
+                    text-wrap
+                    text-capitalize
+                    text-left
+                    ion-text
+                    class="m-0 p-0 fs-13 letter-spacing-2 lable-radio-box"
+                  >
                     Однократное напоминание
                   </p>
                 </ion-row>
                 <ion-row nowrap align-items-center>
-                  <ion-item id="radio-style ios" class="width-default radio-style">
-                    <ion-toggle [(ngModel)]="practice.userSpec.multiPomniFlag" (ngModelChange)="onChangeMulti()"></ion-toggle>
+                  <ion-item
+                    id="radio-style ios"
+                    class="width-default radio-style"
+                  >
+                    <ion-toggle
+                      [(ngModel)]="practice.userSpec.multiPomniFlag"
+                      (ngModelChange)="onChangeMulti()"
+                    ></ion-toggle>
                   </ion-item>
-                  <p padding-horizontal color="text-light" text-wrap text-left ion-text text-capitalize class="m-0 p-0 fs-13 letter-spacing-2 lable-radio-box">
+                  <p
+                    padding-horizontal
+                    color="text-light"
+                    text-wrap
+                    text-left
+                    ion-text
+                    text-capitalize
+                    class="m-0 p-0 fs-13 letter-spacing-2 lable-radio-box"
+                  >
                     Постоянное напоминание
                   </p>
                 </ion-row>
 
-                <ion-row nowrap align-items-center *ngIf="practice.hasMetronome">
+                <ion-row
+                  nowrap
+                  align-items-center
+                  *ngIf="practice.hasMetronome"
+                >
                   <!-- <pre>
                     {{practice | json}}
                   </pre> -->
-                  <ion-item id="radio-style ios" class="width-default radio-style">
-                    <ion-toggle [(ngModel)]="practice.userSpec.metronomeFlag" (ngModelChange)="onChangeMetronome()"></ion-toggle>
+                  <ion-item
+                    id="radio-style ios"
+                    class="width-default radio-style"
+                  >
+                    <ion-toggle
+                      [(ngModel)]="practice.userSpec.metronomeFlag"
+                      (ngModelChange)="onChangeMetronome()"
+                    ></ion-toggle>
                   </ion-item>
-                  <p padding-horizontal color="text-light" text-wrap text-left ion-text text-capitalize class="m-0 p-0 fs-13 letter-spacing-2 lable-radio-box">
+                  <p
+                    padding-horizontal
+                    color="text-light"
+                    text-wrap
+                    text-left
+                    ion-text
+                    text-capitalize
+                    class="m-0 p-0 fs-13 letter-spacing-2 lable-radio-box"
+                  >
                     Метроном
                   </p>
                 </ion-row>
               </ion-item>
-
             </ion-card>
           </ion-col>
 
-          <ion-item no-padding *ngIf="practice.exercises && practice.exercises.length > 0">
+          <ion-item
+            no-padding
+            *ngIf="practice.exercises && practice.exercises.length > 0"
+          >
             <p ion-text text-center text-wrap color="gray" class="m-b-20">
               Установите время для каждого упражнения
             </p>
             <ion-item class="none-border" text-center no-padding>
-              <ion-item no-padding class="input-style input-goals input-teamplate">
-                <ion-input [(ngModel)]="timeForExercise" text-center placeholder="" color="gray" (ngModelChange)="onTimeForExerciseChange()"></ion-input>
+              <ion-item
+                no-padding
+                class="input-style input-goals input-teamplate"
+              >
+                <ion-input
+                  [(ngModel)]="timeForExercise"
+                  text-center
+                  placeholder=""
+                  color="gray"
+                  (ngModelChange)="onTimeForExerciseChange()"
+                ></ion-input>
               </ion-item>
-              <p margin-top ion-text text-wrap class="fs-14 text-wrap m-t-0 letter-spacing-2">
+              <p
+                margin-top
+                ion-text
+                text-wrap
+                class="fs-14 text-wrap m-t-0 letter-spacing-2"
+              >
                 МИНУТ
               </p>
             </ion-item>
           </ion-item>
-
         </ion-row>
       </ion-col>
     </ion-row>
@@ -180,11 +345,16 @@
 
   <ion-grid>
     <ion-row justify-content-center>
-      <button icon-center margin-top margin-bottom class="button-custom m-r-0 btn-sm-width" (click)="start()"
-        [class.active]="isStarted">
-        {{isStarted?'Закончить практику':'Начать практику'}}
+      <button
+        icon-center
+        margin-top
+        margin-bottom
+        class="button-custom m-r-0 btn-sm-width"
+        (click)="start()"
+        [class.active]="isStarted"
+      >
+        {{ isStarted ? "Закончить практику" : "Начать практику" }}
       </button>
     </ion-row>
   </ion-grid>
-
 </ion-content>
