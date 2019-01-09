@@ -3,7 +3,6 @@ import { filter } from "rxjs/operators";
 import { UserProvider } from "./../../providers/user/user";
 import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
-import { Calendar } from "@ionic-native/calendar";
 
 /**
  * Generated class for the PracticeSearchPage page.
@@ -18,8 +17,6 @@ import { Calendar } from "@ionic-native/calendar";
   templateUrl: "practice-search.html"
 })
 export class PracticeSearchPage {
-  calendar;
-
   title;
   notes;
   location;
@@ -56,41 +53,5 @@ export class PracticeSearchPage {
     if (!p.active) return;
     this.navCtrl.push(PracticePerformancePage, {practice: p})
   }
-  getCalender() {
-    var startDateTimeISO = this.buildISODate(this.startDate, this.startTime);
-    var enddateTimeISO = this.buildISODate(this.endDate, this.endTime);
 
-    this.calendar.requestWritePermission();
-    this.calendar
-      .createEvent(
-        this.title,
-        this.location,
-        this.notes,
-        new Date(startDateTimeISO),
-        new Date(enddateTimeISO)
-      )
-      .then(
-        msg => {
-          alert("msg " + msg);
-        },
-        err => {
-          alert("err " + err);
-        }
-      );
-  }
-
-  buildISODate(date, time) {
-    var dateArray = date && date.split("-");
-    var timeArray = time && time.split(":");
-    var normalDate = new Date(
-      parseInt(dateArray[0]),
-      parseInt(dateArray[1]) - 1,
-      parseInt(dateArray[2]),
-      parseInt(timeArray[0]),
-      parseInt(timeArray[1]),
-      0,
-      0
-    );
-    return normalDate.toISOString();
-  }
 }

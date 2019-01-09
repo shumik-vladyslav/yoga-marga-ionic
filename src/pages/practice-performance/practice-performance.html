@@ -44,6 +44,10 @@
       <ion-col col-lg-10 col-xs-12>
         <h1 ion-text color="primary">{{ practice.name }}</h1>
         <div [innerHTML]="practice?.shortDescription"></div>
+        <!-- <pre class="text-after-img" style="white-space: pre-wrap;">
+          {{practice?.shortDescription}}
+        </pre> -->
+
         <img
           img-cache
           img-cache-src="{{ practice.img }}"

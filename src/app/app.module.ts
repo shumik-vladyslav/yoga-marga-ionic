@@ -15,7 +15,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule,AngularFireStorage } from '@angular/fire/storage';
 import { File } from '@ionic-native/file';
 import { IonicStorageModule } from '@ionic/storage';
-import { Calendar } from '@ionic-native/calendar';
+
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -81,7 +81,6 @@ import { ImgCacheModule } from '../directives/ng-imgcache/img-cache.module';
     ProgressChartDirective
   ],
   imports: [
-    // Calendar,
     BrowserModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(
@@ -142,7 +141,6 @@ import { ImgCacheModule } from '../directives/ng-imgcache/img-cache.module';
     FileTransfer,
     File,
     UserProvider,
-    Calendar,
     DocumentViewer
   ]
 })
