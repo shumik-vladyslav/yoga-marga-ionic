@@ -56,27 +56,6 @@ export class ExercisePerformancePage {
     Object.assign(this.practice, this.navParams.get("practice"));
 
     this.nextExercise();
-    // this.imgCahce
-    //   .init({
-    //     // debug:true,
-    //     skipURIencoding: true
-    //   })
-    //   .then(_ => {
-    //     if (this.practice.audio) {
-    //       this.imgCahce.fetchFromCache(this.practice.audio).then(url => {
-    //         this.practice.audio = new Audio(url);
-    //         this.practice.audio.addEventListener(
-    //           "ended",
-    //           function() {
-    //             this.currentTime = 0;
-    //             this.play();
-    //           },
-    //           false
-    //         );
-    //       });
-    //     }
-
-    //   });
   }
 
   opentText() {
@@ -121,15 +100,19 @@ export class ExercisePerformancePage {
   }
  
   audioState = false;
+  exerciseAudio;
   onToggleAudio() {
-    if (this.practice.audio) {
+    this.exercise = this.practice.exercises[this.exerciseCounter];
+    
+    if (this.exercise.audio && this.exerciseAudio)  {
+      
       if (!this.audioState) {
         console.log("audio play");
-        this.practice.audio.play();
+        this.exerciseAudio.play();
         this.audioState = true;
       } else {
         console.log("audio pause");
-        this.practice.audio.pause();
+        this.exerciseAudio.pause();
         this.audioState = false;
       }
     }
@@ -146,11 +129,18 @@ export class ExercisePerformancePage {
       return this.savePracticeResultAndExit();
     }
 
-
     // get exercise
     this.exercise = this.practice.exercises[this.exerciseCounter];
+    
+    if (this.exerciseAudio) {
+      this.exerciseAudio.pause();
+    }
+    
+    if (this.exercise.audio) {
+      this.exerciseAudio = new Audio(this.exercise.audio);
+    }
+    
 
-    console.log('asany- 1');
     if(this.practice[`ex_img${this.exerciseCounter}`]) {
       this.url = this.practice[`ex_img${this.exerciseCounter}`]
     } else if (this.exercise.hasImg) {
@@ -207,8 +197,13 @@ export class ExercisePerformancePage {
     for (const val of this.subscriptions) {
       val.unsubscribe();
     }
+    
     if (this.practice.audio) {
       this.practice.audio.pause();
+    }
+
+    if (this.exerciseAudio) {
+      this.exerciseAudio.pause();
     }
   }
 
@@ -226,9 +221,6 @@ export class ExercisePerformancePage {
   
   saveTimeForExercise() {
     console.log('set time for pract');
-    
-    // this.practice.userSpec.exercises
-    // const path = `exercises;
 
     let tmpArr = new Array(this.practice.exercises.length);
     tmpArr= tmpArr.fill(+this.exercise.timespan);
@@ -269,6 +261,5 @@ export class ExercisePerformancePage {
       .catch(err => console.log('err', err))
 
     this.navCtrl.pop();
-    // this.navCtrl.setRoot(HomePage);
   }
 }
