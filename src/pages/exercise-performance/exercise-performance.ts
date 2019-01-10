@@ -11,6 +11,7 @@ import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-vi
 import { FileTransfer } from '@ionic-native/file-transfer';
 import { File, IWriteOptions } from "@ionic-native/file";
 import { ImgCacheService } from '../../directives/ng-imgcache/img-cache.service';
+import { take } from 'rxjs/operators';
 /**
  * Generated class for the ExercisePerformancePage page.
  *
@@ -55,6 +56,7 @@ export class ExercisePerformancePage {
     this.practice = {};
     Object.assign(this.practice, this.navParams.get("practice"));
 
+    console.log('Practice', this.practice);
     this.nextExercise();
   }
 
@@ -138,6 +140,9 @@ export class ExercisePerformancePage {
     
     if (this.exercise.audio) {
       this.exerciseAudio = new Audio(this.exercise.audio);
+      if (this.audioState) {
+        this.exerciseAudio.play();
+      }
     }
     
 
@@ -165,15 +170,14 @@ export class ExercisePerformancePage {
     } else {
       this.exercise.timespan = this.practice.timeForExercise;
     }
-    this.timer = new Date(this.exercise.timespan * 60000);
     
+    this.timer = new Date(Math.round(this.exercise.timespan * 60000));
+    console.log(this.timer);
+
     // for decrise practicaTime counter
-    const subs2 = interval(1000).subscribe(val => {
+    const subs2 = interval(1000).pipe(take(Math.round(this.exercise.timespan * 60))).subscribe(val => {
       console.log("subs2", val);
       this.timer -= 1000;
-      if(this.timer <= 0) {
-        subs2.unsubscribe();
-      }
     });
 
     const subs = interval(this.exercise.timespan * 60 * 1000).subscribe(

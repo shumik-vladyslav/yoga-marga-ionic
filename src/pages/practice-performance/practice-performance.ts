@@ -12,6 +12,7 @@ import { UserProvider } from "../../providers/user/user";
 import { FileTransfer } from "@ionic-native/file-transfer";
 import { File, IWriteOptions } from "@ionic-native/file";
 import { ImgCacheService } from "../../directives/ng-imgcache/img-cache.service";
+import { take } from "rxjs/operators";
 
 /**
  * Generated class for the PracticePerformancePage page.
@@ -57,6 +58,20 @@ export class PracticePerformancePage {
   ) {
     this.practice = {};
     Object.assign(this.practice, this.navParams.get("practice"));
+
+    const newExercises = [];
+    if (this.practice.exercises) {
+      this.practice.exercises.forEach(e => {
+        newExercises.push(e);
+        if (e.mirror) {
+          const tmp:any = {};
+          Object.assign(tmp, e);
+          tmp.imgMirror = true;
+          newExercises.push(tmp);
+        }
+      });
+      this.practice.exercises = newExercises;
+    }
 
     this.imgCahce
       .init({
@@ -265,7 +280,7 @@ export class PracticePerformancePage {
 
     const subs = interval(
       Math.round(this.practice.userSpec.praktikaTime * 60000)
-    ).subscribe(val => {
+    ).pipe(take(1)).subscribe(val => {
       console.log("subs", val);
       this.timespan = this.practice.userSpec.praktikaTime;
       for (const val of this.subscriptions) {

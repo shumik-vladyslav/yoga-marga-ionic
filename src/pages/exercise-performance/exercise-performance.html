@@ -20,7 +20,7 @@
           <span (click)="back()" class="arrow-slide arrow-left"></span>
           <div class="img-sm-wrap-inside">
             <!-- <img [src]="url" alt="" *ngIf="url"> -->
-            <img img-cache img-cache-src="{{url}}" *ngIf="url"> 
+            <img img-cache img-cache-src="{{url}}" *ngIf="url" [class.mirror]="exercise.imgMirror"> 
           </div>
           <span (click)="skip()" class="arrow-slide arrow-right"></span>
         </ion-row>
@@ -35,13 +35,12 @@
     <ion-item text-center no-padding>
         <ion-item no-padding class="input-style input-goals input-teamplate">
           <!-- <ion-input [(ngModel)]="practice.userSpec.praktikaTime" *ngIf="!isStarted" text-center color="gray" (ngModelChange)="onPraktikaTimeChange()"></ion-input> -->
-          <ion-input [value]="timer| date:'mm:ss'" disabled text-center color="gray" ></ion-input>
+          <ion-input [value]="timer | date:'mm:ss':'UTC+0'" disabled text-center color="gray" ></ion-input>
         </ion-item>
         <p margin-top ion-text text-wrap class="fs-14 text-wrap m-t-0 m-b-20 letter-spacing-2">
           МИНУТ
         </p>
       </ion-item>
-    <!-- <ion-input [value]="timer| date:'mm:ss'"  disabled text-center color="gray"></ion-input> -->
     <ion-grid>
       <ion-card padding no-margin class="full-width box-shadow col-between height-full m-b-20">
         <ion-row justify-content-center>
