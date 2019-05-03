@@ -5,7 +5,7 @@ import { ProgressChartDirective } from './../directives/progress-chart/progress-
 import { ExercisePerformancePageModule } from './../pages/exercise-performance/exercise-performance.module';
 import { PracticePerformancePageModule } from './../pages/practice-performance/practice-performance.module';
 import { BrowserModule } from '@angular/platform-browser';
-import { ErrorHandler, NgModule } from '@angular/core';
+import { ErrorHandler, NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { HttpClientModule } from '@angular/common/http';
@@ -54,6 +54,8 @@ import { PracticeSearchPage } from '../pages/practice-search/practice-search';
 import { DocumentViewer } from '@ionic-native/document-viewer';
 
 import { ImgCacheModule } from '../directives/ng-imgcache/img-cache.module';
+import { Insomnia } from '@ionic-native/insomnia';
+import { LogPipe } from '../pipe/logPipe';
 
 
 @NgModule({
@@ -78,7 +80,7 @@ import { ImgCacheModule } from '../directives/ng-imgcache/img-cache.module';
     Template_3Page,
     Template_4Page,
     LoadScreenPage,
-    ProgressChartDirective
+    ProgressChartDirective,
   ],
   imports: [
     BrowserModule,
@@ -141,7 +143,9 @@ import { ImgCacheModule } from '../directives/ng-imgcache/img-cache.module';
     FileTransfer,
     File,
     UserProvider,
-    DocumentViewer
-  ]
+    DocumentViewer,
+    Insomnia
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {}
