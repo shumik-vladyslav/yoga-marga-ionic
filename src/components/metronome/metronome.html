@@ -4,15 +4,16 @@
           <ion-col><p ion-text text-center text-wrap color="gray" >Метроном</p>
         </ion-col>
       </ion-row>
-      <ion-row *ngFor="let interval of intervals; let i = index">
+      <ion-row *ngFor="let interval of _intervals; let i = index">
         <ion-col><ion-item text-right class="input-style input-goals input-teamplate">{{interval}}</ion-item></ion-col>
-        <ion-col><button ion-button [disabled]="state=='played'" class="ion-no-margin" color="primary" (click)="intervals.splice(i,1)"><ion-icon name="remove"></ion-icon></button></ion-col>
+        <ion-col><button ion-button [disabled]="state=='played'" class="ion-no-margin" color="primary" (click)="_intervals.splice(i,1);onChange(_intervals)"><ion-icon name="remove"></ion-icon></button></ion-col>
       </ion-row>
       <ion-row>
-          <ion-col><ion-item text-right class="input-style input-goals input-teamplate"><ion-input type="number" #input></ion-input></ion-item></ion-col>
+          <ion-col><ion-item text-right class="input-style input-goals input-teamplate">
+            <input type="number" #input class="new-interval"></ion-item></ion-col>
           <ion-col>
               <!-- <ion-item text-right class="input-style input-goals input-teamplate"> -->
-                <button ion-button [disabled]="state=='played'" class="ion-no-margin" color="primary" (click)="input.value?intervals.push(input.value):0;input.value=''"><ion-icon name="add"></ion-icon></button>
+                <button ion-button [disabled]="state=='played'" class="ion-no-margin" color="primary" (click)="input.value?_intervals.push(+input.value):0;input.value='';onChange(_intervals)"><ion-icon name="add"></ion-icon></button>
               <!-- </ion-item> -->
           </ion-col>
       </ion-row>

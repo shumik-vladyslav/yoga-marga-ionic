@@ -4,22 +4,23 @@
         <span class="arrow arrow-back"></span>
       </button>
       <p text-right ion-text color="white" class="header-title">
-          <a ><img class="header-icon" width="25px" height="25px" src="/assets/icon/svg/header/text.svg"  (click)="opentText()"></a>
-            <img class="header-icon" width="25px" height="25px" src="/assets/icon/svg/header/audio.svg" (click)="onToggleAudio()">
-        <!-- <img class="header-icon" width="25px" height="25px" src="/assets/icon/svg/header/text.svg" alt=""> -->
-        <!-- <img class="header-icon" width="25px" height="25px" src="/assets/icon/svg/header/audio.svg" alt=""> -->
+      <img class="header-icon" width="25px" height="25px" src="/assets/icon/svg/header/text.svg"  (click)="opentText()">
+      <img class="header-icon" width="25px" height="25px" src="/assets/icon/svg/header/audio.svg" (click)="onToggleAudio()">
     </ion-toolbar>
   </ion-header>
-  <ion-content class="p-b-20">
+  <ion-content class="p-b-20" (swipe)="swipeEvent($event)">
     <ion-row *ngIf='practice' justify-content-center>
       <ion-col col-lg-10 col-xs-12>
         <h1 ion-text color="primary">
             {{exercise.name}}
         </h1>
+        <button ion-button color="primary" size="small"><ion-icon name="pause"></ion-icon></button>
+        <button ion-button color="primary" size="small"><ion-icon name="play"></ion-icon></button>
+        <button ion-button color="primary" size="small" (click)="nextExercise()"><ion-icon name="fastforward"></ion-icon></button>
+
         <ion-row justify-content-center class="m-b-10 img-wrap-big">
           <span (click)="back()" class="arrow-slide arrow-left"></span>
           <div class="img-sm-wrap-inside">
-            <!-- <img [src]="url" alt="" *ngIf="url"> -->
             <img img-cache img-cache-src="{{url}}" *ngIf="url" [class.mirror]="exercise.imgMirror"> 
           </div>
           <span (click)="skip()" class="arrow-slide arrow-right"></span>
@@ -35,10 +36,10 @@
     <ion-item text-center no-padding>
         <ion-item no-padding class="input-style input-goals input-teamplate">
           <!-- <ion-input [(ngModel)]="practice.userSpec.praktikaTime" *ngIf="!isStarted" text-center color="gray" (ngModelChange)="onPraktikaTimeChange()"></ion-input> -->
-          <ion-input [value]="timer | date:'mm:ss':'UTC+0'" disabled text-center color="gray" ></ion-input>
+          <ion-input [value]="timer" disabled text-center color="gray" ></ion-input>
         </ion-item>
         <p margin-top ion-text text-wrap class="fs-14 text-wrap m-t-0 m-b-20 letter-spacing-2">
-          МИНУТ
+          СЕКУНД
         </p>
       </ion-item>
     <ion-grid>
@@ -54,7 +55,7 @@
                   <ion-input text-center placeholder="" color="gray" [(ngModel)]="exercise.timespan"></ion-input>
                 </ion-item>
                 <p margin-top ion-text text-wrap class="fs-14 text-wrap m-t-0 letter-spacing-2">
-                  МИНУТ
+                  СЕКУНД
                 </p>
               </ion-item>
             </ion-item>

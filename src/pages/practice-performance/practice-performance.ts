@@ -3,7 +3,7 @@ import { FileCacheProvider } from "./../../providers/file-cache/file-cache";
 import { ExercisePerformancePage } from "./../exercise-performance/exercise-performance";
 import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams, Platform } from "ionic-angular";
-import { interval } from "rxjs";
+import { interval, timer } from "rxjs";
 import { AlertController } from "ionic-angular";
 import { AngularFirestore, DocumentSnapshot } from "@angular/fire/firestore";
 import { AuthProvider } from "../../providers/auth/auth";
@@ -13,7 +13,9 @@ import { FileTransfer } from "@ionic-native/file-transfer";
 import { File, IWriteOptions } from "@ionic-native/file";
 import { ImgCacheService } from "../../directives/ng-imgcache/img-cache.service";
 import { take } from "rxjs/operators";
-
+import { normalizeURL } from 'ionic-angular';
+import { Insomnia } from "@ionic-native/insomnia";
+import * as moment from 'moment';
 /**
  * Generated class for the PracticePerformancePage page.
  *
@@ -27,12 +29,17 @@ import { take } from "rxjs/operators";
   templateUrl: "practice-performance.html"
 })
 export class PracticePerformancePage {
+  intervals = [10,21]
+  onMetr(evnt) {
+    console.log('on change metronom', evnt, this.intervals);
+  }
   practice;
   url;
   metronomeSubscription;
   isStarted = false;
   subscriptions = [];
   audio = new Audio("assets/sound/pomni.mp3");
+  tik = new Audio("assets/sound/tik.mp3");
 
   startTime = 0;
 
@@ -41,7 +48,8 @@ export class PracticePerformancePage {
   timeForExercise;
 
   metronom_sound = new Audio("assets/sound/zvuk-metronoma.mp3");
-
+  test = '0-0-0T00:30:00';
+  
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -54,8 +62,10 @@ export class PracticePerformancePage {
     private transfer: FileTransfer,
     private platform: Platform,
     private imgCahce: ImgCacheService,
-    private document: DocumentViewer
+    private document: DocumentViewer,
+    private insomnia: Insomnia
   ) {
+
     this.practice = {};
     Object.assign(this.practice, this.navParams.get("practice"));
 
@@ -64,7 +74,7 @@ export class PracticePerformancePage {
       this.practice.exercises.forEach(e => {
         newExercises.push(e);
         if (e.mirror) {
-          const tmp:any = {};
+          const tmp: any = {};
           Object.assign(tmp, e);
           tmp.imgMirror = true;
           newExercises.push(tmp);
@@ -131,7 +141,7 @@ export class PracticePerformancePage {
           this.practice.userSpec = userSettings.practices[this.practice.id];
 
           if (!this.practice.userSpec.praktikaTime) {
-            this.practice.userSpec.praktikaTime = 60;
+            this.practice.userSpec.praktikaTime = '0-0-0T00:30:00';
           }
 
           if (!this.practice.userSpec.pomniTime) {
@@ -147,8 +157,11 @@ export class PracticePerformancePage {
   }
 
   opentText() {
+    console.log('open pdf~~~');
+    // this.document.viewDocument('file:///data/user/0/com.ip.yoga_marga/files/opa.pdf',"application/pdf",{});
     if (this.practice.text) {
-      this.fetchTextFileUriFromCache().then(uri =>
+      this.fetchTextFileUriFromCache().then(uri => {
+
         this.document.viewDocument(
           uri,
           "application/pdf",
@@ -157,21 +170,21 @@ export class PracticePerformancePage {
           null,
           err => this.openPdfErrorHandler(err),
           err => this.openPdfErrorHandler(err)
-        )
-      );
+        );
+      }).catch ( err => console.log('~~~openText', err));
     }
   }
 
   openPdfErrorHandler(err) {
-    console.log("error", JSON.stringify(err));
+    console.log("~~~error pdf opening", JSON.stringify(err));
     localStorage.removeItem("text_" + this.practice.text);
-  } 
+  }
 
   fetchTextFileUriFromCache(): Promise<any> {
     return new Promise((resolve, reject) => {
       const fileUri = localStorage.getItem("text_" + this.practice.text);
       if (fileUri) {
-        console.log("Use cached text file");
+        console.log("Use cached text file", fileUri);
         return resolve(fileUri);
       }
       let path = this.file.dataDirectory;
@@ -179,8 +192,9 @@ export class PracticePerformancePage {
       transfer
         .download(this.practice.text, path + this.practice.id + ".pdf")
         .then(entry => {
+          console.log('~~~File downloaded');
           let url = entry.toURL();
-          console.log("Cache text file"); 
+          console.log("Cache text file[", JSON.stringify(entry), url);
           localStorage.setItem("text_" + this.practice.text, url);
           return resolve(url);
         });
@@ -206,15 +220,19 @@ export class PracticePerformancePage {
     if (!this.practice.exercises || this.practice.exercises.length == 0) return;
 
     const tmp = (+this.timeForExercise || 0) * this.practice.exercises.length;
-    this.practice.userSpec.praktikaTime = Math.round(tmp * 10) / 10;
+    this.practice.userSpec.praktikaTime = Math.round(tmp);
   }
 
-  onPraktikaTimeChange() {
+  
+  onPraktikaTimeChange(time = null) {
+    // debugger
+    if(!time) return;
+    this.practice.userSpec.praktikaTime = time;
+    let [hour, minute, second] = time.split(':');
+    time = ((+hour) * 3600 + (+minute) * 60 + (+second)) * 1000;
     if (!this.practice.exercises || this.practice.exercises.length == 0) return;
-    const tmp =
-      (+this.practice.userSpec.praktikaTime || 0) /
-      this.practice.exercises.length;
-    this.timeForExercise = Math.round(tmp * 10) / 10;
+    const tmp = (time || 0) / this.practice.exercises.length;
+    this.timeForExercise = Math.round(tmp);
   }
 
   onChangeSolo() {
@@ -252,6 +270,9 @@ export class PracticePerformancePage {
     if (this.practice.audio) {
       this.practice.audio.pause();
     }
+    this.insomnia
+    .allowSleepAgain()
+    .then(() => console.log("insomnia success off"), () => console.log("insomnia erro off"));
   }
 
   timer;
@@ -259,7 +280,6 @@ export class PracticePerformancePage {
     console.log(this.practice);
 
     this.isStarted = !this.isStarted;
-
     if (!this.isStarted) {
       this.metronom_sound.pause();
       if (this.practice.audio) {
@@ -274,21 +294,31 @@ export class PracticePerformancePage {
       return;
     }
 
+    this.insomnia
+    .keepAwake()
+    .then(
+      () => console.log("insomnia success"),
+      () => console.log("insomnia error")
+    );
+
     this.savePracticeSettings();
     this.startTime = Date.now();
     this.timer = new Date(this.practice.userSpec.praktikaTime * 60000);
 
     const subs = interval(
       Math.round(this.practice.userSpec.praktikaTime * 60000)
-    ).pipe(take(1)).subscribe(val => {
-      console.log("subs", val);
-      this.timespan = this.practice.userSpec.praktikaTime;
-      for (const val of this.subscriptions) {
-        val.unsubscribe();
-      }
-      if (this.practice.exercises && this.practice.exercises.length > 0) return;
-      return this.presentPrompt();
-    });
+    )
+      .pipe(take(1))
+      .subscribe(val => {
+        console.log("subs", val);
+        this.timespan = this.practice.userSpec.praktikaTime;
+        for (const val of this.subscriptions) {
+          val.unsubscribe();
+        }
+        if (this.practice.exercises && this.practice.exercises.length > 0)
+          return;
+        return this.presentPrompt();
+      });
 
     // Напоминание
     const subs1 = interval(
@@ -308,6 +338,7 @@ export class PracticePerformancePage {
 
     if (this.practice.exercises && this.practice.exercises.length > 0) {
       if (this.timeForExercise) {
+        console.log('set time for exer', this.timeForExercise);
         this.practice.timeForExercise = this.timeForExercise;
       }
       return this.navCtrl.push(ExercisePerformancePage, {
@@ -431,4 +462,5 @@ export class PracticePerformancePage {
       this.savePracticeResult().then();
     }
   }
+  
 }

@@ -1,5 +1,7 @@
-import { Component, OnDestroy, Input } from "@angular/core";
+import { Component, OnDestroy, Input, forwardRef } from "@angular/core";
 import { interval, Subscription } from "rxjs";
+import { AbstractValueAccessor, MakeProvider } from "../../pages/practice-performance/abstract-value-accessor";
+import { NG_VALUE_ACCESSOR } from "@angular/forms";
 
 /**
  * Generated class for the MetronomeComponent component.
@@ -9,15 +11,23 @@ import { interval, Subscription } from "rxjs";
  */
 @Component({
   selector: "metronome",
-  templateUrl: "metronome.html"
+  templateUrl: "metronome.html",
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => MetronomeComponent),
+      multi: true
+    }
+  ]
 })
-export class MetronomeComponent implements OnDestroy{
+export class MetronomeComponent extends AbstractValueAccessor implements OnDestroy {
   context;
   tikBuff;
   gongBuff;
   
-  @Input() intervals: number[];
-  
+  // intervals: number[];
+
+
   state = "paused";
   subscription = new Subscription();
 
@@ -122,6 +132,7 @@ export class MetronomeComponent implements OnDestroy{
   }
 
   constructor() {
+    super();
     this.createAudioContext()
 
     this.loadSoundIntoBuffer("assets/sound/tik.mp3").then(b => this.tikBuff = b);
