@@ -1,7 +1,7 @@
 import { FileCacheProvider } from "./../../providers/file-cache/file-cache";
 import { interval, timer } from "rxjs";
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams, Platform } from "ionic-angular";
+import { IonicPage, NavController, NavParams, Platform, LoadingController } from "ionic-angular";
 import { AngularFireStorage } from "@angular/fire/storage";
 import { AuthProvider } from "../../providers/auth/auth";
 import { AngularFirestore } from "@angular/fire/firestore";
@@ -16,6 +16,7 @@ import { File, IWriteOptions } from "@ionic-native/file";
 import { ImgCacheService } from "../../directives/ng-imgcache/img-cache.service";   
 import { take } from "rxjs/operators";
 import { Insomnia } from "@ionic-native/insomnia";
+import * as moment from 'moment';
 
 /**
  * Generated class for the ExercisePerformancePage page.
@@ -42,6 +43,7 @@ export class ExercisePerformancePage {
 
   // Время выполнения практики
   timespan = 0;
+  totalTime = 0;
 
   constructor(
     public navCtrl: NavController,
@@ -56,7 +58,8 @@ export class ExercisePerformancePage {
     private transfer: FileTransfer,
     private platform: Platform,
     private imgCahce: ImgCacheService,
-    private insomnia: Insomnia
+    private insomnia: Insomnia,
+    public loadingController: LoadingController
   ) {
     this.insomnia
       .keepAwake()
@@ -70,21 +73,44 @@ export class ExercisePerformancePage {
     Object.assign(this.practice, this.navParams.get("practice"));
 
     console.log("Practice", this.practice);
+
+    if (
+      this.practice.userSpec &&
+      this.practice.userSpec.exercises
+    ) {
+      this.totalTime = this.practice.userSpec.exercises.reduce((a, i) => a + +i, 0);
+    } else {
+
+      this.totalTime = Math.trunc(this.practice.timeForExercise / 1000) * this.practice.exercises.length * 1000
+    }
+
     this.nextExercise();
+  }
+
+  presentLoading() {
+    const loading = this.loadingController.create({
+      duration: 3000
+    });
+    loading.present().then();
+    return loading;
   }
 
   opentText() {
     if (this.practice.text) {
+      const loading = this.presentLoading();
       this.fetchTextFileUriFromCache().then(uri =>
-        this.document.viewDocument(
-          uri,
-          "application/pdf",
-          {},
-          null,
-          null,
-          err => this.openPdfErrorHandler(err),
-          err => this.openPdfErrorHandler(err)
-        )
+        {
+          loading.dismiss().then();
+          this.document.viewDocument(
+            uri,
+            "application/pdf",
+            {},
+            null,
+            null,
+            err => this.openPdfErrorHandler(err),
+            err => this.openPdfErrorHandler(err)
+          )
+        }
       );
     }
   }
@@ -140,6 +166,10 @@ export class ExercisePerformancePage {
   }
 
   nextExercise() {
+    if (this.timer) {
+      this.totalTime = this.totalTime - this.timer * 1000;
+    }
+    
     this.ionViewWillUnload();
     console.log('~~~next exercise ',this.exerciseCounter);
     if (this.exerciseCounter >= this.practice.exercises.length) {
@@ -188,25 +218,28 @@ export class ExercisePerformancePage {
     // this.exercise.timespan = 10000;
     console.log('timespan', this.practice.timeForExercise);
 
-    this.timer = this.exercise.timespan / 1000
+    this.timer = Math.trunc(this.exercise.timespan/1000)
+    // debugger
     console.log(this.timer);
-
+    
+    this.isPause = true;
+    this.startStopExTimer();
     // for decrise practicaTime counter
-    // 
-    const subs2 = interval(this.exercise.timespan)
-      .pipe(take(Math.round(this.exercise.timespan)))
-      .subscribe(val => {
-        console.log("subs2", val, this.timer);
-        this.timer -= 1;
-      });
+    // debugger
+    // const subs2 = interval(1000)
+    //   .pipe(take(Math.round(this.exercise.timespan/1000)))
+    //   .subscribe(val => {
+    //     console.log("subs2", val, this.timer);
+    //     this.timer = this.timer - 1;
+    //   });
 
-    const subs3 = timer(this.exercise.timespan).subscribe(val => {
-      this.nextExercise();
-      new Audio("assets/sound/gong.mp3").play();
-    });
+    // const subs3 = timer(Math.round(this.exercise.timespan/1000) * 1000).subscribe(val => {
+    //   this.nextExercise();
+    //   new Audio("assets/sound/gong.mp3").play();
+    // });
 
-    this.subscriptions.push(subs2);
-    this.subscriptions.push(subs3);
+    // this.subscriptions.push(subs2);
+    // this.subscriptions.push(subs3);
     this.exerciseCounter++;
   }
 
@@ -215,6 +248,10 @@ export class ExercisePerformancePage {
   }
 
   ionViewWillLeave() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+    
     console.log("Ecercise performance ionViewWillLeave");
     for (const val of this.subscriptions) {
       val.unsubscribe();
@@ -244,20 +281,25 @@ export class ExercisePerformancePage {
     return UserProvider.user ? true : false;
   }
 
-  saveTimeForExercise() {
-    console.log("set time for pract");
+  formatTomespan () {
+    return moment.utc(this.timespan).format('HH:mm:ss');
+    return '10:10:11'
+  }
+
+  saveTimeForExercise(value) {
+    if(!value) return;
+   let tmpDate = moment.duration(value);
+    console.log("set time for pract",value,  tmpDate.asMilliseconds());
 
     let tmpArr = new Array(this.practice.exercises.length);
     tmpArr = tmpArr.fill(+this.exercise.timespan);
-    const tmp = {
-      exercises: this.practice.userSpec.exercises || tmpArr
-    };
-    tmp.exercises[this.exerciseCounter] =
-      (tmp.exercises[this.exerciseCounter] || 0) + +this.exercise.timespan;
 
+    let userUpdate = {};
+    userUpdate[`practices.${this.practice.id}.exercises`] = this.practice.userSpec.exercises || tmpArr
+    userUpdate[`practices.${this.practice.id}.exercises`][this.exerciseCounter] = tmpDate.asMilliseconds();
     this.afs
-      .doc(`users/${this.authP.getUserId()}/practices/${this.practice.id}/`)
-      .update(tmp)
+      .doc(`users/${this.authP.getUserId()}`)
+      .update(userUpdate)
       .then(res => console.log("res", res))
       .catch(err => console.log("err", err));
   }
@@ -302,5 +344,38 @@ export class ExercisePerformancePage {
 
   pause() {
     
+  }
+
+  isPause = true;
+  subscription;
+  startStopExTimer() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+
+    if (this.isPause) {
+
+      this.subscription = interval(1000)
+      .pipe(take(Math.trunc(this.exercise.timespan/1000)))
+      .subscribe(val => {
+        console.log("subs2", val, this.timer);
+        this.timer = this.timer - 1;
+        this.totalTime = this.totalTime - 1000;
+
+        if (this.timer <= 0) {
+          new Audio("assets/sound/gong.mp3").play();
+          if (this.subscription) {
+            this.subscription.unsubscribe();
+          }  
+          this.nextExercise();
+        }
+
+      });
+
+      this.isPause = !this.isPause;
+    } else {
+      this.isPause = !this.isPause;
+    }
+    console.log('isPaused', this.isPause);
   }
 }

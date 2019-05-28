@@ -2,7 +2,7 @@ import { DocumentViewer } from "@ionic-native/document-viewer";
 import { FileCacheProvider } from "./../../providers/file-cache/file-cache";
 import { ExercisePerformancePage } from "./../exercise-performance/exercise-performance";
 import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams, Platform } from "ionic-angular";
+import { IonicPage, NavController, NavParams, Platform, LoadingController } from "ionic-angular";
 import { interval, timer } from "rxjs";
 import { AlertController } from "ionic-angular";
 import { AngularFirestore, DocumentSnapshot } from "@angular/fire/firestore";
@@ -63,7 +63,8 @@ export class PracticePerformancePage {
     private platform: Platform,
     private imgCahce: ImgCacheService,
     private document: DocumentViewer,
-    private insomnia: Insomnia
+    private insomnia: Insomnia,
+    public loadingController: LoadingController
   ) {
 
     this.practice = {};
@@ -156,12 +157,21 @@ export class PracticePerformancePage {
       .catch(err => console.log("err", err));
   }
 
+  presentLoading() {
+    const loading = this.loadingController.create({
+      duration: 3000
+    });
+    loading.present().then();
+    return loading;
+  }
+
   opentText() {
     console.log('open pdf~~~');
     // this.document.viewDocument('file:///data/user/0/com.ip.yoga_marga/files/opa.pdf',"application/pdf",{});
     if (this.practice.text) {
+      const loading = this.presentLoading();
       this.fetchTextFileUriFromCache().then(uri => {
-
+        loading.dismiss().then();
         this.document.viewDocument(
           uri,
           "application/pdf",
@@ -294,6 +304,9 @@ export class PracticePerformancePage {
       return;
     }
 
+    // time for exercise
+    this.onPraktikaTimeChange(this.practice.userSpec.praktikaTime);
+
     this.insomnia
     .keepAwake()
     .then(
@@ -415,6 +428,7 @@ export class PracticePerformancePage {
   }
 
   async savePracticeResult(data = null) {
+
     let practiceRes = this.practice.userSpec;
     console.log("practiceRes", practiceRes);
 
@@ -462,5 +476,5 @@ export class PracticePerformancePage {
       this.savePracticeResult().then();
     }
   }
-  
+
 }

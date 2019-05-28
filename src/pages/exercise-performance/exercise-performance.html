@@ -3,9 +3,17 @@
       <button ion-button navPop ion-text color="white" class="pos-a btn-back">
         <span class="arrow arrow-back"></span>
       </button>
+      
+      <ion-title>
+        <span style="color:white;">{{totalTime | appdate}}</span>
+        
+      </ion-title>
+
       <p text-right ion-text color="white" class="header-title">
-      <img class="header-icon" width="25px" height="25px" src="/assets/icon/svg/header/text.svg"  (click)="opentText()">
-      <img class="header-icon" width="25px" height="25px" src="/assets/icon/svg/header/audio.svg" (click)="onToggleAudio()">
+      <img class="header-icon" width="25px" height="25px" src="/assets/icon/svg/header/text.svg"  
+        (click)="opentText()" *ngIf="practice.text">
+      <img class="header-icon" width="25px" height="25px" src="/assets/icon/svg/header/audio.svg" 
+      (click)="onToggleAudio()" *ngIf="exercise.audio && this.exerciseAudio">
     </ion-toolbar>
   </ion-header>
   <ion-content class="p-b-20" (swipe)="swipeEvent($event)">
@@ -14,8 +22,10 @@
         <h1 ion-text color="primary">
             {{exercise.name}}
         </h1>
-        <button ion-button color="primary" size="small"><ion-icon name="pause"></ion-icon></button>
-        <button ion-button color="primary" size="small"><ion-icon name="play"></ion-icon></button>
+        <button ion-button color="primary" size="small"  (click)="startStopExTimer()" *ngIf="!isPause">
+          <ion-icon name="pause" ></ion-icon>
+        </button>
+        <button ion-button color="primary" size="small"  *ngIf="isPause" (click)="startStopExTimer()"><ion-icon name="play"></ion-icon></button>
         <button ion-button color="primary" size="small" (click)="nextExercise()"><ion-icon name="fastforward"></ion-icon></button>
 
         <ion-row justify-content-center class="m-b-10 img-wrap-big">
@@ -50,18 +60,32 @@
               <p ion-text text-center text-wrap color="gray" class="m-b-20">
                 Вы можете изменить время выполнения
               </p>
+              
               <ion-item text-center no-padding>
-                <ion-item no-padding class="input-style input-goals input-teamplate">
-                  <ion-input text-center placeholder="" color="gray" [(ngModel)]="exercise.timespan"></ion-input>
+                  <ion-item
+                    no-padding
+                    class="input-style input-goals input-teamplate"
+                  >
+                    <!-- <ion-label>Opa</ion-label> -->
+                    <!-- [(ngModel)]="test" -->
+                    <ion-datetime
+                      displayFormat="HH:mm:ss"
+                      pickerFormat="HH:mm:ss"
+                      #timeForEx
+                      [ngModel]="'10:11:10'"
+                    ></ion-datetime>
+                  </ion-item>
+                  <p
+                    margin-top
+                    ion-text
+                    text-wrap
+                    class="fs-14 text-wrap m-t-0 m-b-20 letter-spacing-2"
+                  ></p>
                 </ion-item>
-                <p margin-top ion-text text-wrap class="fs-14 text-wrap m-t-0 letter-spacing-2">
-                  СЕКУНД
-                </p>
-              </ion-item>
             </ion-item>
             <ion-grid>
               <ion-row justify-content-center>
-                <button icon-center class="m-t-10 button-custom m-r-0 btn-sm-width" (click)="saveTimeForExercise()">
+                <button icon-center class="m-t-10 button-custom m-r-0 btn-sm-width" (click)="saveTimeForExercise(timeForEx.value)">
                   Установить
                 </button>
               </ion-row>
