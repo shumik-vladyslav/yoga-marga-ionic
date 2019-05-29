@@ -1,3 +1,4 @@
+import { AppPipesModule } from './../../pipe/pipes.module';
 import { AppDatePipe } from './../../pipe/datePipe';
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
@@ -9,12 +10,11 @@ import { LogPipe } from '../../pipe/logPipe';
 
 @NgModule({
   declarations: [
-    ExercisePerformancePage,
-    AppDatePipe
+    ExercisePerformancePage
   ],
   imports: [
+    AppPipesModule,
     ImgCacheModule,
-    
     IonicPageModule.forChild(ExercisePerformancePage)
   ],
 })

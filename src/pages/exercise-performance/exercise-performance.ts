@@ -31,6 +31,7 @@ import * as moment from 'moment';
   templateUrl: "exercise-performance.html"
 })
 export class ExercisePerformancePage {
+  exDuration;
   timer;
   practice;
   url;
@@ -205,16 +206,15 @@ export class ExercisePerformancePage {
     if (
       this.practice.userSpec &&
       this.practice.userSpec.exercises &&
-      this.practice.userSpec.exercises[this.exerciseCounter] &&
-      this.practice.userSpec.exercises[this.exerciseCounter].timespan
+      this.practice.userSpec.exercises[this.exerciseCounter]
     ) {
       this.exercise.timespan = this.practice.userSpec.exercises[
         this.exerciseCounter
-      ].timespan;
+      ]
     } else {
-      this.exercise.timespan = this.practice.timeForExercise;
+      this.exercise.timespan = 60000;
     }
-
+    this.exDuration = moment.utc(this.exercise.timespan).format('HH:mm:ss');
     // this.exercise.timespan = 10000;
     console.log('timespan', this.practice.timeForExercise);
 
@@ -283,7 +283,6 @@ export class ExercisePerformancePage {
 
   formatTomespan () {
     return moment.utc(this.timespan).format('HH:mm:ss');
-    return '10:10:11'
   }
 
   saveTimeForExercise(value) {
@@ -296,7 +295,7 @@ export class ExercisePerformancePage {
 
     let userUpdate = {};
     userUpdate[`practices.${this.practice.id}.exercises`] = this.practice.userSpec.exercises || tmpArr
-    userUpdate[`practices.${this.practice.id}.exercises`][this.exerciseCounter] = tmpDate.asMilliseconds();
+    userUpdate[`practices.${this.practice.id}.exercises`][this.exerciseCounter - 1] = tmpDate.asMilliseconds();
     this.afs
       .doc(`users/${this.authP.getUserId()}`)
       .update(userUpdate)

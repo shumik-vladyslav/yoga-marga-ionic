@@ -78,7 +78,9 @@ export class MetronomeComponent extends AbstractValueAccessor implements OnDestr
   tikSource
   
   async onStart() {
-    await this.context.resume();
+    if(this.state == 'played') return;
+    this.createAudioContext() ;
+    // await this.context.resume();
 
     let prevIntervalsSumArr = [];
     let prevIntervalsSum = 0;
@@ -119,10 +121,17 @@ export class MetronomeComponent extends AbstractValueAccessor implements OnDestr
   }
 
   async onStop() {
+    if(this.state == 'paused') return;
     console.log('stop');
-    await this.context.suspend();
+
     this.state = 'paused';
     this.subscription.unsubscribe();
+    
+    if(this.context) {
+      await this.context.suspend();
+      await this.context.close();
+      this.context = null;
+    }
   }
 
   createAudioContext() {
@@ -143,8 +152,17 @@ export class MetronomeComponent extends AbstractValueAccessor implements OnDestr
     this.context.suspend().then();
   }
 
+  public ToggleState() {
+    if (this.state=='paused') {
+      this.onStart() 
+    } else {
+      this.onStop()
+    }
+  }
+
   ngOnDestroy() {    
     this.subscription.unsubscribe();
+    if (!this.context) return;
     this.context.close().then( _=> console.log('context is cleared'));
   }
 }

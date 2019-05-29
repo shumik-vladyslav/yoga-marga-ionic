@@ -1,7 +1,7 @@
 import { DocumentViewer } from "@ionic-native/document-viewer";
 import { FileCacheProvider } from "./../../providers/file-cache/file-cache";
 import { ExercisePerformancePage } from "./../exercise-performance/exercise-performance";
-import { Component } from "@angular/core";
+import { Component, ContentChild, ViewChild } from "@angular/core";
 import { IonicPage, NavController, NavParams, Platform, LoadingController } from "ionic-angular";
 import { interval, timer } from "rxjs";
 import { AlertController } from "ionic-angular";
@@ -16,6 +16,9 @@ import { take } from "rxjs/operators";
 import { normalizeURL } from 'ionic-angular';
 import { Insomnia } from "@ionic-native/insomnia";
 import * as moment from 'moment';
+import {DateTime } from 'ionic-angular';
+import { DateTimeData } from "ionic-angular/umd/util/datetime-util";
+import { MetronomeComponent } from "../../components/metronome/metronome";
 /**
  * Generated class for the PracticePerformancePage page.
  *
@@ -29,10 +32,9 @@ import * as moment from 'moment';
   templateUrl: "practice-performance.html"
 })
 export class PracticePerformancePage {
-  intervals = [10,21]
-  onMetr(evnt) {
-    console.log('on change metronom', evnt, this.intervals);
-  }
+  @ViewChild(MetronomeComponent) 
+  metronome: MetronomeComponent;
+
   practice;
   url;
   metronomeSubscription;
@@ -45,7 +47,6 @@ export class PracticePerformancePage {
 
   // Время выполнения практики
   timespan = 0;
-  timeForExercise;
 
   metronom_sound = new Audio("assets/sound/zvuk-metronoma.mp3");
   test = '0-0-0T00:30:00';
@@ -66,6 +67,7 @@ export class PracticePerformancePage {
     private insomnia: Insomnia,
     public loadingController: LoadingController
   ) {
+
 
     this.practice = {};
     Object.assign(this.practice, this.navParams.get("practice"));
@@ -136,23 +138,19 @@ export class PracticePerformancePage {
         const userSettings: any = res.data();
 
         if (
-          userSettings.practices &&
-          userSettings.practices[this.practice.id]
+          !userSettings.practices ||
+          !userSettings.practices[this.practice.id]
         ) {
-          this.practice.userSpec = userSettings.practices[this.practice.id];
-
-          if (!this.practice.userSpec.praktikaTime) {
-            this.practice.userSpec.praktikaTime = '0-0-0T00:30:00';
-          }
-
-          if (!this.practice.userSpec.pomniTime) {
-            this.practice.userSpec.pomniTime = 15;
-          }
+          this.practice.userSpec = {
+            pomniTime: 15,
+            praktikaTime: 3600000,
+            intervals: []
+          };
+          this.onPraktikaTimeChange(3600000);
         } else {
-          this.practice.userSpec = {};
+          this.practice.userSpec = userSettings.practices[this.practice.id];
         }
-
-        this.onPraktikaTimeChange();
+        this.initTimings();
       })
       .catch(err => console.log("err", err));
   }
@@ -226,25 +224,85 @@ export class PracticePerformancePage {
     }
   }
 
-  onTimeForExerciseChange() {
-    if (!this.practice.exercises || this.practice.exercises.length == 0) return;
+  ////////////////////////////////////////////////////////////
+  pr;
+  ex;
 
-    const tmp = (+this.timeForExercise || 0) * this.practice.exercises.length;
-    this.practice.userSpec.praktikaTime = Math.round(tmp);
+  initTimings() {
+    if (this.practice.userSpec.exercises) {
+      this.practice.userSpec.praktikaTime = this.practice.userSpec.exercises.reduce((a, i) => a + +i, 0);
+    }
+
+    this.pr = moment.utc(this.practice.userSpec.praktikaTime).format('HH:mm:ss');
+    let tmp = (this.practice.userSpec.praktikaTime || 0) / this.practice.exercises.length;
+    tmp = Math.round(tmp);
+
+    this.ex = moment.utc(tmp).format('HH:mm:ss');
   }
 
-  
+  onTimeForExerciseChange(time = null) {  
+    if (!time) return;
+    if (!this.practice.exercises || this.practice.exercises.length == 0) return;
+    
+    const milli = moment.duration(time).asMilliseconds()
+    const tmp = (milli || 0) * this.practice.exercises.length;
+    this.practice.userSpec.praktikaTime = tmp;
+    
+    this.saveTimings(milli, tmp);
+    this.pr = moment.utc(tmp).format('HH:mm:ss');
+  }
+
   onPraktikaTimeChange(time = null) {
-    // debugger
     if(!time) return;
-    this.practice.userSpec.praktikaTime = time;
-    let [hour, minute, second] = time.split(':');
-    time = ((+hour) * 3600 + (+minute) * 60 + (+second)) * 1000;
-    if (!this.practice.exercises || this.practice.exercises.length == 0) return;
-    const tmp = (time || 0) / this.practice.exercises.length;
-    this.timeForExercise = Math.round(tmp);
+    const milli = moment.duration(time).asMilliseconds();
+    this.practice.userSpec.praktikaTime = milli;
+    
+
+    if (!this.practice.exercises || this.practice.exercises.length == 0) {
+      this.saveTimings(null, milli);
+      return;
+    }
+    
+    
+    
+    let tmp = (milli || 0) / this.practice.exercises.length;
+    tmp = Math.round(tmp);
+    this.ex = moment.utc(tmp).format('HH:mm:ss');
+    this.saveTimings(tmp, milli);
+   
   }
 
+  // Practica time, exercises durations
+  saveTimings(exerciseDuration, prakticaDuration) {
+    let userUpdate = {};
+    if(!exerciseDuration && prakticaDuration) {
+      userUpdate[`practices.${this.practice.id}.praktikaTime`] = prakticaDuration;
+      this.afs
+      .doc(`users/${this.authP.getUserId()}`)
+      .update(userUpdate)
+      .then(res => console.log("res", res))
+      .catch(err => console.log("err", err));
+      return;
+    };
+    
+    const exCount = this.practice.exercises.length;
+    
+    let tmpArr = new Array(exCount);
+    tmpArr = tmpArr.fill(exerciseDuration);
+
+   
+    userUpdate[`practices.${this.practice.id}.exercises`] = tmpArr
+    userUpdate[`practices.${this.practice.id}.praktikaTime`] = prakticaDuration;
+    this.practice.userSpec.exercises = tmpArr;
+    this.practice.userSpec.praktikaTime = prakticaDuration;
+    this.afs
+      .doc(`users/${this.authP.getUserId()}`)
+      .update(userUpdate)
+      .then(res => console.log("res", res))
+      .catch(err => console.log("err", err));
+  }
+
+  ///////////////////////////////////////////////////////////////
   onChangeSolo() {
     if (this.practice.userSpec.soloPomniFlag) {
       this.practice.userSpec.multiPomniFlag = false;
@@ -291,7 +349,10 @@ export class PracticePerformancePage {
 
     this.isStarted = !this.isStarted;
     if (!this.isStarted) {
-      this.metronom_sound.pause();
+      if (this.practice.userSpec.metronomeFlag && this.metronome) {
+        this.metronome.onStop();
+      }
+
       if (this.practice.audio) {
         this.practice.audio.pause();
       }
@@ -305,7 +366,7 @@ export class PracticePerformancePage {
     }
 
     // time for exercise
-    this.onPraktikaTimeChange(this.practice.userSpec.praktikaTime);
+    // this.onPraktikaTimeChange(this.practice.userSpec.praktikaTime);
 
     this.insomnia
     .keepAwake()
@@ -316,22 +377,22 @@ export class PracticePerformancePage {
 
     this.savePracticeSettings();
     this.startTime = Date.now();
-    this.timer = new Date(this.practice.userSpec.praktikaTime * 60000);
+    this.timer = this.practice.userSpec.praktikaTime;
 
-    const subs = interval(
-      Math.round(this.practice.userSpec.praktikaTime * 60000)
-    )
-      .pipe(take(1))
-      .subscribe(val => {
-        console.log("subs", val);
-        this.timespan = this.practice.userSpec.praktikaTime;
-        for (const val of this.subscriptions) {
-          val.unsubscribe();
-        }
-        if (this.practice.exercises && this.practice.exercises.length > 0)
-          return;
-        return this.presentPrompt();
-      });
+    // const subs = interval(
+    //   this.practice.userSpec.praktikaTime
+    // )
+    //   .pipe(take(1))
+    //   .subscribe(val => {
+    //     console.log("subs", val);
+    //     this.timespan = this.practice.userSpec.praktikaTime;
+    //     for (const val of this.subscriptions) {
+    //       val.unsubscribe();
+    //     }
+    //     if (this.practice.exercises && this.practice.exercises.length > 0)
+    //       return;
+    //     return this.presentPrompt();
+    //   });
 
     // Напоминание
     const subs1 = interval(
@@ -346,32 +407,28 @@ export class PracticePerformancePage {
         this.audio.play();
       }
     });
-
+    this.subscriptions.push(subs1);
     this.pomniSubs = subs1;
 
+    // go to practice performance page
     if (this.practice.exercises && this.practice.exercises.length > 0) {
-      if (this.timeForExercise) {
-        console.log('set time for exer', this.timeForExercise);
-        this.practice.timeForExercise = this.timeForExercise;
-      }
       return this.navCtrl.push(ExercisePerformancePage, {
         practice: this.practice
       });
     }
 
-    // for decrise practicaTime counter
-    const subs2 = interval(1000).subscribe(val => {
-      console.log("subs2", val);
-      this.timer -= 1000;
-    });
-
-    if (this.practice.userSpec.metronomeFlag) {
-      this.metronom_sound.play();
+    if (this.practice.userSpec.metronomeFlag && this.metronome) {
+      this.metronome.onStart();
     }
+    // for decrise practicaTime counter
+    this.startStopExTimer()
+    // const subs2 = interval(1000).subscribe(val => {
+    //   console.log("subs2", val);
+    //   this.timer -= 1000;
+    // });
 
-    this.subscriptions.push(subs);
-    this.subscriptions.push(subs1);
-    this.subscriptions.push(subs2);
+    // this.subscriptions.push(subs);
+    // this.subscriptions.push(subs2);
   }
 
   pomniSubs;
@@ -477,4 +534,47 @@ export class PracticePerformancePage {
     }
   }
 
+  isPause = true;
+  subscription;
+  startStopExTimer() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+
+    if (this.isPause) {
+      
+      this.subscription = interval(1000)
+      .pipe(take(Math.trunc(this.timer/1000)))
+      .subscribe(val => {
+        console.log("subs2", val, this.timer);
+        this.timer = this.timer - 1000;
+
+        if (this.timer <= 0) {
+          if (this.practice.userSpec.metronomeFlag && this.metronome) {
+            this.metronome.onStop();
+          }
+          this.timespan = this.practice.userSpec.praktikaTime;
+          for (const val of this.subscriptions) {
+            val.unsubscribe();
+          }
+          if (this.practice.exercises && this.practice.exercises.length > 0)
+            return;
+          return this.presentPrompt();
+        }
+
+      });
+
+      this.isPause = !this.isPause;
+
+      if (this.practice.userSpec.metronomeFlag && this.metronome) {
+        this.metronome.onStart();
+      }
+    } else {
+      this.isPause = !this.isPause;
+      if (this.practice.userSpec.metronomeFlag && this.metronome) {
+        this.metronome.onStop();
+      }
+    }
+    console.log('isPaused', this.isPause);
+  }
 }

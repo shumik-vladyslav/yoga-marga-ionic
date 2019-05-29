@@ -2,7 +2,7 @@ import { forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 export abstract class AbstractValueAccessor implements ControlValueAccessor {
-    _intervals: any = '';
+    _intervals: any = [];
     get intervals(): any { return this._intervals; };
     set intervals(v: any) {
         console.log('set intervals', v);
@@ -13,6 +13,10 @@ export abstract class AbstractValueAccessor implements ControlValueAccessor {
     }
 
     writeValue(intervals: any) {
+      if(!intervals) {
+        this._intervals = [];
+        this.onChange([]);    
+      }
       this._intervals = intervals;
       // warning: comment below if only want to emit on user intervention
       this.onChange(intervals);

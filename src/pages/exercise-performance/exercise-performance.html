@@ -6,7 +6,6 @@
       
       <ion-title>
         <span style="color:white;">{{totalTime | appdate}}</span>
-        
       </ion-title>
 
       <p text-right ion-text color="white" class="header-title">
@@ -72,7 +71,7 @@
                       displayFormat="HH:mm:ss"
                       pickerFormat="HH:mm:ss"
                       #timeForEx
-                      [ngModel]="'10:11:10'"
+                      [ngModel]="exDuration"
                     ></ion-datetime>
                   </ion-item>
                   <p

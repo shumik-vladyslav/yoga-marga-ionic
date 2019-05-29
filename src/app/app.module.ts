@@ -56,6 +56,9 @@ import { DocumentViewer } from '@ionic-native/document-viewer';
 import { ImgCacheModule } from '../directives/ng-imgcache/img-cache.module';
 import { Insomnia } from '@ionic-native/insomnia';
 import { LogPipe } from '../pipe/logPipe';
+import { AppDatePipe } from '../pipe/datePipe';
+import { PracticePerformancePage } from '../pages/practice-performance/practice-performance';
+import { AppPipesModule } from '../pipe/pipes.module';
 
 
 @NgModule({
@@ -80,9 +83,10 @@ import { LogPipe } from '../pipe/logPipe';
     Template_3Page,
     Template_4Page,
     LoadScreenPage,
-    ProgressChartDirective,
+    ProgressChartDirective
   ],
   imports: [
+    AppPipesModule,
     BrowserModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(
@@ -104,7 +108,9 @@ import { LogPipe } from '../pipe/logPipe';
     PracticeSearchPageModule,
     ActivationWarningPageModule,
     ImgCacheModule,
-    PracticesListPageModule
+    PracticesListPageModule,
+    PracticePerformancePageModule,
+    ExercisePerformancePageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -130,7 +136,9 @@ import { LogPipe } from '../pipe/logPipe';
     LoadScreenPage,
     ProgressChartDirective,
     PracticeSearchPage,
-    SettingsPage
+    SettingsPage,
+    // PracticePerformancePage,
+    // ExercisePerformancePage
   ],
   providers: [
     AngularFireStorage,

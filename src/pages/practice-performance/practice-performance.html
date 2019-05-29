@@ -17,6 +17,10 @@
     >
       <span class="arrow arrow-back"></span>
     </button>
+    <ion-title>
+        <span style="color:white;">{{timer | appdate}}</span>
+      </ion-title>
+
     <p text-right ion-text color="white" class="header-title">
       <!-- [href]="practice?.text"  -->
       <a *ngIf="practice.text">
@@ -43,6 +47,11 @@
     <ion-row justify-content-center>
       <ion-col col-lg-10 col-xs-12>
         <h1 ion-text color="primary">{{ practice.name }}</h1>
+        <div *ngIf="isStarted">
+            <button ion-button color="primary" size="small"  (click)="startStopExTimer()" *ngIf="!isPause"><ion-icon name="pause" ></ion-icon></button>
+            <button ion-button color="primary" size="small"  *ngIf="isPause" (click)="startStopExTimer()"><ion-icon name="play"></ion-icon></button>
+        </div>
+        
         <!-- <ion-button expand="block">Block Button</ion-button> -->
         <!-- <ion-item>
             <ion-label>Время для практики </ion-label>
@@ -168,37 +177,30 @@
               no-margin
               class="full-width box-shadow col-between height-full"
             >
+
               <ion-item no-padding>
-                <p
-                  ion-text
-                  text-center
-                  text-wrap
-                  color="gray"
-                  class="height-100"
-                >
+                <p ion-text text-center text-wrap color="gray" class="height-100">
                   Установите время для выполнения практики
                 </p>
                 <ion-item text-center no-padding>
-                  <ion-item
-                    no-padding
-                    class="input-style input-goals input-teamplate"
-                  >
-                    <!-- <ion-label>Opa</ion-label> -->
-                    <!-- [(ngModel)]="test" -->
-                    <ion-datetime
-                      displayFormat="HH:mm:ss"
-                      pickerFormat="HH:mm:ss"
-                      (ngModelChange)="onPraktikaTimeChange($event)"
-                      [(ngModel)]="practice.userSpec.praktikaTime"
-                    ></ion-datetime>
+                  <ion-item no-padding class="input-style input-goals input-teamplate">
+                    <ion-datetime displayFormat="HH:mm:ss" pickerFormat="HH:mm:ss" (ngModelChange)="onPraktikaTimeChange($event)"
+                    [(ngModel)]="pr"></ion-datetime>
                   </ion-item>
-                  <p
-                    margin-top
-                    ion-text
-                    text-wrap
-                    class="fs-14 text-wrap m-t-0 m-b-20 letter-spacing-2"
-                  ></p>
+                  <p margin-top ion-text text-wrap class="fs-14 text-wrap m-t-0 m-b-20 letter-spacing-2"></p>
                 </ion-item>
+                <ion-item no-padding *ngIf="practice.exercises && practice.exercises.length > 0">
+                <p ion-text text-center text-wrap color="gray" class="m-b-20">
+                  Или установите время для каждого упражнения
+                </p>
+                <ion-item class="none-border" text-center no-padding>
+                  <ion-item no-padding class="input-style input-goals input-teamplate">
+                    <ion-datetime displayFormat="HH:mm:ss" pickerFormat="HH:mm:ss" (ngModelChange)="onTimeForExerciseChange($event)" 
+                    [(ngModel)]="ex"></ion-datetime>
+                  </ion-item>
+                </ion-item>
+              </ion-item>
+
               </ion-item>
             </ion-card>
           </ion-col>
@@ -305,13 +307,7 @@
                       (ngModelChange)="onChangeMetronome()"
                     ></ion-toggle>
                   </ion-item>
-                  <p
-                    padding-horizontal
-                    color="text-light"
-                    text-wrap
-                    text-left
-                    ion-text
-                    text-capitalize
+                  <p padding-horizontal color="text-light" text-wrap text-left ion-text text-capitalize
                     class="m-0 p-0 fs-13 letter-spacing-2 lable-radio-box"
                   >
                     Метроном
@@ -321,27 +317,12 @@
               </ion-item>
             </ion-card>
           </ion-col>
-          <ion-item
-            no-padding
-            *ngIf="practice.exercises && practice.exercises.length > 0"
-          >
-            <p ion-text text-center text-wrap color="gray" class="m-b-20">
-              Установите время для каждого упражнения
-            </p>
-            <ion-item class="none-border" text-center no-padding>
-              <ion-item no-padding class="input-style input-goals input-teamplate">
-                <ion-datetime
-                  displayFormat="H:m:s"
-                  pickerFormat="H:m:s"
-                  (ngModelChange)="onTimeForExerciseChange($event)"
-                  [(ngModel)]="timeForExercise"
-                ></ion-datetime>
-              </ion-item>
-              <p margin-top ion-text text-wrap class="fs-14 text-wrap m-t-0 letter-spacing-2">
-                МИНУТ
-              </p>
-            </ion-item>
-          </ion-item>
+
+<!-- ... -->
+
+        </ion-row>
+        <ion-row *ngIf="practice.userSpec?.metronomeFlag">
+            <metronome [(ngModel)]="practice.userSpec.intervals" #metronome></metronome>
         </ion-row>
       </ion-col>
     </ion-row>

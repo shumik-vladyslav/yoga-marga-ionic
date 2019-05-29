@@ -5,6 +5,6 @@ import * as moment from 'moment';
 export class AppDatePipe implements PipeTransform {
     transform(value: any): any {
        if(!value) return null;
-       return moment.utc(value).format('hh:mm:ss');
+       return moment.utc(value).format('HH:mm:ss');
     }
 }
