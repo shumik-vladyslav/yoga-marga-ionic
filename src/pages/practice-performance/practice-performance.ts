@@ -37,20 +37,17 @@ export class PracticePerformancePage {
 
   practice;
   url;
-  metronomeSubscription;
+  
   isStarted = false;
   subscriptions = [];
   audio = new Audio("assets/sound/pomni.mp3");
-  tik = new Audio("assets/sound/tik.mp3");
+  gong = new Audio("assets/sound/gong.mp3");
 
   startTime = 0;
 
   // Время выполнения практики
   timespan = 0;
 
-  metronom_sound = new Audio("assets/sound/zvuk-metronoma.mp3");
-  test = '0-0-0T00:30:00';
-  
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -113,14 +110,6 @@ export class PracticePerformancePage {
 
         this.resorePracticeSettings();
       });
-  }
-
-  onChangeMetronome() {
-    if (this.practice.userSpec.metronomeFlag === false) {
-      this.metronom_sound.pause();
-    } else if (this.isStarted) {
-      this.metronom_sound.play();
-    }
   }
 
   resorePracticeSettings() {
@@ -470,6 +459,7 @@ export class PracticePerformancePage {
         }
       ]
     });
+    this.gong.play();
     alert.present();
   }
 

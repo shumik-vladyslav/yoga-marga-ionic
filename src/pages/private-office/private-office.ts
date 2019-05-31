@@ -53,13 +53,18 @@ export class PrivateOfficePage {
     const globalPractices = UserProvider.globalPractices;
     console.log('global practices', globalPractices);
     
+    
     this.progresses = UserProvider.getUserGoals().map(a => {
+      let val = Math.round(((+a.achivement) / (+a.goal)) * 100);
+      if (!a.achivement || a.goal) {
+        val = 0;
+      }
       return {
-        val: Math.round(((+a.achivement) / (+a.goal)) * 100),
+        val: val,
         name: a.name,
         ico: globalPractices[a.id]?globalPractices[a.id].ico:'',
         goal: a.goal,
-        achivement: a.achivement
+        achivement: a.achivement?a.achivement:0
       };
     }).filter(a => +a.goal);
 
