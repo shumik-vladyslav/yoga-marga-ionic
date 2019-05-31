@@ -47,7 +47,7 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       {
-        title: "Коталог",
+        title: "Каталог",
         icon: "/assets/icon/svg/navigation/icon-nav1.svg",
         component: HomePage
       },
