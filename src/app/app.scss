@@ -215,7 +215,7 @@ div {
   .item-inner {
     border: none !important;
     background: color($colors, gray-300) !important;
-    color: #7fd7d2;
+    color: #b700ff;
     font-weight: bold;
     font-size: 17px;
     height: 42px;
@@ -531,7 +531,21 @@ span.arrow-back {
   }
 }
 .toolbar-content-ios .btn-back {
-  top: -6px;
+  top: -1px;
+}
+.toolbar-title-ios {
+  text-align: left !important;
+}
+.time {
+  color: white;
+  position: absolute;
+  top: 2px;
+  left: 65px;
+}
+.toolbar-title-ios {
+  .time {
+    top: 10px !important;
+  }
 }
 .letter-spacing-2 {
   letter-spacing: 2px;
@@ -595,4 +609,10 @@ ion-item > div.item-inner {
 
 .img-icon {
   background-color: #b700ff;
+}
+ion-label {
+  margin-right: 0 !important;
+}
+.btn-back {
+  top: 8px;
 }
