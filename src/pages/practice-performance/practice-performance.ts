@@ -64,8 +64,6 @@ export class PracticePerformancePage {
     private insomnia: Insomnia,
     public loadingController: LoadingController
   ) {
-
-
     this.practice = {};
     Object.assign(this.practice, this.navParams.get("practice"));
 
@@ -327,9 +325,6 @@ export class PracticePerformancePage {
     if (this.practice.audio) {
       this.practice.audio.pause();
     }
-    this.insomnia
-    .allowSleepAgain()
-    .then(() => console.log("insomnia success off"), () => console.log("insomnia erro off"));
   }
 
   timer;
@@ -345,6 +340,10 @@ export class PracticePerformancePage {
       if (this.practice.audio) {
         this.practice.audio.pause();
       }
+      this.insomnia
+        .allowSleepAgain()
+        .then(() => console.log("insomnia success off pr"), () => console.log("insomnia erro off"));
+
       this.timespan = (Date.now() - this.startTime) / 1000 / 60;
       if (this.practice.isAmountCounter || this.practice.isMaxAchievement) {
         this.presentPrompt();
@@ -367,21 +366,6 @@ export class PracticePerformancePage {
     this.savePracticeSettings();
     this.startTime = Date.now();
     this.timer = this.practice.userSpec.praktikaTime;
-
-    // const subs = interval(
-    //   this.practice.userSpec.praktikaTime
-    // )
-    //   .pipe(take(1))
-    //   .subscribe(val => {
-    //     console.log("subs", val);
-    //     this.timespan = this.practice.userSpec.praktikaTime;
-    //     for (const val of this.subscriptions) {
-    //       val.unsubscribe();
-    //     }
-    //     if (this.practice.exercises && this.practice.exercises.length > 0)
-    //       return;
-    //     return this.presentPrompt();
-    //   });
 
     // Напоминание
     const subs1 = interval(
@@ -411,13 +395,6 @@ export class PracticePerformancePage {
     }
     // for decrise practicaTime counter
     this.startStopExTimer()
-    // const subs2 = interval(1000).subscribe(val => {
-    //   console.log("subs2", val);
-    //   this.timer -= 1000;
-    // });
-
-    // this.subscriptions.push(subs);
-    // this.subscriptions.push(subs2);
   }
 
   pomniSubs;
@@ -431,6 +408,7 @@ export class PracticePerformancePage {
   }
 
   presentPrompt() {
+    // debugger
     const inputsArr = [];
     if (this.practice.isAmountCounter) {
       inputsArr.push({
@@ -533,13 +511,16 @@ export class PracticePerformancePage {
 
     if (this.isPause) {
       
-      this.subscription = interval(1000)
-      .pipe(take(Math.trunc(this.timer/1000)))
+      this.subscription = interval(500)
+      // .pipe(take(Math.trunc(this.timer/500)))
       .subscribe(val => {
+        
         console.log("subs2", val, this.timer);
-        this.timer = this.timer - 1000;
+        // debugger
+        this.timer = this.practice.userSpec.praktikaTime - ( Date.now() - this.startTime);
 
         if (this.timer <= 0) {
+          this.subscription.unsubscribe();
           if (this.practice.userSpec.metronomeFlag && this.metronome) {
             this.metronome.onStop();
           }

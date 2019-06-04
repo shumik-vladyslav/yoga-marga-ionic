@@ -56,7 +56,7 @@ export class PrivateOfficePage {
     
     this.progresses = UserProvider.getUserGoals().map(a => {
       let val = Math.round(((+a.achivement) / (+a.goal)) * 100);
-      if (!a.achivement || a.goal) {
+      if (!a.achivement || !a.goal) {
         val = 0;
       }
       return {

@@ -101,7 +101,7 @@
                 </p>
                 <div class="df ai-c jc-c">
                   <div class="info-value-box">
-                    {{ practice.userSpec?.timespan | number: "1.0-0" }}
+                    {{ practice.userSpec?.timespan | appdate }}
                   </div>
                 </div>
 
@@ -189,7 +189,7 @@
                           {{practice | json}}
                         </pre> -->
                     <ion-item id="radio-style ios" class="width-default radio-style">
-                      <ion-toggle [(ngModel)]="practice.userSpec.metronomeFlag" (ngModelChange)="onChangeMetronome()"></ion-toggle>
+                      <ion-toggle [(ngModel)]="practice.userSpec.metronomeFlag"></ion-toggle>
                     </ion-item>
                     <p padding-horizontal color="text-light" text-wrap text-left ion-text text-capitalize class="m-0 p-0 fs-13 letter-spacing-2 lable-radio-box">
                       Метроном

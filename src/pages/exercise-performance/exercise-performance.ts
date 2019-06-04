@@ -268,7 +268,7 @@ export class ExercisePerformancePage {
     this.insomnia
       .allowSleepAgain()
       .then(
-        () => console.log("insomnia success off"),
+        () => console.log("insomnia success off ex"),
         () => console.log("insomnia erro off")
       );
   }
@@ -360,6 +360,9 @@ export class ExercisePerformancePage {
         console.log("subs2", val, this.timer);
         this.timer = this.timer - 1;
         this.totalTime = this.totalTime - 1000;
+
+        // this.totalTime = this.practice.userSpec.praktikaTime - ( Date.now() - this.startTime);
+
 
         if (this.timer <= 0) {
           new Audio("assets/sound/gong.mp3").play();
