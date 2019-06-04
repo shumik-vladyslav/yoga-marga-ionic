@@ -606,7 +606,10 @@ ion-item > div.item-inner {
     margin-right: 50px !important;
   }
 }
-
+.cust-link {
+  color: #b700ff;
+  font-size: 16px;
+}
 .img-icon {
   background-color: #b700ff;
 }
@@ -615,4 +618,30 @@ ion-label {
 }
 .btn-back {
   top: 8px;
+}
+ion-toolbar {
+  .toolbar-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+.mute-ban-icon {
+  width: 35px;
+  height: 35px;
+  border: 2px solid #cff0ee;
+  border-radius: 100px;
+  position: absolute;
+  top: -4px;
+  left: 1px;
+  pointer-events: none;
+  &::after{
+    content: "";
+    width: 100%;
+    border-bottom: 2px solid #cff0ee;
+    position: absolute;
+    left: 1px;
+    top: 14px;
+    transform: rotate(45deg);
+  }
 }
