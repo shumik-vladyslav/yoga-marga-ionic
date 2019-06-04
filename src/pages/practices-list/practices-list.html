@@ -23,42 +23,56 @@
   </ion-header> -->
 
 <ion-header>
-
   <!-- <ion-navbar>
     <ion-title color="white" class="header-title"></ion-title>
   </ion-navbar> -->
 
   <ion-toolbar>
     <!-- (click)="goPage()" -->
-    <button ion-button navPop ion-text color="white" class="pos-a btn-back" icon-only>
+    <div navPop ion-text color="white" icon-only>
       <span class="arrow arrow-back"></span>
-    </button>
-    <p text-center ion-text color="white" class="header-title">{{title}}</p>
+    </div>
+    <p text-center ion-text color="white" class="header-title">{{ title }}</p>
 
     <!-- <p text-right ion-text color="white" class="header-title">
         <img class="header-icon" width="25px" height="25px" src="/assets/icon/svg/header/text.svg" alt="">
         <img class="header-icon" width="25px" height="25px" src="/assets/icon/svg/header/audio.svg" alt=""> -->
     <!-- <img class="header-icon" width="25px" height="25px" src="/assets/icon/svg/header/video.svg" alt=""> -->
   </ion-toolbar>
-
 </ion-header>
-
 
 <ion-content padding>
   <ion-card no-margin class="full-width box-shadow">
     <ion-card-content no-padding padding-vertical>
       <ion-grid>
         <ion-row justify-content-center>
-          <ion-col col-4 class="border-r col-between" no-padding *ngFor="let pract of practices" [navPush]="pract.active === false?'':'PracticePerformancePage'"
-            [navParams]="{practice: pract}" [class.inactive]="pract.active===false"
-            >
- 
+          <ion-col
+            col-4
+            class="border-r col-between"
+            no-padding
+            *ngFor="let pract of practices"
+            [navPush]="pract.active === false ? '' : 'PracticePerformancePage'"
+            [navParams]="{ practice: pract }"
+            [class.inactive]="pract.active === false"
+          >
             <ion-row>
               <ion-col col-12>
-                <ion-item text-center no-padding  *ngIf="pract.ico">
-                    <!-- style="display:none" -->
-                    <img img-cache img-cache-src="{{pract.ico}}" #img class="img-icon" style="display:none">
-                    <img class="img-icon" [ngStyle]="{'-webkit-mask': 'url(' + img.src + ') no-repeat 50% 50%','mask': 'url(' + img.src + ') no-repeat 50% 50%'}">
+                <ion-item text-center no-padding *ngIf="pract.ico">
+                  <!-- style="display:none" -->
+                  <img
+                    img-cache
+                    img-cache-src="{{ pract.ico }}"
+                    #img
+                    class="img-icon"
+                    style="display:none"
+                  />
+                  <img
+                    class="img-icon"
+                    [ngStyle]="{
+                      '-webkit-mask': 'url(' + img.src + ') no-repeat 50% 50%',
+                      mask: 'url(' + img.src + ') no-repeat 50% 50%'
+                    }"
+                  />
                 </ion-item>
               </ion-col>
             </ion-row>
@@ -67,11 +81,10 @@
               <ion-col col-12>
                 <ion-item text-center no-padding class="min-height-default">
                   <!-- <ion-icon name="ios-hand-outline" ion-text class=""></ion-icon> -->
-                  <p ion-text class="fs-16 text-wrap">{{pract.name}}</p>
+                  <p ion-text class="fs-16 text-wrap">{{ pract.name }}</p>
                 </ion-item>
               </ion-col>
             </ion-row>
-
           </ion-col>
         </ion-row>
       </ion-grid>

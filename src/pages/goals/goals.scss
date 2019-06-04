@@ -1,9 +1,19 @@
 page-goals {
-    .input-goals-page{
-        width: 60% !important; 
-        @include media-breakpoint('xs'){
-            margin: 0 !important;
-            width: 100% !important;
-        }
+  .input-goals-page {
+    width: 60% !important;
+    @include media-breakpoint("xs") {
+      margin: 0 !important;
+      width: 100% !important;
     }
+  }
+  ion-navbar {
+    .toolbar-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+  .space-block{
+    width: 23px;
+  }
 }
