@@ -140,6 +140,10 @@ export class CreateComplexPage {
   }
 
   submit() {
+    if (!this.name || this.name ==='') return;
+    if (Object.keys(this.complexPractices).length <= 0) return;
+
+    // debugger
     let com = UserProvider.getComplexes();
 
     const tmp = {
