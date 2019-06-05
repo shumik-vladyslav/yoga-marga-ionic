@@ -18,13 +18,14 @@ import { UserProvider } from "../../providers/user/user";
 })
 export class GoalsPage {
   goals: any = {
-    om: "",
-    om_dram: "",
-    // prostiraniya: "",
-    chandaly: "",
-    anuloma_viloma: "",
-    // sahita_kumbhaka: ""
+    om: null,
+    om_dram: null,
+    prostiraniya: null,
+    chandaly: null,
+    anuloma_viloma: null,
+    sakhita_kumbhaka: null
   };
+  
   ionViewCanEnter() {
     return UserProvider.user ? true : false;
   }

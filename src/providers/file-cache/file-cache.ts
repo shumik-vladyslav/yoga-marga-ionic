@@ -32,10 +32,7 @@ export class FileCacheProvider {
     private afStorage: AngularFireStorage
   ) {
     console.log("opa", this.file.dataDirectory);
-    // this.storage.clear().then()
-    // this.init().then(
-    //   _ => console.log(JSON.stringify(this.in_memory))
-    // );
+
     this.file
       .readAsText(this.file.dataDirectory, "cachedUrls")
       .then(text => {

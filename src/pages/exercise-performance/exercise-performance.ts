@@ -2,18 +2,12 @@ import { FileCacheProvider } from "./../../providers/file-cache/file-cache";
 import { interval, timer } from "rxjs";
 import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams, Platform, LoadingController } from "ionic-angular";
-import { AngularFireStorage } from "@angular/fire/storage";
 import { AuthProvider } from "../../providers/auth/auth";
 import { AngularFirestore } from "@angular/fire/firestore";
-import { HomePage } from "../home/home";
 import { UserProvider } from "../../providers/user/user";
-import {
-  DocumentViewer,
-  DocumentViewerOptions
-} from "@ionic-native/document-viewer";
+import {DocumentViewer} from "@ionic-native/document-viewer";
 import { FileTransfer } from "@ionic-native/file-transfer";
-import { File, IWriteOptions } from "@ionic-native/file";
-import { ImgCacheService } from "../../directives/ng-imgcache/img-cache.service";   
+import { File } from "@ionic-native/file";
 import { take } from "rxjs/operators";
 import { Insomnia } from "@ionic-native/insomnia";
 import * as moment from 'moment';
@@ -51,14 +45,9 @@ export class ExercisePerformancePage {
     public navParams: NavParams,
     private afs: AngularFirestore,
     private authP: AuthProvider,
-    private afStorage: AngularFireStorage,
-    private fileCashe: FileCacheProvider,
-    private fileCacheP: FileCacheProvider,
     private document: DocumentViewer,
     private file: File,
     private transfer: FileTransfer,
-    private platform: Platform,
-    private imgCahce: ImgCacheService,
     private insomnia: Insomnia,
     public loadingController: LoadingController
   ) {

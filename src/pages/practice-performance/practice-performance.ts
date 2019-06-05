@@ -1,5 +1,4 @@
 import { DocumentViewer } from "@ionic-native/document-viewer";
-import { FileCacheProvider } from "./../../providers/file-cache/file-cache";
 import { ExercisePerformancePage } from "./../exercise-performance/exercise-performance";
 import { Component, ContentChild, ViewChild } from "@angular/core";
 import { IonicPage, NavController, NavParams, Platform, LoadingController } from "ionic-angular";
@@ -7,17 +6,11 @@ import { interval, timer } from "rxjs";
 import { AlertController } from "ionic-angular";
 import { AngularFirestore, DocumentSnapshot } from "@angular/fire/firestore";
 import { AuthProvider } from "../../providers/auth/auth";
-import { AngularFireStorage } from "@angular/fire/storage";
-import { UserProvider } from "../../providers/user/user";
 import { FileTransfer } from "@ionic-native/file-transfer";
-import { File, IWriteOptions } from "@ionic-native/file";
+import { File } from "@ionic-native/file";
 import { ImgCacheService } from "../../directives/ng-imgcache/img-cache.service";
-import { take } from "rxjs/operators";
-import { normalizeURL } from 'ionic-angular';
 import { Insomnia } from "@ionic-native/insomnia";
 import * as moment from 'moment';
-import {DateTime } from 'ionic-angular';
-import { DateTimeData } from "ionic-angular/umd/util/datetime-util";
 import { MetronomeComponent } from "../../components/metronome/metronome";
 /**
  * Generated class for the PracticePerformancePage page.
@@ -54,11 +47,8 @@ export class PracticePerformancePage {
     private alertCtrl: AlertController,
     private afs: AngularFirestore,
     private authP: AuthProvider,
-    private afStorage: AngularFireStorage,
-    private fileCacheP: FileCacheProvider,
     private file: File,
     private transfer: FileTransfer,
-    private platform: Platform,
     private imgCahce: ImgCacheService,
     private document: DocumentViewer,
     private insomnia: Insomnia,
@@ -325,6 +315,10 @@ export class PracticePerformancePage {
     if (this.practice.audio) {
       this.practice.audio.pause();
     }
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+
   }
 
   timer;
