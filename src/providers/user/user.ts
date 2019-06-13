@@ -151,7 +151,7 @@ export class UserProvider {
         if (practices[key]) {
           achivement = practices[key].amountCounter
             ? practices[key].amountCounter
-            : practices[key].timespan / 3600000;
+            : Math.round(practices[key].timespan / 3600000);
         } else {
           achivement = 0;
         }

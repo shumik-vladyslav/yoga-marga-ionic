@@ -77,11 +77,6 @@ export class PracticePerformancePage {
         skipURIencoding: true
       })
       .then(_ => {
-        // if (this.practice.text) {
-        // this.imgCahce.fetchFromCache(this.practice.text).then(url => {
-        //   this.practice.text = url;
-        // });
-        // }
         if (this.practice.audio) {
           this.imgCahce.fetchFromCache(this.practice.audio).then(url => {
             this.practice.audio = new Audio(url);
@@ -338,6 +333,7 @@ export class PracticePerformancePage {
         .allowSleepAgain()
         .then(() => console.log("insomnia success off pr"), () => console.log("insomnia erro off"));
 
+      debugger
       this.timespan = (Date.now() - this.startTime) / 1000 / 60;
       if (this.practice.isAmountCounter || this.practice.isMaxAchievement) {
         this.presentPrompt();
@@ -402,7 +398,6 @@ export class PracticePerformancePage {
   }
 
   presentPrompt() {
-    // debugger
     const inputsArr = [];
     if (this.practice.isAmountCounter) {
       inputsArr.push({
@@ -446,8 +441,16 @@ export class PracticePerformancePage {
       .catch(err => console.log("err", err));
   }
 
-  async savePracticeResult(data = null) {
+  onBack() {
+    if (!this.isStarted) {
+      this.navCtrl.pop();
+      return;
+    }
+    this.savePracticeResult().then();
+  }
 
+  async savePracticeResult(data = null) {
+    
     let practiceRes = this.practice.userSpec;
     console.log("practiceRes", practiceRes);
 
@@ -469,7 +472,7 @@ export class PracticePerformancePage {
       }
     }
 
-    practiceRes.timespan = (practiceRes.timespan || 0) + +this.timespan;
+    practiceRes.timespan = (practiceRes.timespan || 0) + (Date.now() - this.startTime);
 
     const tmp = {};
     tmp[`practices.${this.practice.id}`] = practiceRes;
@@ -506,7 +509,6 @@ export class PracticePerformancePage {
     if (this.isPause) {
       
       this.subscription = interval(500)
-      // .pipe(take(Math.trunc(this.timer/500)))
       .subscribe(val => {
         
         console.log("subs2", val, this.timer);

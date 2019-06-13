@@ -7,7 +7,7 @@
 
 <ion-header>
   <ion-toolbar>
-    <div navPop ion-text color="white" icon-only>
+    <div ion-text color="white" icon-only (click)="onBack()">
       <span class="arrow arrow-back"></span>
     </div>
     <ion-title>
@@ -38,24 +38,7 @@
           </button>
         </div>
 
-        <!-- <ion-button expand="block">Block Button</ion-button> -->
-        <!-- <ion-item>
-            <ion-label>Время для практики </ion-label>
-            <ion-datetime displayFormat="HH:mm:ss" pickerFormat="HH:mm:ss" ></ion-datetime>
-        </ion-item>
-        <ion-item>
-            <ion-label>Время для упражнения </ion-label>
-            <ion-datetime displayFormat="HH:mm:ss" pickerFormat="HH:mm:ss" ></ion-datetime>
-        </ion-item>
-        <ion-item>
-            <ion-label>Период напоминания</ion-label>
-            <ion-datetime displayFormat="HH:mm:ss" pickerFormat="HH:mm:ss" ></ion-datetime>
-        </ion-item> -->
         <div [innerHTML]="practice?.shortDescription"></div>
-        <!-- <pre class="text-after-img" style="white-space: pre-wrap;">
-          {{practice?.shortDescription}}
-        </pre> -->
-
         <img img-cache img-cache-src="{{ practice.img }}" *ngIf="practice.img" />
 
         <ion-row justify-content-center class="m-b-10 img-sm-wrap"> </ion-row>
@@ -81,7 +64,6 @@
                   </div>
                 </div>
               </ion-col>
-              <!--  -->
               <ion-col col-lg-6 col-sm-6 col-xs-12 *ngIf="practice.userSpec?.maxAchievement">
                 <p ion-text text-center text-wrap color="gray" class="height-50">
                   Лучший результат
@@ -94,8 +76,6 @@
               </ion-col>
 
               <ion-col col-lg-6 col-sm-6 col-xs-12 *ngIf="practice.userSpec?.timespan">
-                <!-- <ion-card padding no-margin class="full-width box-shadow col-between height-full"> -->
-                <!-- <ion-item no-padding> -->
                 <p ion-text text-center text-wrap color="gray" class="height-50">
                   Общее время практики
                 </p>
@@ -104,9 +84,6 @@
                     {{ practice.userSpec?.timespan | appdate }}
                   </div>
                 </div>
-
-                <!-- </ion-item> -->
-                <!-- </ion-card> -->
               </ion-col>
             </ion-row>
           </ion-grid>
