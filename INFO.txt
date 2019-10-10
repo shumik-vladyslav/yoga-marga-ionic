@@ -15,3 +15,12 @@
 отбивает сахитокумбхаки
 
 сохранять данние прі досрочном виходе із упражненія
+
+
+комплекс удалять
+
+node_modules/ionic-angular/components/app/app-root.js
+change 
+_this.setElementClass('disable-scroll', true);
+to
+_this.setElementClass('disable-scroll', false);

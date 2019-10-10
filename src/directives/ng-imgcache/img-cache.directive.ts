@@ -10,11 +10,11 @@ export class ImgCacheDirective {
     private imgCache: ImgCacheService,
     private el: ElementRef,
     private renderer: Renderer2
-  ) {}
+  ) { }
 
   @Input('img-cache-src')
   set src(val) {
-    if(val) {
+    if (val) {
       this.imgCache
         .fetchFromCache(val)
         .then(cached => {
@@ -25,7 +25,7 @@ export class ImgCacheDirective {
 
   @Input('img-cache-bg-url')
   set bgUrl(val) {
-    if(val) {
+    if (val) {
       this.imgCache
         .fetchFromCache(val)
         .then(cached => {
@@ -33,4 +33,5 @@ export class ImgCacheDirective {
         });
     }
   };
+  
 }
