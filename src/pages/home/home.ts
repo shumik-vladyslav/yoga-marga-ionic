@@ -3,7 +3,6 @@ import { NavController, NavParams } from 'ionic-angular';
 import { AllPracticesPage } from '../all-practices/all-practices';
 import { PrivateOfficePage } from '../private-office/private-office';
 import { ComplexsPage } from '../complexs/complexs';
-import { Template_3Page } from '../template-3/template-3';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { UserProvider } from '../../providers/user/user';
@@ -73,23 +72,18 @@ export class HomePage {
   
   onClickPractice(practice) {
     console.log('click practice', practice);
-    
   }
 
-  goAllPracticesPage(){
+  goAllPracticesPage() {
     this.navCtrl.push(AllPracticesPage);
   }
 
-  goToComplexsPage(){
+  goToComplexsPage() {
     this.navCtrl.setRoot(ComplexsPage);
   }
 
-  goToPrivateOffice(){
+  goToPrivateOffice() {
     this.navCtrl.setRoot(PrivateOfficePage);
-  }
-
-  goToAsana2(){
-    this.navCtrl.setRoot(Template_3Page);
   }
  
   goToMyComplex(complex) {

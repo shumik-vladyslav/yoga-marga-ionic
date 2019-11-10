@@ -1,3 +1,4 @@
+import { ComponentsModule } from './../components/components.module';
 import { PracticesListPageModule } from './../pages/practices-list/practices-list.module';
 import { ActivationWarningPageModule } from './../pages/activation-warning/activation-warning.module';
 import { PracticeSearchPageModule } from './../pages/practice-search/practice-search.module';
@@ -15,7 +16,6 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule,AngularFireStorage } from '@angular/fire/storage';
 import { File } from '@ionic-native/file';
 import { IonicStorageModule } from '@ionic/storage';
-
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -35,10 +35,6 @@ import { PrivateOfficePage } from '../pages/private-office/private-office';
 import { GoalsPage } from '../pages/goals/goals';
 import { SettingsPage } from '../pages/settings/settings';
 import { TermsPage } from '../pages/terms/terms';
-import { Template_1Page } from '../pages/template-1/template-1';
-import { Template_2Page } from '../pages/template-2/template-2';
-import { Template_3Page } from '../pages/template-3/template-3';
-import { Template_4Page } from '../pages/template-4/template-4'; 
 import { LoadScreenPage } from '../pages/load-screen/load-screen';
 
 import { SettingsProvider } from '../providers/shared-services-settings/shared-services-settings';
@@ -59,6 +55,8 @@ import { LogPipe } from '../pipe/logPipe';
 import { AppDatePipe } from '../pipe/datePipe';
 import { PracticePerformancePage } from '../pages/practice-performance/practice-performance';
 import { AppPipesModule } from '../pipe/pipes.module';
+import { FileOpener } from '@ionic-native/file-opener/ngx';
+import { ToastHelper } from '../utils/toals-helper';
 
 
 @NgModule({
@@ -78,14 +76,11 @@ import { AppPipesModule } from '../pipe/pipes.module';
     GoalsPage,
     SettingsPage,
     TermsPage,
-    Template_1Page,
-    Template_2Page,
-    Template_3Page,
-    Template_4Page,
     LoadScreenPage,
     ProgressChartDirective
   ],
   imports: [
+    ComponentsModule,
     AppPipesModule,
     BrowserModule,
     IonicModule.forRoot(MyApp),
@@ -129,14 +124,10 @@ import { AppPipesModule } from '../pipe/pipes.module';
     GoalsPage,
     SettingsPage,
     TermsPage,
-    Template_1Page,
-    Template_2Page,
-    Template_3Page,
-    Template_4Page,
     LoadScreenPage,
     ProgressChartDirective,
     PracticeSearchPage,
-    SettingsPage,
+    SettingsPage
     // PracticePerformancePage,
     // ExercisePerformancePage
   ],
@@ -152,7 +143,9 @@ import { AppPipesModule } from '../pipe/pipes.module';
     File,
     UserProvider,
     DocumentViewer,
-    Insomnia
+    Insomnia,
+    FileOpener,
+    ToastHelper
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

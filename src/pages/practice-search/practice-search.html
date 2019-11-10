@@ -1,11 +1,3 @@
-<!--
-  Generated template for the PracticeSearchPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-
-
 <ion-header>
   <ion-toolbar>
     <button ion-button menuToggle class="pos-a" ion-text color="white">
@@ -14,26 +6,25 @@
     <p text-center ion-text color="white" class="header-title">Найти практику</p>
   </ion-toolbar>
 </ion-header>
-
 <ion-content padding>
   <ion-item>
     <ion-label floating>Название практики</ion-label>
     <ion-input (input)="onSearchChange($event.target.value)"></ion-input>
   </ion-item>
-
-  <ion-card no-margin class="full-width box-shadow">
+  <ion-card no-margin class="full-width">
     <ion-card-content no-padding padding-vertical>
       <ion-grid>
         <ion-row justify-content-center>
-            <!-- [navPush]="p.active === false?'':'PracticePerformancePage'" [navParams]="{practice: p}"  -->
-          <ion-col col-4 class="border-r col-between" no-padding *ngFor="let p of filtered"
-            (click)="onPractice(p)"
+          <!-- [navPush]="p.active === false?'':'PracticePerformancePage'" [navParams]="{practice: p}"  -->
+          <!-- border-r -->
+          <ion-col col-4 class=" col-between " no-padding *ngFor="let p of filtered" (click)="onPractice(p)"
             [class.inactive]="p.active===false">
-            <ion-row>
+            <ion-row class="practice-icon">
               <ion-col col-12>
                 <ion-item text-center no-padding>
                   <img img-cache img-cache-src="{{p.ico}}" #img class="img-icon" style="display:none">
-                  <img class="img-icon" [ngStyle]="{'-webkit-mask': 'url(' + img.src + ') no-repeat 50% 50%','mask': 'url(' + img.src + ') no-repeat 50% 50%'}">
+                  <img class="img-icon"
+                    [ngStyle]="{'-webkit-mask': 'url(' + img.src + ') no-repeat 50% 50%','mask': 'url(' + img.src + ') no-repeat 50% 50%'}">
                 </ion-item>
               </ion-col>
             </ion-row>

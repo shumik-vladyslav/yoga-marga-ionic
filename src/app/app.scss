@@ -14,6 +14,22 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
+$primary-color : #009688;
+
+.lg-icon {
+  font-size: 2em;
+  color: $primary-color!important;
+  
+}
+// #b701ff
+
+.footer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 50px;
+}
+
 @font-face {
   font-family: "gilroybold";
   src: url("../assets/fonts/gilroy-bold.ttf") format("truetype"),
@@ -215,7 +231,7 @@ div {
   .item-inner {
     border: none !important;
     background: color($colors, gray-300) !important;
-    color: #b700ff;
+    color: #009688 ;
     font-weight: bold;
     font-size: 17px;
     height: 42px;
@@ -234,7 +250,7 @@ div {
     font-size: 16px;
     border: none !important;
     background: color($colors, gray-300) !important;
-    color: #b700ff;
+    color: #009688 ;
     font-weight: bold;
     .input-wrapper {
       ion-input {
@@ -611,7 +627,7 @@ ion-item > div.item-inner {
   font-size: 16px;
 }
 .img-icon {
-  background-color: #b700ff;
+  background-color: $primary-color;
 }
 ion-label {
   margin-right: 0 !important;

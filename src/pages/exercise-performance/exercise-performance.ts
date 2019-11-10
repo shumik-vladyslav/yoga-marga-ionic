@@ -208,13 +208,13 @@ export class ExercisePerformancePage {
     console.log('timespan', this.practice.timeForExercise);
 
     this.timer = Math.trunc(this.exercise.timespan/1000)
-    // debugger
+    
     console.log(this.timer);
     
     this.isPause = true;
     this.startStopExTimer();
     // for decrise practicaTime counter
-    // debugger
+  
     // const subs2 = interval(1000)
     //   .pipe(take(Math.round(this.exercise.timespan/1000)))
     //   .subscribe(val => {

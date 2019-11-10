@@ -1,34 +1,24 @@
-<ion-card padding no-margin class="full-width box-shadow col-between height-full">
-    <ion-grid>
-      <ion-row >
-          <ion-col><p ion-text text-center text-wrap color="gray" >Метроном</p>
-        </ion-col>
-      </ion-row>
-      <ion-row *ngFor="let interval of _intervals; let i = index">
-        <ion-col><ion-item text-center class="input-style input-goals input-teamplate">{{interval}}</ion-item></ion-col>
-        <ion-col><button ion-button [disabled]="state=='played'" class="ion-no-margin" color="primary" (click)="_intervals.splice(i,1);onChange(_intervals)"><ion-icon name="remove"></ion-icon></button></ion-col>
-      </ion-row>
-      <ion-row>
-          <ion-col><ion-item text-center class="input-style input-goals input-teamplate">
-            <input type="number" text-center #input class="new-interval"></ion-item></ion-col>
-          <ion-col>
-              <!-- <ion-item text-right class="input-style input-goals input-teamplate"> -->
-                <button ion-button [disabled]="state=='played'" class="ion-no-margin" color="primary" (click)="input.value?_intervals.push(+input.value):0;input.value='';onChange(_intervals)"><ion-icon name="add"></ion-icon></button>
-              <!-- </ion-item> -->
-          </ion-col>
-      </ion-row>
-      <!-- <ion-row>
-        <ion-col>
-          <button ion-button color="primary" (click)="state=='paused'?onStart():onStop()" style="width:100%" >
-            <ion-icon name="play" *ngIf="state=='paused'"></ion-icon>
-            <ion-icon name="pause" *ngIf="state=='played'"></ion-icon>
-          </button>
-      </ion-col>
-      </ion-row> -->
-    </ion-grid>
-  <!-- 
-  <br>
-  <button ion-button color="primary" (click)="onStop()">Stop</button> -->
-
-
-</ion-card>
+<ion-grid no-padding>
+  <ion-row no-padding>
+    <ion-col no-padding>
+      <button ion-button [disabled]="state=='played'" class="ion-no-margin" color="primary"
+        style="margin-bottom: 10px!important;"
+        (click)="_intervals?'':_intervals=[];_intervals.push({value: 1});onChange(_intervals)">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-col>
+  </ion-row>
+  <ion-row *ngFor="let interval of _intervals; let i = index">
+    <ion-col>
+      <ion-item text-center class="input-style input-goals input-teamplate">
+        <input type="number" text-center [(ngModel)]="_intervals[i].value" class="new-interval" (ngModelChange)="onChange(_intervals)">
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <button ion-button [disabled]="state=='played'" class="ion-no-margin" color="primary"
+        (click)="_intervals.splice(i,1);onChange(_intervals)">
+        <ion-icon name="remove"></ion-icon>
+      </button>
+    </ion-col>
+  </ion-row>
+</ion-grid>

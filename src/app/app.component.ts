@@ -26,7 +26,6 @@ export class MyApp {
   @ViewChild(Nav)
   nav: Nav;
 
-  // rootPage: any = Template_1Page;
   // rootPage: any = SingInPage;
   rootPage: any;
 
@@ -94,7 +93,7 @@ export class MyApp {
           UserProvider.Init(this.afs, user.email).then(res => {
             console.log('user init', res);
             if (res && res.active && res.active == true ) {
-              this.rootPage = HomePage;
+              this.rootPage = PracticeSearchPage;
               this.menyIsEnabled = true;
             } else {
               this.rootPage = ActivationWarningPage;

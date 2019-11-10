@@ -1,0 +1,97 @@
+<ion-content padding>
+  <ion-grid>
+    <ion-item no-padding>
+      <p ion-text text-wrap text-center color="gray">
+        Установите время всей практики
+      </p>
+      <ion-item no-padding class="input-style input-goals input-teamplate">
+        <ion-datetime ion-margin-vertical text-center displayFormat="HH:mm:ss" pickerFormat="HH:mm:ss"
+          (ngModelChange)="onPracticeTimeChange($event)" [(ngModel)]="practiceDuration"></ion-datetime>
+      </ion-item>
+    </ion-item>
+
+    <ion-item no-padding *ngIf="practice.exercises && practice.exercises[0]">
+      <p ion-text text-wrap text-center color="gray">
+        Также вы можете установить время на каждое упражнение
+      </p>
+      <ion-item no-padding class="input-style input-goals input-teamplate">
+        <ion-datetime ion-margin-vertical displayFormat="HH:mm:ss" pickerFormat="HH:mm:ss" text-center
+          (ngModelChange)="onTimeForExerciseChange($event)" [(ngModel)]="exerciseDuration"></ion-datetime>
+      </ion-item>
+    </ion-item>
+    <ion-item no-padding>
+      <p ion-text text-wrap text-center color="gray">
+        Установите время, через которое Вы услышите настановление о
+        неотвлечении
+      </p>
+      <ion-item no-padding class="input-style input-goals input-teamplate">
+        <ion-datetime ion-margin-vertical displayFormat="HH:mm:ss" pickerFormat="HH:mm:ss" text-center
+          (ngModelChange)="onRemainderChange($event)" [(ngModel)]="reminderDuration"></ion-datetime>
+      </ion-item>
+
+      <ion-row nowrap align-items-center>
+        <ion-item id="radio-style ios" class="width-default radio-style">
+          <ion-toggle [(ngModel)]="settings.singleReminder" (ngModelChange)="onChangeSolo()">
+          </ion-toggle>
+        </ion-item>
+        <p padding-horizontal color="text-light" text-wrap text-capitalize text-left ion-text
+          class="m-0 p-0 fs-13 letter-spacing-2 lable-radio-box">
+          Однократное напоминание
+        </p>
+      </ion-row>
+      <ion-row nowrap align-items-center>
+        <ion-item id="radio-style ios" class="width-default radio-style">
+          <ion-toggle [(ngModel)]="settings.multiReminder" (ngModelChange)="onChangeMulti()">
+          </ion-toggle>
+        </ion-item>
+        <p padding-horizontal color="text-light" text-wrap text-left ion-text text-capitalize
+          class="m-0 p-0 fs-13 letter-spacing-2 lable-radio-box">
+          Постоянное напоминание
+        </p>
+      </ion-row>
+    </ion-item>
+
+    <ion-item no-padding *ngIf="practice.hasMetronome">
+      <p ion-text text-wrap text-center color="gray">
+        Настройте метроном
+      </p>
+      <metronome [(ngModel)]="settings.intervals" #metronome (ngModelChange)="onChangeIntervals($event)"></metronome>
+    </ion-item>
+
+    <ion-item no-padding>
+      <p ion-text text-wrap text-center color="gray">
+        Цель: время проведенное в практике (Часов)
+      </p>
+      <ion-item no-padding class="input-style input-goals input-teamplate">
+        <ion-input type="number" [(ngModel)]="settings.spentTimeGoal"></ion-input>
+      </ion-item>
+    </ion-item>
+
+    <ion-item no-padding *ngIf="practice.hasMaxAchevement">
+      <p ion-text text-wrap text-center color="gray">
+        Цель: максимальное достижение (например длительность задержки в минутах)
+      </p>
+      <ion-item no-padding class="input-style input-goals input-teamplate">
+        <ion-input type="number" [(ngModel)]="settings.maxAchevementGoal"></ion-input>
+      </ion-item>
+    </ion-item>
+
+    <ion-item no-padding *ngIf="practice.hasAmountCounter">
+      <p ion-text text-wrap text-center color="gray">
+        Цель: количество (например количество простираний)
+      </p>
+      <ion-item no-padding class="input-style input-goals input-teamplate">
+        <ion-input type="number" [(ngModel)]="settings.amountCounterGoal"></ion-input>
+      </ion-item>
+    </ion-item>
+  </ion-grid>
+</ion-content>
+
+<ion-footer class="footer">
+  <button ion-button color="primary" clear (click)="onSave()">
+    <ion-icon name="document" class="lg-icon"></ion-icon>
+  </button>
+  <button ion-button color="primary" clear navPop>
+    <ion-icon name="close-circle" class="lg-icon"></ion-icon>
+  </button>
+</ion-footer>
