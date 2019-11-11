@@ -91,9 +91,9 @@
     <allow-navigation href="http://192.168.0.101:8100" sessionid="c9250aa1" />
     <plugin name="cordova-plugin-document-viewer" spec="^0.9.10" />
     <plugin name="cordova-plugin-insomnia" spec="^4.3.0" />
-    <engine name="ios" spec="4.5.5" />
-    <engine name="android" spec="7.1.4" />
     <plugin name="cordova-plugin-file-opener2" spec="^2.2.1">
         <variable name="ANDROID_SUPPORT_V4_VERSION" value="27.+" />
     </plugin>
+    <engine name="ios" spec="4.5.5" />
+    <engine name="android" spec="7.1.4" />
 </widget>

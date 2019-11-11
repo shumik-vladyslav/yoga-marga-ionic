@@ -1,5 +1,6 @@
+// User specific information related to the concrete practice
 export class PracticeSettings {
-    reminderDuration: number;
+    reminderInterval: number;
     // practice duration
     practiceDuration: number;
     exerciseDuration: number;
@@ -11,17 +12,17 @@ export class PracticeSettings {
     singleReminder: boolean;
     multiReminder: boolean;
     metronomeFlag: boolean;
-    maxAchevement?: number;
+    maxAchievement?: number;
     amountCounter?: number;
 
     spentTimeGoal?: number;
-    maxAchevementGoal?: number;
+    maxAchievementGoal?: number;
     amountCounterGoal?: number;
     
     // fabric method
     public static createInstance(): PracticeSettings {
         return {
-            reminderDuration: 60 * 1000,
+            reminderInterval: 60 * 1000,
             // practice duration
             practiceDuration: 60 * 60 * 1000,
             exerciseDuration: 0,

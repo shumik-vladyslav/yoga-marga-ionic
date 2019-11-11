@@ -26,7 +26,7 @@
       </p>
       <ion-item no-padding class="input-style input-goals input-teamplate">
         <ion-datetime ion-margin-vertical displayFormat="HH:mm:ss" pickerFormat="HH:mm:ss" text-center
-          (ngModelChange)="onRemainderChange($event)" [(ngModel)]="reminderDuration"></ion-datetime>
+          (ngModelChange)=" onRemainderItervalChange($event)" [(ngModel)]="reminderInterval"></ion-datetime>
       </ion-item>
 
       <ion-row nowrap align-items-center>
@@ -67,12 +67,12 @@
       </ion-item>
     </ion-item>
 
-    <ion-item no-padding *ngIf="practice.hasMaxAchevement">
+    <ion-item no-padding *ngIf="practice.hasMaxAchievement">
       <p ion-text text-wrap text-center color="gray">
         Цель: максимальное достижение (например длительность задержки в минутах)
       </p>
       <ion-item no-padding class="input-style input-goals input-teamplate">
-        <ion-input type="number" [(ngModel)]="settings.maxAchevementGoal"></ion-input>
+        <ion-input type="number" [(ngModel)]="settings.maxAchievementGoal"></ion-input>
       </ion-item>
     </ion-item>
 

@@ -10,7 +10,7 @@ export class ToastHelper {
         const toast = await this.toastController.create({
             message: message,
             position: 'top',
-            duration: 2000
+            duration: 1000
         });
         await toast.present();
         await this.delay(2000);

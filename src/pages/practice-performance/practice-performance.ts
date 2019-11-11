@@ -15,6 +15,8 @@ import * as moment from 'moment';
 import { MetronomeComponent } from "../../components/metronome/metronome";
 import { UserProvider } from '../../providers/user/user';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
+import { Practice } from '../../models/practice';
+import { Metronome } from '../../utils/metronome';
 
 @IonicPage()
 @Component({
@@ -22,14 +24,15 @@ import { FileOpener } from '@ionic-native/file-opener/ngx';
   templateUrl: "practice-performance.html"
 })
 export class PracticePerformancePage {
-  @ViewChild(MetronomeComponent) metronome: MetronomeComponent;
+  // @ViewChild(MetronomeComponent) metronome: MetronomeComponent;
+  metronome: Metronome;
   public StateEnum = { Inited: 0, Started: 1, Paused: 2 };
   state = this.StateEnum.Inited;
 
-  practice;
+  practice: Practice;
   url;
 
-  audio = new Audio("assets/sound/pomni.mp3");
+  remaiderSound = new Audio("assets/sound/pomni.mp3");
   gong = new Audio("assets/sound/gong.mp3");
 
   startTime = 0;
@@ -37,8 +40,6 @@ export class PracticePerformancePage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private afs: AngularFirestore,
-    private authP: AuthProvider,
     private file: File,
     private transfer: FileTransfer,
     private imgCahce: ImgCacheService,
@@ -86,7 +87,14 @@ export class PracticePerformancePage {
     if (!settings) {
       settings = PracticeSettings.createInstance();
     }
-    this.practice.settings=settings;
+    this.practice.settings = settings;
+
+    // init metronome
+    if (settings.intervals && settings.intervals.length > 0) {
+      this.metronome = Metronome.createMetronome(settings.intervals.map(i => i.value),
+        'assets/sound/tik.mp3', 'assets/sound/gong.mp3');
+    }
+
   }
 
   presentLoading() {
@@ -100,24 +108,30 @@ export class PracticePerformancePage {
   opentText() {
     console.log('open pdf~~~');
     if (this.practice.text) {
-      const loading = this.presentLoading();
-      this.fetchTextFileUriFromCache().then(uri => {
-        loading.dismiss().then();
-
-        this.fileOpener.open(uri, 'application/pdf')
-          .then(() => console.log('File is opened'))
-          .catch(e => console.log('Error opening file', e));
-        // this.document.viewDocument(
-        //   uri,
-        //   "application/pdf",
-        //   {},
-        //   null,
-        //   null,
-        //   err => this.openPdfErrorHandler(err),
-        //   err => this.openPdfErrorHandler(err)
-        // );
-      }).catch(err => console.log('~~~openText', err));
+      this.fileOpener.open(this.practice.text, 'application/pdf')
+        .then(() => console.log('File is opened'))
+        .catch(e => console.log('Error opening file', e));
     }
+
+    // if (this.practice.text) {
+    //   const loading = this.presentLoading();
+    //   this.fetchTextFileUriFromCache().then(uri => {
+    //     loading.dismiss().then();
+
+    //     this.fileOpener.open(uri, 'application/pdf')
+    //       .then(() => console.log('File is opened'))
+    //       .catch(e => console.log('Error opening file', e));
+    //     // this.document.viewDocument(
+    //     //   uri,
+    //     //   "application/pdf",
+    //     //   {},
+    //     //   null,
+    //     //   null,
+    //     //   err => this.openPdfErrorHandler(err),
+    //     //   err => this.openPdfErrorHandler(err)
+    //     // );
+    //   }).catch(err => console.log('~~~openText', err));
+    // }
   }
 
   fetchTextFileUriFromCache(): Promise<any> {
@@ -141,17 +155,16 @@ export class PracticePerformancePage {
     });
   }
 
-  audioState = false;
   onToggleAudio() {
     if (this.practice.audio) {
-      if (!this.audioState) {
+      if (this.isMuted) {
         console.log("audio play");
         this.practice.audio.play();
-        this.audioState = true;
+        this.isMuted = false;
       } else {
         console.log("audio pause");
         this.practice.audio.pause();
-        this.audioState = false;
+        this.isMuted = true;
       }
     }
   }
@@ -171,17 +184,65 @@ export class PracticePerformancePage {
   async startPausePractice() {
   }
 
-  startPractice() {
-    // go to exercises performance page
-    if (this.practice.exercises && this.practice.exercises.length > 0) {
-      return this.navCtrl.push(ExercisePerformancePage, {
-        practice: this.practice
-      });
+  exerciseIndex;
+  exercises;
+  exercisesCount;
+  practiceDuration;
+
+  exercise;
+
+  nextExercise() {
+    // increment index
+    if (!this.exerciseIndex) {
+      this.exerciseIndex = 0;
+    } else {
+      this.exerciseIndex++;
     }
+
+    this.exercise = this.exercises[this.exerciseIndex];
+
+  }
+
+  // need for custom duration of every exercise
+  calculatePracticeDuration() {
+    if (!this.exercises) {
+      return this.practice.settings.practiceDuration || 60 * 60 * 1000;
+    }
+    let summ = 0;
+    for (let e of this.exercises) {
+      if (e.exerciseDuration) {
+        summ += +e.exerciseDuration;
+      } else {
+        summ += this.practice.settings.exerciseDuration ?
+          +this.practice.settings.exerciseDuration :
+          +this.practice.settings.practiceDuration / this.exercisesCount;
+      }
+    }
+    console.log('calculatePracticeDuration', summ);
+    return summ;
+  }
+
+  hasExercises() {
+    return this.practice.exercises && this.practice.exercises.length > 0;
+  }
+
+  startPractice() {
     this.resumeAudio();
     this.screenKeepAwake();
-    this.startRemainder();
-    this.startMetronome();
+
+    // go to exercises performance page
+
+    if (this.hasExercises()) {
+      // init exercises
+      this.exercises = this.practice.exercises;
+      this.exercisesCount = this.practice.exercises.length;
+      this.exerciseIndex = 0;
+      this.practiceDuration = this.calculatePracticeDuration();
+      this.nextExercise();
+    } else {
+      this.practiceDuration = this.practice.settings.practiceDuration;
+    }
+
     this.startTimer(100);
     this.state = this.StateEnum.Started;
   }
@@ -189,20 +250,18 @@ export class PracticePerformancePage {
   pausePractice() {
     this.pauseTimer();
     this.pauseAudio();
-    this.stopMetronome();
-    // todo pause remaider
+    this.screenAllowSleep();
     this.state = this.StateEnum.Paused;
   }
 
   resumePractice() {
     this.resumeTimer();
     this.resumeAudio();
-    // todo resume remainder
-    this.startMetronome();
+    this.screenKeepAwake();
     this.state = this.StateEnum.Started;
   }
 
-  isMuted = false;
+  isMuted = true;
   pauseAudio() {
     if (this.practice.audio) {
       this.practice.audio.pause();
@@ -215,42 +274,19 @@ export class PracticePerformancePage {
     }
   }
 
-  exitPractice() {
-    // stop metronome
-    this.stopMetronome();
-
+  async exitPractice() {
     //stop audio
     this.pauseAudio();
 
     // insomnia sleep again
     this.screenAllowSleep()
 
-    this.savePracticeSpentTime();
+    await this.savePracticeSpentTime();
 
-    if (this.practice.isAmountCounter || this.practice.isMaxAchievement) {
-      this.navCtrl.push('PracticeResultPage');
+    if (this.state !== this.StateEnum.Inited && (this.practice.isAmountCounter || this.practice.isMaxAchievement)) {
+      this.navCtrl.push('PracticeResultPage', { practice: this.practice });
     } else {
       this.navCtrl.pop();
-    }
-  }
-
-  remainderSubs;
-  startRemainder() {
-    this.remainderSubs = interval(
-      this.practice.settings.reminderInterval
-    ).subscribe(() => {
-      if (this.practice.settings.soloPomniFlag) {
-        this.audio.play();
-        this.remainderSubs.unsubscribe();
-      } else if (this.practice.settings.multiPomniFlag) {
-        this.audio.play();
-      }
-    });
-  }
-
-  stopRemainder() {
-    if (this.remainderSubs) {
-      this.remainderSubs.unsubscribe();
     }
   }
 
@@ -263,16 +299,13 @@ export class PracticePerformancePage {
       .catch(err => console.log("err", err));
   }
 
-  async onBack() {
-    if (this.state === this.StateEnum.Inited) {
-      return this.navCtrl.pop();
-    }
-    await this.savePracticeSpentTime();
-  }
-
   async savePracticeSpentTime() {
+    if (!this.startTime) {
+      return;
+    }
+    const spent = this.practiceDuration - this.countdown;
     const settings = this.practice.settings;
-    settings.spentTime = (settings.spentTime || 0) + (Date.now() - this.startTime);
+    settings.spentTime = (settings.spentTime || 0) + spent;
     await this.savePracticeSettings(settings);
   }
 
@@ -280,61 +313,70 @@ export class PracticePerformancePage {
   countdown;
   intervalSubs;
   timerInterval;
+  prevSeccond;
+  isRemainderRunOnce = false;
+  
+  timerTickCb() {
+    this.countdown = this.practiceDuration - (Date.now() - this.startTime);
+    if (this.countdown <= 0) {
+      this.countdown = 0;
+      this.stopTimer();
+    }
+    
+    // current second, counting starts from 0
+    const currSecond = Math.floor((this.practiceDuration - this.countdown) / 1000);
+    if (currSecond != this.prevSeccond) {
+      this.prevSeccond = currSecond;
+      this.metronome.nextTik(currSecond);
+    }
+
+    const isTimeToRemind = currSecond % (this.practice.settings.reminderInterval / 1000 - 1) == 0;
+    // console.log('isTimeToRemind', currSeccond, this.practice.settings.reminderInterval / 1000, isTimeToRemind);
+    if (!isTimeToRemind || currSecond === 0) return;
+
+    if (this.practice.settings.singleReminder && !this.isRemainderRunOnce) {
+      this.remaiderSound.play();
+      this.isRemainderRunOnce = true;
+    } else if (this.practice.settings.multiReminder) {
+      this.remaiderSound.currentTime = 0.0;
+      this.remaiderSound.play();
+    }
+
+  }
 
   startTimer(millisecons: number) {
     this.timerInterval = millisecons;
-    this.countdown = this.practice.settings.practiceDuration;
+    this.countdown = this.practiceDuration;
     this.startTime = Date.now();
-    this.startMetronome();
-    this.intervalSubs = interval(millisecons)
-      .subscribe(() => {
-        this.countdown -= Date.now() - this.startTime;
-        if (this.countdown <= 0) {
-          this.stopTimer();
-        }
-      });
+    this.intervalSubs = interval(millisecons).subscribe(() => this.timerTickCb());
   }
 
   pauseTimer() {
-    this.stopMetronome();
     if (this.intervalSubs) {
       this.intervalSubs.unsubscribe();
     }
   }
 
   resumeTimer() {
-    this.startMetronome();
-    this.intervalSubs = interval(this.timerInterval)
-      .subscribe(() => {
-        this.countdown -= Date.now() - this.startTime;
-        if (this.countdown <= 0) {
-          this.stopTimer();
-        }
-      });
+    this.intervalSubs = interval(this.timerInterval).subscribe(() => this.timerTickCb());
   }
 
   stopTimer() {
-    this.stopMetronome();
     if (this.intervalSubs) {
       this.intervalSubs.unsubscribe();
     }
-
+    this.gong.play();
     this.exitPractice();
   }
   // end timer
 
 
   // metronome
-  startMetronome() {
-    if (this.practice.settings.metronomeFlag && this.metronome) {
-      this.metronome.onStart();
+  toggleMetronome() {
+    if (!this.metronome) {
+      return;
     }
-  }
-
-  stopMetronome() {
-    if (this.practice.settings.metronomeFlag && this.metronome) {
-      this.metronome.onStop();
-    }
+    this.metronome.toggleMute();
   }
   // end metronome
 

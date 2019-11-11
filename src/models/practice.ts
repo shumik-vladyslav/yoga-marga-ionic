@@ -1,11 +1,19 @@
+import { PracticeSettings } from './practice-settings';
 export class Practice {
-    reminderInterval: number;
-    // practice duration
-    practiceDuration: number;
-    exercises: [{}];
-    // total time spent in the practice
-    spentTime: number;
-    singleReminder: boolean;
-    multiReminder: boolean;
-    metronomeFlag: boolean;
+    id: string;
+    img?: string;
+    name: string;
+    shortDescription: string;
+    audio?: string | any;
+    text?: string | any;
+    exercises: any[];
+    settings?: PracticeSettings;
+
+    hasMetronome: boolean;
+    
+    isMaxAchievement: boolean; // for backward compatibility
+    hasMaxAchievement: boolean;
+    
+    isAmountCounter: boolean; // for backward compatibility
+    hasAmountCounter: boolean;
 }

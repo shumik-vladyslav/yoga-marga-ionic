@@ -59,6 +59,8 @@ import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { ToastHelper } from '../utils/toals-helper';
 
 
+// import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -80,6 +82,7 @@ import { ToastHelper } from '../utils/toals-helper';
     ProgressChartDirective
   ],
   imports: [
+    // FontAwesomeModule,
     ComponentsModule,
     AppPipesModule,
     BrowserModule,

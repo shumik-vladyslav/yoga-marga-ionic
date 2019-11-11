@@ -1,5 +1,8 @@
+import { ToastHelper } from './../../utils/toals-helper';
+import { Practice } from './../../models/practice';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { UserProvider } from '../../providers/user/user';
 
 /**
  * Generated class for the PracticeResultPage page.
@@ -14,74 +17,44 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'practice-result.html',
 })
 export class PracticeResultPage {
-  practice;
-
+  practice: Practice;
+  amountCounter = 0;
+  maxAchievement = 0;
   constructor(
-    public navCtrl: NavController, 
-    public navParams: NavParams) {
-      this.practice = {...this.navParams.get("practice")};
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public toastHelper: ToastHelper) {
+    this.practice = { ...this.navParams.get("practice") };
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PracticeResultPage');
   }
 
-  // presentPrompt() {
-  //   const inputsArr = [];
-  //   if (this.practice.isAmountCounter) {
-  //     inputsArr.push({
-  //       name: "amountCounter",
-  //       placeholder: "Колличесство"
-  //     });
-  //   }
+  async onSave() {
+    console.log('on save', this.practice.id);
+    const patch = { practices: {} };
+    
+    // calculate amount counter
+    if (this.practice.isAmountCounter) {
+      if (this.practice.settings.amountCounter) {
+        this.practice.settings.amountCounter = +this.practice.settings.amountCounter + +this.amountCounter;
+      } else {
+        this.practice.settings.amountCounter = +this.amountCounter;
+      }
+    }
+    
+    // calculate max achivement
+    if (this.practice.isMaxAchievement) {
+      this.practice.settings.maxAchievement = this.maxAchievement > this.practice.settings.maxAchievement ?
+      this.maxAchievement : this.practice.settings.maxAchievement;
+    }
+    
 
-  //   if (this.practice.isMaxAchievement) {
-  //     inputsArr.push({
-  //       name: "maxAchievement",
-  //       placeholder: "Максимальное достижение"
-  //     });
-  //   }
+    patch.practices[this.practice.id] = this.practice.settings;
+    await UserProvider.updateUser(patch);
+    await this.toastHelper.presentTopMess('Сохранено');
+    await this.navCtrl.popToRoot();
+  }
 
-  //   let alert = this.alertCtrl.create({
-  //     title: "Практика закончена",
-  //     inputs: inputsArr,
-  //     buttons: [
-  //       {
-  //         text: "Сохранить результат",
-  //         handler: data => {
-  //           console.log(data);
-  //           this.savesettingsult(data);
-  //         }
-  //       }
-  //     ]
-  //   });
-  //   this.gong.play();
-  //   alert.present();
-  // }
-
-  // save() {
-  //   const settings = this.practice.settings;
-
-  //   if (data) {
-  //     if (data.amountCounter) {
-  //       settings.amountCounter =
-  //         (+settings.amountCounter || 0) + +data.amountCounter;
-  //     }
-
-  //     if (data.maxAchievement) {
-  //       if (!settings.maxAchievement) {
-  //         settings.maxAchievement = data.maxAchievement;
-  //       } else {
-  //         settings.maxAchievement =
-  //           settings.maxAchievement < data.maxAchievement
-  //             ? +data.maxAchievement
-  //             : settings.maxAchievement;
-  //       }
-  //     }
-  //   }
-
-  //   settings.timespan = (settings.timespan || 0) + (Date.now() - this.startTime);
-
-  //   await this.savePracticeSettings(settings);
-  // }
 }

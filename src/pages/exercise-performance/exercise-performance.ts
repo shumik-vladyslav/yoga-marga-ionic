@@ -213,22 +213,6 @@ export class ExercisePerformancePage {
     
     this.isPause = true;
     this.startStopExTimer();
-    // for decrise practicaTime counter
-  
-    // const subs2 = interval(1000)
-    //   .pipe(take(Math.round(this.exercise.timespan/1000)))
-    //   .subscribe(val => {
-    //     console.log("subs2", val, this.timer);
-    //     this.timer = this.timer - 1;
-    //   });
-
-    // const subs3 = timer(Math.round(this.exercise.timespan/1000) * 1000).subscribe(val => {
-    //   this.nextExercise();
-    //   new Audio("assets/sound/gong.mp3").play();
-    // });
-
-    // this.subscriptions.push(subs2);
-    // this.subscriptions.push(subs3);
     this.exerciseCounter++;
   }
 
@@ -326,12 +310,10 @@ export class ExercisePerformancePage {
   }
 
   swipeEvent(event) {
-    console.log('swipe', event);
     this.nextExercise();
   }
 
   pause() {
-    
   }
 
   isPause = true;

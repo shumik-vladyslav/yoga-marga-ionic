@@ -1,44 +1,62 @@
 <ion-content>
-  <div style="height: 60%;overflow: scroll;">
-    <img img-cache img-cache-src="{{ practice.img }}" *ngIf="practice.img" style="padding-top: 10px;" />
+  <metronome [(ngModel)]="practice.settings.intervals" #metronome style="display: none;"></metronome>
+  <div class="practice-img">
+    <!-- <img img-cache img-cache-src="{{ practice.img }}" *ngIf="practice.img" style="padding-top: 10px;" /> -->
+    <img src="{{ practice.img }}" *ngIf="practice.img" style="padding-top: 10px;" />
   </div>
-  <div class="footer">
-    <div><ion-icon name="medal"></ion-icon></div>
-    <div><ion-icon name="clock"></ion-icon></div>
-    <div><ion-icon name="podium"></ion-icon></div>
+  <div class="stats-blok">
+    <div>
+      <ion-icon name="clock" style="margin-right: 7px;"></ion-icon>
+      {{practice.settings?.spentTime | msToHours}}
+    </div>
+    <div *ngIf="practice.settings?.amountCounter">
+      <ion-icon name="medal" style="margin-right: 7px;"></ion-icon>{{practice.settings?.amountCounter}}
+    </div>
+    <div *ngIf="practice.settings?.maxAchievement">
+      <ion-icon name="podium" style="margin-right: 7px;"></ion-icon>{{practice.settings?.maxAchievement}}
+    </div>
   </div>
-  <div>
-    <ion-progress-bar color="primary" value="0.5"></ion-progress-bar>
-  </div>
-  
-  <h1 ion-text color="primary">{{ practice.name }}</h1>
-  <div style="height: 30%;overflow: scroll;">
+
+  <h1 ion-text color="dark" style="font-weight: bold;">{{ practice.name }}</h1>
+
+  <div class="time" *ngIf="state !== StateEnum.Inited">{{countdown | appdate}}</div>
+
+  <!-- <div class="time" *ngIf="state !== StateEnum.Inited" >{{countdown | appdate}}</div> -->
+  <!-- <ion-progress-bar color="primary" value="0.5" *ngIf="state !== StateEnum.Inited"></ion-progress-bar>
+  <ion-progress-bar color="primary" value="0.5"></ion-progress-bar>
+  <ion-progress-bar></ion-progress-bar> -->
+  <div style="height: 30%;overflow: scroll;" *ngIf="state === StateEnum.Inited">
     <div [innerHTML]="practice?.shortDescription"></div>
   </div>
 
 </ion-content>
 
 <ion-footer class="footer">
-  <div class="time" *ngIf="state !== StateEnum.Inited">{{countdown | appdate}}</div>
   <button ion-button color="primary" clear (click)="onToggleAudio()" *ngIf="practice.audio">
-    <ion-icon name="volume-up" class="lg-icon"></ion-icon>
+    <ion-icon name="volume-up" class="lg-icon" *ngIf="!isMuted"></ion-icon>
+    <ion-icon name="volume-off" class="lg-icon" *ngIf="isMuted"></ion-icon>
   </button>
-  <button ion-button color="primary" clear *ngIf="practice.text" (click)="opentText()">
+  <button ion-button color="primary" clear (click)="toggleMetronome()" *ngIf="metronome">
+    <ion-icon name="pulse" class="lg-icon"></ion-icon>
+  </button>
+  <button ion-button color="primary" clear *ngIf="practice.text && state !== StateEnum.Started" (click)="opentText()">
     <ion-icon name="information" class="lg-icon"></ion-icon>
   </button>
-  
-  <button ion-button color="primary" *ngIf="state === StateEnum.Inited || state === StateEnum.Paused" (click)="startPractice()" clear>
+
+  <button ion-button color="primary" clear *ngIf="state === StateEnum.Inited || state === StateEnum.Paused"
+    (click)="state !== StateEnum.Paused?startPractice():resumePractice()">
     <ion-icon name="play" class="lg-icon"></ion-icon>
   </button>
 
-  <button ion-button color="primary" *ngIf="state === StateEnum.Paused" (click)="resumePractice()" clear>
+  <button ion-button color="primary" *ngIf="state === StateEnum.Started" (click)="pausePractice()" clear>
     <ion-icon name="pause" class="lg-icon"></ion-icon>
-  </button> 
+  </button>
 
-  <button ion-button color="primary" clear navPush="PracticeSettingsPage" [navParams]="{practice: practice}">
+  <button ion-button color="primary" clear *ngIf="state !== StateEnum.Started" navPush="PracticeSettingsPage"
+    [navParams]="{practice: practice}">
     <ion-icon name="settings" class="lg-icon"></ion-icon>
   </button>
-  <button ion-button color="primary" clear (click)="onBack()">
+  <button ion-button color="primary" clear (click)="exitPractice()">
     <ion-icon name="close" class="lg-icon"></ion-icon>
   </button>
 </ion-footer>

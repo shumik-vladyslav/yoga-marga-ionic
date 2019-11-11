@@ -24,9 +24,6 @@ export class MetronomeComponent extends AbstractValueAccessor implements OnDestr
   context;
   tikBuff;
   gongBuff;
-  
-  // intervals: number[];
-
 
   state = "paused";
   subscription = new Subscription();
@@ -50,30 +47,30 @@ export class MetronomeComponent extends AbstractValueAccessor implements OnDestr
     return source;
   }
 
-  sources = []
+  // sources = []
   
-  playSedule(delay = 0) {
-    // this.sources.forEach( s => s.disconnect());
-    // this.sources = [];
-    const sum = this.intervals.reduce((a,b) => a+(+b), 0);
-    const currTime = this.context.currentTime;
+  // playSedule(delay = 0) {
+  //   // this.sources.forEach( s => s.disconnect());
+  //   // this.sources = [];
+  //   const sum = this.intervals.reduce((a,b) => a+(+b.value), 0);
+  //   const currTime = this.context.currentTime;
 
-    let prevIntervalsSum = 0;
-    let prevIntervalsSumArr = [];
-    for (let i = 0; i < this.intervals.length; i++) {
-      const interval = this.intervals[i];
-      prevIntervalsSum = prevIntervalsSum + Number(interval);
-      prevIntervalsSumArr.push(prevIntervalsSum);
-      console.log('gong', prevIntervalsSum, currTime + prevIntervalsSum + delay);
-      this.sources.push(this.playBuffer(this.gongBuff, currTime + prevIntervalsSum + delay));
-    }
+  //   let prevIntervalsSum = 0;
+  //   let prevIntervalsSumArr = [];
+  //   for (let i = 0; i < this.intervals.length; i++) {
+  //     const interval = this.intervals[i].value;
+  //     prevIntervalsSum = prevIntervalsSum + Number(interval);
+  //     prevIntervalsSumArr.push(prevIntervalsSum);
+  //     console.log('gong', prevIntervalsSum, currTime + prevIntervalsSum + delay);
+  //     this.sources.push(this.playBuffer(this.gongBuff, currTime + prevIntervalsSum + delay));
+  //   }
 
-    for (let i = 1; i <= sum; i++) {
-      if (prevIntervalsSumArr.includes(i)) continue;
-      console.log('tuk', currTime + i + delay);
-      this.sources.push(this.playBuffer(this.tikBuff, currTime + i + delay));
-    }
-  }
+  //   for (let i = 1; i <= sum; i++) {
+  //     if (prevIntervalsSumArr.includes(i)) continue;
+  //     console.log('tuk', currTime + i + delay);
+  //     this.sources.push(this.playBuffer(this.tikBuff, currTime + i + delay));
+  //   }
+  // }
 
   tikSource
   
@@ -87,12 +84,12 @@ export class MetronomeComponent extends AbstractValueAccessor implements OnDestr
     this.subscription = new Subscription();
 
     for (let i = 0; i < this.intervals.length; i++) {
-      const inter = this.intervals[i];
+      const inter = this.intervals[i].value;
       prevIntervalsSum = prevIntervalsSum + Number(inter);
       prevIntervalsSumArr.push(prevIntervalsSum);
     }
     
-    const sum = this.intervals.reduce((a,b) => a+(+b), 0);
+    const sum = this.intervals.reduce((a,b) => a+(+b.value), 0);
     this.subscription.add(
       interval(1000).subscribe( sec => {
         console.log('sec', sec, this.context.currentTime);
