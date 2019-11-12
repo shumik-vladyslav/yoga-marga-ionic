@@ -179,6 +179,7 @@ export class PracticePerformancePage {
     if (this.practice.audio) {
       this.practice.audio.pause();
     }
+    this.stopTimer();
   }
 
   async startPausePractice() {
@@ -321,6 +322,8 @@ export class PracticePerformancePage {
     if (this.countdown <= 0) {
       this.countdown = 0;
       this.stopTimer();
+      this.gong.play();
+      this.exitPractice();
     }
     
     // current second, counting starts from 0
@@ -365,8 +368,6 @@ export class PracticePerformancePage {
     if (this.intervalSubs) {
       this.intervalSubs.unsubscribe();
     }
-    this.gong.play();
-    this.exitPractice();
   }
   // end timer
 
