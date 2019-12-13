@@ -1,5 +1,6 @@
 import { PracticeSettings } from './practice-settings';
 export class Practice {
+    isBm?: boolean;
     id: string;
     img?: string;
     name: string;

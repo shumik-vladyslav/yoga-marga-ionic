@@ -1,8 +1,7 @@
 <ion-content>
-  <metronome [(ngModel)]="practice.settings.intervals" #metronome style="display: none;"></metronome>
   <div class="practice-img">
     <!-- <img img-cache img-cache-src="{{ practice.img }}" *ngIf="practice.img" style="padding-top: 10px;" /> -->
-    <img src="{{ practice.img }}" *ngIf="practice.img" style="padding-top: 10px;" />
+    <img src="{{ show.img }}" *ngIf="show.img" style="padding-top: 10px;" />
   </div>
   <div class="stats-blok">
     <div>
@@ -17,16 +16,19 @@
     </div>
   </div>
 
-  <h1 ion-text color="dark" style="font-weight: bold;">{{ practice.name }}</h1>
+  <h1 ion-text color="dark" style="font-weight: bold;">{{ show?.title }}</h1>
 
-  <div class="time" *ngIf="state !== StateEnum.Inited">{{countdown | appdate}}</div>
-
+  <div class="time" *ngIf="state !== StateEnum.Inited && show.practiceTimer">{{show.practiceTimer | appdate}}</div>
+  <!-- <div style="width: 100%;height: 4px;background-color: #8F67BE;"></div> -->
+  <div class="time" *ngIf="state !== StateEnum.Inited && show.exerciseTimer">{{show.exerciseTimer | appdate}}</div>
+  <!-- <div style="width: 100%;height: 4px;background-color: #8F67BE;"></div> -->
+  <!-- {{countdown | appdate}} -->
   <!-- <div class="time" *ngIf="state !== StateEnum.Inited" >{{countdown | appdate}}</div> -->
   <!-- <ion-progress-bar color="primary" value="0.5" *ngIf="state !== StateEnum.Inited"></ion-progress-bar>
   <ion-progress-bar color="primary" value="0.5"></ion-progress-bar>
   <ion-progress-bar></ion-progress-bar> -->
   <div style="height: 30%;overflow: scroll;" *ngIf="state === StateEnum.Inited">
-    <div [innerHTML]="practice?.shortDescription"></div>
+    <div [innerHTML]="show?.description"></div>
   </div>
 
 </ion-content>
@@ -47,6 +49,12 @@
     (click)="state !== StateEnum.Paused?startPractice():resumePractice()">
     <ion-icon name="play" class="lg-icon"></ion-icon>
   </button>
+  
+  <button ion-button color="primary" clear (click)="exercisesHelper.onSkipExercise()"
+  *ngIf="(state === StateEnum.Started || state === StateEnum.Paused) && exercisesHelper.hasExercises()">
+    <ion-icon name="skip-forward"  class="lg-icon"></ion-icon>
+  </button>
+  
 
   <button ion-button color="primary" *ngIf="state === StateEnum.Started" (click)="pausePractice()" clear>
     <ion-icon name="pause" class="lg-icon"></ion-icon>

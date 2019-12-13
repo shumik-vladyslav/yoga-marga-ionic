@@ -33,6 +33,7 @@ $dark-color : color($colors, dark);
     justify-content: space-around;
     align-items: center;
     height: 50px;
+    border-top: 1px solid;
 }
 
 @font-face {

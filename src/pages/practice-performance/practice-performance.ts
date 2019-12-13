@@ -1,22 +1,18 @@
+import { ExercisesHelper } from './../../utils/exercises-helper';
 import { PracticeSettings } from './../../models/practice-settings';
 import { DocumentViewer } from "@ionic-native/document-viewer";
-import { ExercisePerformancePage } from "./../exercise-performance/exercise-performance";
-import { Component, ContentChild, ViewChild } from "@angular/core";
-import { IonicPage, NavController, NavParams, Platform, LoadingController } from "ionic-angular";
+import { Component } from "@angular/core";
+import { IonicPage, NavController, NavParams, LoadingController } from "ionic-angular";
 import { interval, timer } from "rxjs";
-import { AlertController } from "ionic-angular";
-import { AngularFirestore, DocumentSnapshot } from "@angular/fire/firestore";
-import { AuthProvider } from "../../providers/auth/auth";
 import { FileTransfer } from "@ionic-native/file-transfer";
 import { File } from "@ionic-native/file";
 import { ImgCacheService } from "../../directives/ng-imgcache/img-cache.service";
 import { Insomnia } from "@ionic-native/insomnia";
-import * as moment from 'moment';
-import { MetronomeComponent } from "../../components/metronome/metronome";
 import { UserProvider } from '../../providers/user/user';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { Practice } from '../../models/practice';
 import { Metronome } from '../../utils/metronome';
+import * as moment from 'moment';
 
 @IonicPage()
 @Component({
@@ -35,7 +31,16 @@ export class PracticePerformancePage {
   remaiderSound = new Audio("assets/sound/pomni.mp3");
   gong = new Audio("assets/sound/gong.mp3");
 
-  startTime = 0;
+  practiceDuration;
+  exercisesHelper: ExercisesHelper;
+
+  show = {
+    img: '',
+    title: '',
+    description: '',
+    practiceTimer: 0,
+    exerciseTimer: null
+  }
 
   constructor(
     public navCtrl: NavController,
@@ -87,14 +92,26 @@ export class PracticePerformancePage {
     if (!settings) {
       settings = PracticeSettings.createInstance();
     }
+    
     this.practice.settings = settings;
 
+    this.exercisesHelper = new ExercisesHelper(this.practice);
+    
     // init metronome
     if (settings.intervals && settings.intervals.length > 0) {
       this.metronome = Metronome.createMetronome(settings.intervals.map(i => i.value),
         'assets/sound/tik.mp3', 'assets/sound/gong.mp3');
     }
 
+    // go to exercises performance page
+    if (this.exercisesHelper.hasExercises()) {
+      this.practiceDuration = this.exercisesHelper.calculatePracticeDuration();
+    } else {
+      this.practiceDuration = this.practice.settings.practiceDuration;
+    }
+    this.show.img = this.practice.img;
+    this.show.title = this.practice.name;
+    this.show.description = this.practice.shortDescription;
   }
 
   presentLoading() {
@@ -185,66 +202,10 @@ export class PracticePerformancePage {
   async startPausePractice() {
   }
 
-  exerciseIndex;
-  exercises;
-  exercisesCount;
-  practiceDuration;
-
-  exercise;
-
-  nextExercise() {
-    // increment index
-    if (!this.exerciseIndex) {
-      this.exerciseIndex = 0;
-    } else {
-      this.exerciseIndex++;
-    }
-
-    this.exercise = this.exercises[this.exerciseIndex];
-
-  }
-
-  // need for custom duration of every exercise
-  calculatePracticeDuration() {
-    if (!this.exercises) {
-      return this.practice.settings.practiceDuration || 60 * 60 * 1000;
-    }
-    let summ = 0;
-    for (let e of this.exercises) {
-      if (e.exerciseDuration) {
-        summ += +e.exerciseDuration;
-      } else {
-        summ += this.practice.settings.exerciseDuration ?
-          +this.practice.settings.exerciseDuration :
-          +this.practice.settings.practiceDuration / this.exercisesCount;
-      }
-    }
-    console.log('calculatePracticeDuration', summ);
-    return summ;
-  }
-
-  hasExercises() {
-    return this.practice.exercises && this.practice.exercises.length > 0;
-  }
-
   startPractice() {
     this.resumeAudio();
     this.screenKeepAwake();
-
-    // go to exercises performance page
-
-    if (this.hasExercises()) {
-      // init exercises
-      this.exercises = this.practice.exercises;
-      this.exercisesCount = this.practice.exercises.length;
-      this.exerciseIndex = 0;
-      this.practiceDuration = this.calculatePracticeDuration();
-      this.nextExercise();
-    } else {
-      this.practiceDuration = this.practice.settings.practiceDuration;
-    }
-
-    this.startTimer(100);
+    this.startTimer(200);
     this.state = this.StateEnum.Started;
   }
 
@@ -292,10 +253,7 @@ export class PracticePerformancePage {
   }
 
   savePracticeSettings(settings = this.practice.settings) {
-    const patch = {};
-    patch[`practices.${this.practice.id}`] = this.practice.settings;
-
-    UserProvider.updateUser(patch)
+    UserProvider.updateUserPracticeSettings(this.practice.id, this.practice.settings)
       .then(res => console.log("res", res))
       .catch(err => console.log("err", err));
   }
@@ -316,27 +274,33 @@ export class PracticePerformancePage {
   timerInterval;
   prevSeccond;
   isRemainderRunOnce = false;
-  
+  startTime = 0;
   timerTickCb() {
     this.countdown = this.practiceDuration - (Date.now() - this.startTime);
-    if (this.countdown <= 0) {
-      this.countdown = 0;
+    if (this.exercisesHelper.hasExercises()) {
+      this.show = this.exercisesHelper.nextTick((Date.now() - this.startTime));
+    } else {
+      // practice timer section
+      this.show.practiceTimer = this.countdown;
+      // end practice timer section
+    }
+    if (this.show.practiceTimer <= 0) {
+      this.show.practiceTimer = 0;
       this.stopTimer();
       this.gong.play();
       this.exitPractice();
     }
-    
-    // current second, counting starts from 0
+
+    // metronome section
     const currSecond = Math.floor((this.practiceDuration - this.countdown) / 1000);
-    if (currSecond != this.prevSeccond) {
+    if (currSecond != this.prevSeccond && this.metronome) {
       this.prevSeccond = currSecond;
       this.metronome.nextTik(currSecond);
     }
-
+    // end metronome section
+    // reminder section
     const isTimeToRemind = currSecond % (this.practice.settings.reminderInterval / 1000 - 1) == 0;
-    // console.log('isTimeToRemind', currSeccond, this.practice.settings.reminderInterval / 1000, isTimeToRemind);
     if (!isTimeToRemind || currSecond === 0) return;
-
     if (this.practice.settings.singleReminder && !this.isRemainderRunOnce) {
       this.remaiderSound.play();
       this.isRemainderRunOnce = true;
@@ -344,7 +308,7 @@ export class PracticePerformancePage {
       this.remaiderSound.currentTime = 0.0;
       this.remaiderSound.play();
     }
-
+    //end reminder section
   }
 
   startTimer(millisecons: number) {

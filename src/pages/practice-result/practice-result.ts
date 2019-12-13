@@ -32,9 +32,6 @@ export class PracticeResultPage {
   }
 
   async onSave() {
-    console.log('on save', this.practice.id);
-    const patch = { practices: {} };
-    
     // calculate amount counter
     if (this.practice.isAmountCounter) {
       if (this.practice.settings.amountCounter) {
@@ -49,10 +46,8 @@ export class PracticeResultPage {
       this.practice.settings.maxAchievement = this.maxAchievement > this.practice.settings.maxAchievement ?
       this.maxAchievement : this.practice.settings.maxAchievement;
     }
-    
 
-    patch.practices[this.practice.id] = this.practice.settings;
-    await UserProvider.updateUser(patch);
+    await  UserProvider.updateUserPracticeSettings(this.practice.id, this.practice.settings);
     await this.toastHelper.presentTopMess('Сохранено');
     await this.navCtrl.popToRoot();
   }

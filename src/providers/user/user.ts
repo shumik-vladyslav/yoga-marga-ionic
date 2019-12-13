@@ -46,7 +46,9 @@ export class UserProvider {
         if (!docSnapshot.exists) return;
         UserProvider.id = docSnapshot.id;
         UserProvider.user = docSnapshot.data();
-
+        if (!UserProvider.user.practices) {
+          UserProvider.user.practices = {};
+        }
         if (UserProvider.stepFlag) {
           resolve(UserProvider.user);
         } else {
@@ -108,6 +110,11 @@ export class UserProvider {
 
   static updateUser (patch): Promise<void> {
     return this.afs.doc(`users/${this.uid}`).update(patch);
+  }
+
+  static updateUserPracticeSettings(practiceId, settings) {
+    UserProvider.user.practices[practiceId] = settings;
+    return UserProvider.updateUser(UserProvider.user);
   }
 
   static sendFeedback (msg): Promise<any> {

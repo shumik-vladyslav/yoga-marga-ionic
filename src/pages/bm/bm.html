@@ -1,0 +1,33 @@
+<ion-content padding>
+  <ion-item *ngFor="let t of practice.bmtracks; let i=index" (click)="onSelectTrack(i)">
+    <ion-label>
+      <ion-icon *ngIf="playedIdx === i" name="radio"></ion-icon> {{i+1}}. {{t.name}}
+    </ion-label>
+  </ion-item>
+</ion-content>
+<ion-footer class="footer">
+  <button ion-button color="primary" clear (click)="onBack()">
+    <ion-icon name="skip-backward" class="lg-icon"></ion-icon>
+  </button>
+
+  <button ion-button color="primary" clear *ngIf="paused" (click)="onPlay()">
+    <ion-icon name="play" class="lg-icon"></ion-icon>
+  </button>
+  <button ion-button color="primary" clear *ngIf="!paused" (click)="onPause()">
+    <ion-icon name="pause" class="lg-icon"></ion-icon>
+  </button>
+
+  <button ion-button color="primary" clear (click)="onForw()">
+    <ion-icon name="skip-forward" class="lg-icon"></ion-icon>
+  </button>
+
+  <button ion-button color="primary" clear navPush="PracticeSettingsPage"
+    [navParams]="{practice: practice}">
+    <ion-icon name="settings" class="lg-icon"></ion-icon>
+  </button>
+
+  <button ion-button color="primary" clear navPop>
+    <ion-icon name="close" class="lg-icon"></ion-icon>
+  </button>
+
+</ion-footer>

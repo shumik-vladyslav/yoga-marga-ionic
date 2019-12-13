@@ -1,3 +1,4 @@
+import { ExercisesHelper } from './../../utils/exercises-helper';
 import { ToastHelper } from './../../utils/toals-helper';
 import { PracticeSettings } from './../../models/practice-settings';
 import { Component, ViewChild } from '@angular/core';
@@ -13,16 +14,26 @@ import { Practice } from '../../models/practice';
   templateUrl: 'practice-settings.html',
 })
 export class PracticeSettingsPage {
-  @ViewChild(MetronomeComponent)  metronome: MetronomeComponent;
+  @ViewChild(MetronomeComponent) metronome: MetronomeComponent;
   exerciseDuration;
   practiceDuration;
   reminderInterval;
 
   settings: PracticeSettings;
   practice: Practice;
-
+  exercisesHelper: ExercisesHelper;
   onChangeIntervals(event) {
     console.log(event);
+  }
+
+  transformTime(value, direction) {
+    if (!value) return;
+    // milliseconds time to string HH:mm:ss
+    if (direction === 'T->S') {
+      return moment.utc(value).format('HH:mm:ss');
+    }
+    // string HH:mm:ss to milliseconds
+    return moment.duration(value).asMilliseconds();
   }
 
   constructor(
@@ -30,19 +41,54 @@ export class PracticeSettingsPage {
     public navParams: NavParams,
     public toastHelper: ToastHelper
   ) {
-    this.practice = {...this.navParams.get("practice")};
-    console.log('practice settings ', this.practice);
+    this.practice = { ...this.navParams.get("practice") };
     if (!this.practice.settings) {
       this.settings = PracticeSettings.createInstance();
     } else {
       this.settings = this.practice.settings;
     }
-    this.reminderInterval = moment.utc(this.settings.reminderInterval).format('HH:mm:ss');
-    this.practiceDuration = moment.utc(this.settings.practiceDuration).format('HH:mm:ss');
-    this.onPracticeTimeChange(this.practiceDuration);
-    // this.exerciseDuration = moment.utc(this.settings.exerciseDuration).format('HH:mm:ss');
+    this.exercisesHelper = new ExercisesHelper(this.practice);
+
+    this.reminderInterval = this.transformTime(this.settings.reminderInterval, 'T->S');
+
+    if (this.exercisesHelper.hasExercises()) {
+      this.settings.exercises = this.exercisesHelper.exercises;
+
+      const exDur = this.exercisesHelper.calculateExerciseDurations()*1000;
+      this.practiceDuration = this.transformTime(this.exercisesHelper.calculatePracticeDuration()*1000, 'T->S');
+      this.exerciseDuration = this.transformTime(exDur, 'T->S');
+      if (!this.settings.exercises[0].exerciseDuration) {
+        for (let e of this.settings.exercises) {
+          e.exerciseDuration = exDur;
+        }
+      }
+    } else {
+      this.practiceDuration = this.transformTime(this.settings.practiceDuration, 'T->S');
+    }
   }
 
+  setExDurationsByDefault () {
+    this.settings.exercises = [...this.practice.exercises];
+
+    const exercises = this.settings.exercises;
+    let summ = 0;
+    for (let e of exercises) {
+        if (e.exerciseDuration) {
+            summ += +e.exerciseDuration;
+        }
+    }
+
+    this.practiceDuration = this.transformTime(summ, 'T->S');
+    this.exerciseDuration = this.transformTime(Math.floor(summ/exercises.length), 'T->S');
+  }
+
+  /**
+   * Выставление времени в боксах и в списке
+   * проблема все отрезки времени хранятся в милиссекундах на интерфейсе они могут отображаться 
+   * в минутах или в формате строки. При изменении нужно производить преобразование в обе стороны.
+   * 
+   * Вторая проблема. Если в практике имеются упражнения. То алгоритм просчета усложняется.
+   */
   ionViewDidLoad() {
     console.log('ionViewDidLoad PracticeSettingsPage');
   }
@@ -53,7 +99,7 @@ export class PracticeSettingsPage {
     this.settings.reminderInterval = milli;
   }
 
-  onTimeForExerciseChange(time = null) {
+  onTimeForExerciseChange (time = null) {
     if (!time) return;
     if (!this.practice.exercises || this.practice.exercises.length == 0) return;
 
@@ -63,9 +109,13 @@ export class PracticeSettingsPage {
 
     // this.saveTimings(milli, tmp);
     this.practiceDuration = moment.utc(tmp).format('HH:mm:ss');
+
+    for (let e of this.settings.exercises) {
+      e.exerciseDuration = milli;
+    }
   }
 
-  onPracticeTimeChange(time = null) {
+  onPracticeTimeChange (time = null) {
     if (!time) return;
     const milli = moment.duration(time).asMilliseconds();
     this.settings.practiceDuration = milli;
@@ -77,6 +127,12 @@ export class PracticeSettingsPage {
     let tmp = (milli || 0) / this.practice.exercises.length;
     tmp = Math.round(tmp);
     this.exerciseDuration = moment.utc(tmp).format('HH:mm:ss');
+
+    // todo fille exercises durations
+    if (!this.settings.exercises) return;
+    for (let e of this.settings.exercises) {
+      e.exerciseDuration = tmp;
+    }
   }
 
   onChangeSolo() {
@@ -91,13 +147,19 @@ export class PracticeSettingsPage {
     }
   }
 
-  async onSave() { 
-    console.log('on save', this.practice.id);
-    const patch = {practices: {}};
-    patch.practices[this.practice.id] = this.settings;
-    await UserProvider.updateUser(patch);
+  async onSave() {
+    // console.log('on save', this.settings);
+    // const patch = { practices: this.settings };
+    // patch.practices[this.practice.id] = this.settings;
+    // await UserProvider.updateUser(patch);
+    await  UserProvider.updateUserPracticeSettings(this.practice.id,this.settings);
     await this.toastHelper.presentTopMess('Сохранено');
     await this.navCtrl.pop();
   }
 
+  getMilliseconds(value) {
+    if (!value) return null;
+    const t = value.split(':');
+    return (t[0] * 60 * 60 + t[1] * 60 + t[2]) * 1000;
+  }
 }

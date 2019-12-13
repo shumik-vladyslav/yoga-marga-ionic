@@ -6,7 +6,7 @@ export class PracticeSettings {
     exerciseDuration: number;
     exercises?: any[];
     // intervalse for metronome
-    intervals?: [{ value: number }];
+    intervals?: { value: number }[];
     // total time spent in the practice
     spentTime: number;
     singleReminder: boolean;
@@ -18,7 +18,7 @@ export class PracticeSettings {
     spentTimeGoal?: number;
     maxAchievementGoal?: number;
     amountCounterGoal?: number;
-    
+    priority?: number;
     // fabric method
     public static createInstance(): PracticeSettings {
         return {
@@ -26,7 +26,7 @@ export class PracticeSettings {
             // practice duration
             practiceDuration: 60 * 60 * 1000,
             exerciseDuration: 0,
-            intervals: [{ value: 1 }],
+            intervals: [],
             // total time spent in the practice
             spentTime: 0,
             singleReminder: false,

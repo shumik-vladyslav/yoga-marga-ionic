@@ -1,3 +1,4 @@
+import { BmPageModule } from './../pages/bm/bm.module';
 import { ComponentsModule } from './../components/components.module';
 import { PracticesListPageModule } from './../pages/practices-list/practices-list.module';
 import { ActivationWarningPageModule } from './../pages/activation-warning/activation-warning.module';
@@ -108,7 +109,8 @@ import { ToastHelper } from '../utils/toals-helper';
     ImgCacheModule,
     PracticesListPageModule,
     PracticePerformancePageModule,
-    ExercisePerformancePageModule
+    ExercisePerformancePageModule,
+    BmPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -130,7 +132,8 @@ import { ToastHelper } from '../utils/toals-helper';
     LoadScreenPage,
     ProgressChartDirective,
     PracticeSearchPage,
-    SettingsPage
+    SettingsPage,
+    
     // PracticePerformancePage,
     // ExercisePerformancePage
   ],

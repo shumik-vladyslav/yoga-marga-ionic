@@ -1,18 +1,26 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar>
     <button ion-button menuToggle class="pos-a" ion-text color="white">
       <ion-icon name="menu" class="fs-30"></ion-icon>
     </button>
     <p text-center ion-text color="white" class="header-title">Найти практику</p>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
+
 <ion-content padding>
-  <ion-item>
-    <ion-label floating>Название практики</ion-label>
+  <!-- <ion-item>
+    <ion-label>Название практики</ion-label>
     <ion-input (input)="onSearchChange($event.target.value)"></ion-input>
-  </ion-item>
-  <ion-card no-margin class="full-width">
-    <ion-card-content no-padding padding-vertical>
+  </ion-item> -->
+      <!-- [(ngModel)]="myInput" -->
+  <ion-searchbar
+    [showCancelButton]="true"
+    (ionInput)="onSearchChange($event.target.value)"
+    (ionCancel)="onSearchChange($event.target.value)">
+  </ion-searchbar>
+
+  <!-- <ion-card no-margin class="full-width">
+    <ion-card-content no-padding padding-vertical> -->
       <ion-grid>
         <ion-row justify-content-center>
           <!-- [navPush]="p.active === false?'':'PracticePerformancePage'" [navParams]="{practice: p}"  -->
@@ -28,6 +36,7 @@
                   <img src="{{p.ico}}" #img class="img-icon" style="display:none">
                   <img class="img-icon"
                     [ngStyle]="{'-webkit-mask': 'url(' + img.src + ') no-repeat 50% 50%','mask': 'url(' + img.src + ') no-repeat 50% 50%'}">
+                    <div class="target-progress" [style.width]="calculateGoal(p)*100 +'%'"></div>
                 </ion-item>
               </ion-col>
             </ion-row>
@@ -41,6 +50,16 @@
           </ion-col>
         </ion-row>
       </ion-grid>
-    </ion-card-content>
-  </ion-card>
+    <!-- </ion-card-content>
+  </ion-card> -->
 </ion-content>
+
+<ion-footer class="footer">
+
+    <!-- <button ion-button color="primary" clear (click)="toggleMetronome()" *ngIf="metronome">
+      <ion-icon name="pulse" class="lg-icon"></ion-icon>
+    </button> -->
+    <button ion-button  color="primary" clear menuToggle class="pos-a" ion-text>
+        <ion-icon name="menu" class="fs-30"></ion-icon>
+      </button>
+  </ion-footer>

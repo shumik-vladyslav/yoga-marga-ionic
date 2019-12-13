@@ -1,6 +1,14 @@
 <ion-content padding>
   <ion-grid>
     <ion-item no-padding>
+      <p ion-text text-wrap text-center color="gray" >
+        Установите приоритет (чем больше число тем выше практика в списке)
+      </p>
+      <ion-item no-padding class="input-style input-goals input-teamplate">
+        <ion-input type="number" [(ngModel)]="settings.priority"></ion-input>
+      </ion-item>
+    </ion-item>
+    <ion-item no-padding *ngIf="!practice.isBm">
       <p ion-text text-wrap text-center color="gray">
         Установите время всей практики
       </p>
@@ -19,7 +27,7 @@
           (ngModelChange)="onTimeForExerciseChange($event)" [(ngModel)]="exerciseDuration"></ion-datetime>
       </ion-item>
     </ion-item>
-    <ion-item no-padding>
+    <ion-item no-padding *ngIf="!practice.isBm">
       <p ion-text text-wrap text-center color="gray">
         Установите время, через которое Вы услышите настановление о
         неотвлечении
@@ -63,7 +71,8 @@
         Цель: время проведенное в практике (Часов)
       </p>
       <ion-item no-padding class="input-style input-goals input-teamplate">
-        <ion-input type="number" [(ngModel)]="settings.spentTimeGoal"></ion-input>
+        <ion-input type="number" [ngModel]="settings.spentTimeGoal/60/60/1000"
+          (ngModelChange)="settings.spentTimeGoal=+$event*60*60*1000"></ion-input>
       </ion-item>
     </ion-item>
 
@@ -85,6 +94,21 @@
       </ion-item>
     </ion-item>
   </ion-grid>
+  <!-- <ion-item no-padding> -->
+  <p ion-text text-wrap text-center color="gray" *ngIf="settings.exercises && settings.exercises[0]">
+    Вы можете установить свое время для каждого упражнения
+    <button ion-button class="ion-no-margin" color="primary" (click)="setExDurationsByDefault()">
+      Восстановить по умолчанию
+    </button>
+  </p>
+  <ion-item *ngFor="let e of settings.exercises; let i=index">
+    <ion-label position="stacked">{{i+1}}.{{e.name}}</ion-label>
+    <ion-datetime ion-margin-vertical displayFormat="HH:mm:ss" pickerFormat="HH:mm:ss" text-center
+      [ngModel]="settings.exercises[i].exerciseDuration | appdate"
+      (ngModelChange)="settings.exercises[i].exerciseDuration=getMilliseconds($event)"></ion-datetime>
+    <!-- </ion-item> -->
+  </ion-item>
+
 </ion-content>
 
 <ion-footer class="footer">

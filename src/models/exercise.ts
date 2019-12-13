@@ -1,4 +1,10 @@
 export class Exercise {
-    //custom exercise duration
+    name: string;
+    image: string;
+    audio: string | any;
+    description: string;
     exerciseDuration: number;
+    mirror: boolean;
+
+    
 }

@@ -11,4 +11,19 @@ page-practice-search {
     border: solid 2px #009688;
     margin: 10px;
   }
+
+  .item-md.item-block .item-inner {
+    border-bottom: none!important;
+  }
+
+  .item-ios.item-block .item-inner {
+    border-bottom: none!important;
+  }
+  
+  .target-progress {
+    background-color: #9435F2;
+    width: 0px;
+    height: 5px;
+    border-radius: 5px;
+  }
 }

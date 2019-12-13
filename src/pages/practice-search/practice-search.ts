@@ -1,3 +1,4 @@
+import { BmPage } from './../bm/bm';
 import { PracticePerformancePage } from './../practice-performance/practice-performance';
 import { filter } from "rxjs/operators";
 import { UserProvider } from "./../../providers/user/user";
@@ -29,12 +30,24 @@ export class PracticeSearchPage {
   filtered;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.practices = Object.values(UserProvider.getGlobalPractices()).filter(
+    const uspr = UserProvider.getUserPractices();
+
+    const glpr = Object.values(UserProvider.getGlobalPractices()).filter(
       (p: any) => p.active !== false
     );
+
+    
+    this.practices = glpr.map((gp:any) => ({...uspr[gp.id], ...gp }));
+    console.log(this.practices[0]);
+    this.practices = this.practices.sort((a,b) => 
+      {
+        const ap = a.priority?a.priority:0;
+        const bp = b.priority?b.priority:0;
+        return bp-ap;
+      });
+    console.log(this.practices[0]);
+
     this.filtered = this.practices;
-    // console.log('practices', this.practices);
-    //
   }
 
   ionViewDidLoad() {
@@ -43,6 +56,9 @@ export class PracticeSearchPage {
 
   onSearchChange(value) {
     console.log(value);
+    if(!value) {
+      return this.filtered = this.practices;
+    }
     this.filtered = this.practices.filter(
       p => p.name.toLowerCase().indexOf(value.toLowerCase()) !== -1
     );
@@ -51,7 +67,20 @@ export class PracticeSearchPage {
   // [navPush]="p.active === false?'':'PracticePerformancePage'" [navParams]="{practice: p}" 
   onPractice(p) {
     if (!p.active) return;
-    this.navCtrl.push(PracticePerformancePage, {practice: p})
+    if (p.isBm) {
+      this.navCtrl.push(BmPage, {practice: p})
+    } else {
+      this.navCtrl.push(PracticePerformancePage, {practice: p})
+    }
   }
 
+  calculateGoal(pr) {
+    if (pr.spentTimeGoal) {
+      return pr.spentTime?+pr.spentTime/+pr.spentTimeGoal:0;
+    } else if (pr.amountCounterGoal) {
+      return pr.amountCounter?+pr.amountCounter/+pr.amountCounterGoal:0;
+    } else if (pr.maxAchievementGoal) {
+      return pr.maxAchievement?+pr.maxAchievement/+pr.maxAchievementGoal:0;
+    } else return 0;
+  }
 }
