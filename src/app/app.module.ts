@@ -1,3 +1,4 @@
+import { CreateComplexPracticesPageModule } from './../pages/create-complex-practices/create-complex-practices.module';
 import { BmPageModule } from './../pages/bm/bm.module';
 import { ComponentsModule } from './../components/components.module';
 import { PracticesListPageModule } from './../pages/practices-list/practices-list.module';
@@ -58,6 +59,8 @@ import { PracticePerformancePage } from '../pages/practice-performance/practice-
 import { AppPipesModule } from '../pipe/pipes.module';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { ToastHelper } from '../utils/toals-helper';
+import { CreateComplexNamePageModule } from '../pages/create-complex-name/create-complex-name.module';
+import { CreateComplexSelectPracticesPageModule } from '../pages/create-complex-select-practices/create-complex-select-practices.module';
 
 
 // import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -110,7 +113,10 @@ import { ToastHelper } from '../utils/toals-helper';
     PracticesListPageModule,
     PracticePerformancePageModule,
     ExercisePerformancePageModule,
-    BmPageModule
+    BmPageModule,
+    CreateComplexNamePageModule,
+    CreateComplexPracticesPageModule,
+    CreateComplexSelectPracticesPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

@@ -4,6 +4,7 @@ import { filter } from "rxjs/operators";
 import { UserProvider } from "./../../providers/user/user";
 import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
+import { MyComplexsPage } from '../my-complexs/my-complexs';
 
 /**
  * Generated class for the PracticeSearchPage page.
@@ -29,22 +30,25 @@ export class PracticeSearchPage {
   practices;
   filtered;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams) {
     const uspr = UserProvider.getUserPractices();
 
     const glpr = Object.values(UserProvider.getGlobalPractices()).filter(
       (p: any) => p.active !== false
     );
 
+    this.practices = glpr.map((gp: any) => ({ ...uspr[gp.id], ...gp }));
     
-    this.practices = glpr.map((gp:any) => ({...uspr[gp.id], ...gp }));
-    console.log(this.practices[0]);
-    this.practices = this.practices.sort((a,b) => 
-      {
-        const ap = a.priority?a.priority:0;
-        const bp = b.priority?b.priority:0;
-        return bp-ap;
-      });
+    this.practices = this.practices.sort((a, b) => {
+      const ap = a.priority ? a.priority : 0;
+      const bp = b.priority ? b.priority : 0;
+      return bp - ap;
+    });
+
+    let com = UserProvider.getComplexes();
+    this.practices = [...com,...this.practices];
     console.log(this.practices[0]);
 
     this.filtered = this.practices;
@@ -56,7 +60,7 @@ export class PracticeSearchPage {
 
   onSearchChange(value) {
     console.log(value);
-    if(!value) {
+    if (!value) {
       return this.filtered = this.practices;
     }
     this.filtered = this.practices.filter(
@@ -68,19 +72,26 @@ export class PracticeSearchPage {
   onPractice(p) {
     if (!p.active) return;
     if (p.isBm) {
-      this.navCtrl.push(BmPage, {practice: p})
+      this.navCtrl.push(BmPage, { practice: p })
+    } else if (p.isComplex) {
+      // this.navCtrl.push(PracticePerformancePage, { practice: p })
+      this.navCtrl.push(MyComplexsPage, {complex: p});
     } else {
-      this.navCtrl.push(PracticePerformancePage, {practice: p})
+      this.navCtrl.push(PracticePerformancePage, { practice: p })
     }
   }
 
   calculateGoal(pr) {
     if (pr.spentTimeGoal) {
-      return pr.spentTime?+pr.spentTime/+pr.spentTimeGoal:0;
+      return pr.spentTime ? +pr.spentTime / +pr.spentTimeGoal : 0;
     } else if (pr.amountCounterGoal) {
-      return pr.amountCounter?+pr.amountCounter/+pr.amountCounterGoal:0;
+      return pr.amountCounter ? +pr.amountCounter / +pr.amountCounterGoal : 0;
     } else if (pr.maxAchievementGoal) {
-      return pr.maxAchievement?+pr.maxAchievement/+pr.maxAchievementGoal:0;
+      return pr.maxAchievement ? +pr.maxAchievement / +pr.maxAchievementGoal : 0;
     } else return 0;
+  }
+
+  onAddComplex() {
+    console.log('add complex');
   }
 }

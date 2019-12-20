@@ -12,54 +12,57 @@
     <ion-label>Название практики</ion-label>
     <ion-input (input)="onSearchChange($event.target.value)"></ion-input>
   </ion-item> -->
-      <!-- [(ngModel)]="myInput" -->
-  <ion-searchbar
-    [showCancelButton]="true"
-    (ionInput)="onSearchChange($event.target.value)"
+  <!-- [(ngModel)]="myInput" -->
+  <ion-searchbar [showCancelButton]="true" (ionInput)="onSearchChange($event.target.value)"
     (ionCancel)="onSearchChange($event.target.value)">
   </ion-searchbar>
 
   <!-- <ion-card no-margin class="full-width">
     <ion-card-content no-padding padding-vertical> -->
-      <ion-grid>
-        <ion-row justify-content-center>
-          <!-- [navPush]="p.active === false?'':'PracticePerformancePage'" [navParams]="{practice: p}"  -->
-          <!-- border-r -->
-          <ion-col col-4 class=" col-between " no-padding *ngFor="let p of filtered" (click)="onPractice(p)"
-            [class.inactive]="p.active===false">
-            <ion-row class="practice-icon">
-              <ion-col col-12>
-                <ion-item text-center no-padding>
-                  <!-- <img img-cache img-cache-src="{{p.ico}}" #img class="img-icon" style="display:none">
+  <ion-grid>
+    <ion-row justify-content-center>
+      <!-- [navPush]="p.active === false?'':'PracticePerformancePage'" [navParams]="{practice: p}"  -->
+      <!-- border-r -->
+      <ion-col col-4 class=" col-between " no-padding *ngFor="let p of filtered" (click)="onPractice(p)"
+        [class.inactive]="p.active===false">
+        <ion-row class="practice-icon">
+          <ion-col col-12>
+            <ion-item text-center no-padding>
+              <!-- <img img-cache img-cache-src="{{p.ico}}" #img class="img-icon" style="display:none">
                   <img class="img-icon"
                     [ngStyle]="{'-webkit-mask': 'url(' + img.src + ') no-repeat 50% 50%','mask': 'url(' + img.src + ') no-repeat 50% 50%'}"> -->
-                  <img src="{{p.ico}}" #img class="img-icon" style="display:none">
-                  <img class="img-icon"
-                    [ngStyle]="{'-webkit-mask': 'url(' + img.src + ') no-repeat 50% 50%','mask': 'url(' + img.src + ') no-repeat 50% 50%'}">
-                    <div class="target-progress" [style.width]="calculateGoal(p)*100 +'%'"></div>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col col-12>
-                <ion-item text-center no-padding class="min-height-default">
-                  <p ion-text class="fs-16 text-wrap">{{p.name}}</p>
-                </ion-item>
-              </ion-col>
-            </ion-row>
+              <img src="{{p.ico}}" #img class="img-icon" style="display:none">
+              <img class="img-icon"
+                [ngStyle]="{'-webkit-mask': 'url(' + img.src + ') no-repeat 50% 50%','mask': 'url(' + img.src + ') no-repeat 50% 50%'}">
+              <div class="target-progress" [style.width]="calculateGoal(p)*100 +'%'"></div>
+            </ion-item>
           </ion-col>
         </ion-row>
-      </ion-grid>
-    <!-- </ion-card-content>
+        <ion-row>
+          <ion-col col-12>
+            <ion-item text-center no-padding class="min-height-default">
+              <p ion-text class="fs-16 text-wrap">{{p.name}}</p>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!-- </ion-card-content>
   </ion-card> -->
 </ion-content>
 
 <ion-footer class="footer">
 
-    <!-- <button ion-button color="primary" clear (click)="toggleMetronome()" *ngIf="metronome">
+  <!-- <button ion-button color="primary" clear (click)="toggleMetronome()" *ngIf="metronome">
       <ion-icon name="pulse" class="lg-icon"></ion-icon>
     </button> -->
-    <button ion-button  color="primary" clear menuToggle class="pos-a" ion-text>
-        <ion-icon name="menu" class="fs-30"></ion-icon>
-      </button>
-  </ion-footer>
+  <!-- class="pos-a" ion-text -->
+  <!-- class="fs-30" -->
+  <button ion-button color="primary" clear menuToggle>
+    <ion-icon name="menu" class="lg-icon"></ion-icon>
+  </button>
+  <button ion-button color="primary" clear navPush="CreateComplexNamePage">
+    <ion-icon name="add" class="lg-icon"></ion-icon>
+  </button>
+</ion-footer>
