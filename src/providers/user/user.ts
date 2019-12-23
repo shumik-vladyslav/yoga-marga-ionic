@@ -36,11 +36,11 @@ export class UserProvider {
     this.afs = afs;
     this.uid = userId;
     return new Promise<any>((resolve,reject) => {
-      afs
+      const s1 = afs
       .doc(`users/${userId}`)
       .snapshotChanges()
       .subscribe(action => {
-        
+        s1.unsubscribe();
         const docSnapshot = action.payload;
 
         if (!docSnapshot.exists) return;
@@ -55,12 +55,11 @@ export class UserProvider {
           UserProvider.stepFlag = true;
         }
       });
-
-    afs
+    const s2 = afs
       .collection(`practices`)
       .valueChanges()
       .subscribe(value => {
-        
+        s2.unsubscribe();
         if (UserProvider.stepFlag) {
           resolve(UserProvider.user);
         } else {

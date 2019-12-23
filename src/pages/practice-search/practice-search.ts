@@ -52,6 +52,7 @@ export class PracticeSearchPage {
     console.log(this.practices[0]);
 
     this.filtered = this.practices;
+    console.log(this.filtered);
   }
 
   ionViewDidLoad() {

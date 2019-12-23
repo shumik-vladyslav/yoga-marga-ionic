@@ -16,13 +16,8 @@
   <ion-searchbar [showCancelButton]="true" (ionInput)="onSearchChange($event.target.value)"
     (ionCancel)="onSearchChange($event.target.value)">
   </ion-searchbar>
-
-  <!-- <ion-card no-margin class="full-width">
-    <ion-card-content no-padding padding-vertical> -->
   <ion-grid>
     <ion-row justify-content-center>
-      <!-- [navPush]="p.active === false?'':'PracticePerformancePage'" [navParams]="{practice: p}"  -->
-      <!-- border-r -->
       <ion-col col-4 class=" col-between " no-padding *ngFor="let p of filtered" (click)="onPractice(p)"
         [class.inactive]="p.active===false">
         <ion-row class="practice-icon">
@@ -48,8 +43,6 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <!-- </ion-card-content>
-  </ion-card> -->
 </ion-content>
 
 <ion-footer class="footer">

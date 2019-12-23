@@ -2,7 +2,11 @@
   <!-- <button ion-button class="ion-no-margin" color="primary" navPush="CreateComplexSelectPracticesPage">
     Добавить упражнение.
   </button> -->
-
+  <ion-item no-padding style="margin-top: 40px;">
+    <p ion-text text-wrap text-center color="gray">
+      Кликните по тем практикам которые вы хотите добавить в комплекс.
+    </p>
+  </ion-item>
   <div>
     <ion-item *ngFor="let pract of model.practices;let i = index" id="radio-style ios" (click)="uselect(pract)">
       <ion-label>

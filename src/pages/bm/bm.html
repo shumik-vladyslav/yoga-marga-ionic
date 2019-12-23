@@ -1,4 +1,8 @@
 <ion-content padding>
+  <div class="practice-img">
+    <img src="{{ practice.img }}" *ngIf="practice.img" style="padding-top: 10px;" />
+  </div>
+
   <ion-item *ngFor="let t of practice.bmtracks; let i=index" (click)="onSelectTrack(i)">
     <ion-label>
       <ion-icon *ngIf="playedIdx === i" name="radio"></ion-icon> {{i+1}}. {{t.name}}

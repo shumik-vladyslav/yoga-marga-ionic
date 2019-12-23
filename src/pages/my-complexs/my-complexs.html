@@ -1,4 +1,4 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar>
     <div navPop ion-text color="white" icon-only>
       <span class="arrow arrow-back"></span>
@@ -6,10 +6,15 @@
     <p text-center ion-text color="white" class="header-title">{{complex.name}}</p>
     <div style="width:40px"></div>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
 <ion-content>
-    <ion-card no-margin class="full-width box-shadow">
+  <ion-item no-padding style="margin-top: 40px;">
+    <p ion-text text-wrap text-center color="gray">
+      Комплекс: {{complex.name}}
+    </p>
+  </ion-item>
+  <!-- <ion-card no-margin class="full-width box-shadow">
         <ion-card-content no-padding padding-vertical>
           <ion-grid>
             <ion-row justify-content-center>
@@ -28,7 +33,6 @@
                 <ion-row>
                   <ion-col col-12>
                     <ion-item text-center no-padding class="min-height-default">
-                      <!-- <ion-icon name="ios-hand-outline" ion-text class=""></ion-icon> -->
                       <p ion-text class="fs-16 text-wrap">{{pract.name}}</p>
                     </ion-item>
                   </ion-col>
@@ -38,14 +42,52 @@
             </ion-row>
           </ion-grid>
         </ion-card-content>
-      </ion-card>
+      </ion-card> -->
 
   <ion-grid>
+    <ion-row justify-content-center>
+      <ion-col col-4 class=" col-between " no-padding *ngFor="let p of practices" (click)="onPractice(p)"
+        [class.inactive]="p.active===false">
+        <ion-row class="practice-icon">
+          <ion-col col-12>
+            <ion-item text-center no-padding>
+              <!-- <img img-cache img-cache-src="{{p.ico}}" #img class="img-icon" style="display:none">
+                      <img class="img-icon"
+                        [ngStyle]="{'-webkit-mask': 'url(' + img.src + ') no-repeat 50% 50%','mask': 'url(' + img.src + ') no-repeat 50% 50%'}"> -->
+              <img src="{{p.ico}}" #img class="img-icon" style="display:none">
+              <img class="img-icon"
+                [ngStyle]="{'-webkit-mask': 'url(' + img.src + ') no-repeat 50% 50%','mask': 'url(' + img.src + ') no-repeat 50% 50%'}">
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-12>
+            <ion-item text-center no-padding class="min-height-default">
+              <p ion-text class="fs-16 text-wrap">{{p.name}}</p>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- <ion-grid>
       <ion-row justify-content-center>
         <button icon-center margin-top margin-bottom class="button-custom m-0 btn-sm-width" (click)="switchState()">
           Начать комплекс
         </button>
       </ion-row>
-    </ion-grid>
+    </ion-grid> -->
 
 </ion-content>
+<ion-footer class="footer">
+  <button ion-button color="primary" clear (click)="onDelete()">
+    <ion-icon name="trash" class="lg-icon"></ion-icon>
+  </button>
+  <button ion-button color="primary" clear (click)="switchState()">
+    <ion-icon name="play" class="lg-icon"></ion-icon>
+  </button>
+  <button ion-button color="primary" clear navPop>
+    <ion-icon name="close" class="lg-icon"></ion-icon>
+  </button>
+</ion-footer>

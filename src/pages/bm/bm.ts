@@ -28,7 +28,7 @@ export class BmPage {
     private insomnia: Insomnia,
   ) {
     this.practice = { ...this.navParams.get("practice") };
-
+    console.log(this.practice);
     const userPractices = UserProvider.getUserPractices();
     let settings = userPractices ? userPractices[this.practice.id] : null;
     if (!settings) {

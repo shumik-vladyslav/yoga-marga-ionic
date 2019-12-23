@@ -1,3 +1,15 @@
 page-my-complexs {
-
+    .practice-icon {
+        border-radius: 10px;
+        border: solid 2px #009688;
+        margin: 10px;
+      }
+    
+      .item-md.item-block .item-inner {
+        border-bottom: none!important;
+      }
+    
+      .item-ios.item-block .item-inner {
+        border-bottom: none!important;
+      }
 }
