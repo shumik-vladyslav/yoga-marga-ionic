@@ -35,7 +35,7 @@ export class SignUpPage {
   ) {
     this.myForm = formBuilder.group(
       {
-        spiritualName: ["", Validators.required],
+        spiritualName: [""],
         fullName: ["", Validators.required],
         Status: ["", Validators.required],
         Email: ["", [Validators.required, Validators.email]],

@@ -68,13 +68,11 @@ export class PracticeSearchPage {
     );
   }
 
-  // [navPush]="p.active === false?'':'PracticePerformancePage'" [navParams]="{practice: p}" 
   onPractice(p) {
     if (!p.active) return;
     if (p.isBm) {
       this.navCtrl.push(BmPage, { practice: p })
     } else if (p.isComplex) {
-      // this.navCtrl.push(PracticePerformancePage, { practice: p })
       this.navCtrl.push(MyComplexsPage, {complex: p});
     } else {
       this.navCtrl.push(PracticePerformancePage, { practice: p })

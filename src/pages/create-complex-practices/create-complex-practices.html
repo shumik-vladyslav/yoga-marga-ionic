@@ -1,40 +1,22 @@
-<!--
-  Generated template for the CreateComplexPracticesPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-content padding>
   <!-- <button ion-button class="ion-no-margin" color="primary" navPush="CreateComplexSelectPracticesPage">
     Добавить упражнение.
   </button> -->
 
-  <div style="height: 45%;overflow: scroll;">
-    <!-- <ion-row nowrap > -->
-      <!-- class="width-default radio-style" -->
-      <ion-item *ngFor="let pract of model.practices;let i = index" id="radio-style ios"  (click)="uselect(pract)">
-        <!-- <ion-toggle (ionChange)="onToggle(pract.id,$event.checked)"></ion-toggle> -->
-        <!-- [(ngModel)]="eItem.checkId" -->
-        <ion-label>{{pract.name}}</ion-label>
-      </ion-item>
-      <!-- <p padding-horizontal text-left ion-text text-wrap class="m-l-20 fs-15">
-        {{pract.name}}
-      </p> -->
-    <!-- </ion-row> -->
+  <div>
+    <ion-item *ngFor="let pract of model.practices;let i = index" id="radio-style ios" (click)="uselect(pract)">
+      <ion-label>
+        <div class="marker purple"></div>{{pract.name}}
+      </ion-label>
+    </ion-item>
   </div>
   <hr>
-  <div style="height: 45%;overflow: scroll;">
-    <!-- <ion-row nowrap *ngFor="let pract of practices;let i = index"> -->
-      <!-- class="width-default radio-style" -->
-      <ion-item *ngFor="let pract of practices;let i = index" id="radio-style ios" (click)="select(pract)">
-        <!-- <ion-toggle (ionChange)="onToggle(pract.id,$event.checked)"></ion-toggle> -->
-        <!-- [(ngModel)]="eItem.checkId" -->
-        <ion-label>{{pract.name}}</ion-label>
-      </ion-item>
-      <!-- <p padding-horizontal text-left ion-text text-wrap class="m-l-20 fs-15">
-        
-      </p> -->
-    <!-- </ion-row> -->
+  <div>
+    <ion-item *ngFor="let pract of practices;let i = index" id="radio-style ios" (click)="select(pract)">
+      <ion-label>
+        <div class="marker green"></div>{{pract.name}}
+      </ion-label>
+    </ion-item>
   </div>
 </ion-content>
 

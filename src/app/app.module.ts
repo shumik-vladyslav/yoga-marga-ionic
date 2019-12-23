@@ -61,7 +61,7 @@ import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { ToastHelper } from '../utils/toals-helper';
 import { CreateComplexNamePageModule } from '../pages/create-complex-name/create-complex-name.module';
 import { CreateComplexSelectPracticesPageModule } from '../pages/create-complex-select-practices/create-complex-select-practices.module';
-
+// import { InAppBrowser } from '@ionic-native';
 
 // import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 

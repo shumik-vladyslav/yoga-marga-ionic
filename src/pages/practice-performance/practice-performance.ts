@@ -72,20 +72,25 @@ export class PracticePerformancePage {
     }
 
     // fetch audio file
-    this.imgCahce
-      .init({
-        // debug:true,
-        skipURIencoding: true
-      })
-      .then(_ => {
-        if (this.practice.audio) {
-          this.imgCahce.fetchFromCache(this.practice.audio).then(url => {
-            this.practice.audio = new Audio(url);
-            this.practice.audio.addEventListener("ended", function () { this.currentTime = 0; this.play(); }, false);
-          });
-        }
-      });
+    // this.imgCahce
+    //   .init({
+    //     // debug:true,
+    //     skipURIencoding: true
+    //   })
+    //   .then(_ => {
+    //     if (this.practice.audio) {
+    //       this.imgCahce.fetchFromCache(this.practice.audio).then(url => {
+    //         this.practice.audio = new Audio(url);
+    //         this.practice.audio.addEventListener("ended", function () { this.currentTime = 0; this.play(); }, false);
+    //       });
+    //     }
+    //   });
 
+    if (this.practice.audio) {
+      this.practice.audio = new Audio(this.practice.audio);
+      this.practice.audio.addEventListener("ended", function () { this.currentTime = 0; this.play(); }, false);
+    }
+    
     // fetch user settings
     const userPractices = UserProvider.getUserPractices();
     let settings = userPractices ? userPractices[this.practice.id] : null;
@@ -123,18 +128,17 @@ export class PracticePerformancePage {
   }
 
   opentText() {
-    console.log('open pdf~~~');
     if (this.practice.text) {
-      this.fileOpener.open(this.practice.text, 'application/pdf')
-        .then(() => console.log('File is opened'))
-        .catch(e => console.log('Error opening file', e));
+      window.open(this.practice.text, '_system');
+      // this.fileOpener.open(this.practice.text, 'application/pdf')
+      //   .then(() => console.log('File is opened'))
+      //   .catch(e => console.log('Error opening file', e));
     }
 
     // if (this.practice.text) {
     //   const loading = this.presentLoading();
     //   this.fetchTextFileUriFromCache().then(uri => {
     //     loading.dismiss().then();
-
     //     this.fileOpener.open(uri, 'application/pdf')
     //       .then(() => console.log('File is opened'))
     //       .catch(e => console.log('Error opening file', e));

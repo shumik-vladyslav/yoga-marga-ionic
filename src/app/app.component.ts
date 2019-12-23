@@ -117,12 +117,12 @@ export class MyApp {
 
       console.log('app component');
       // Ensure you init once the platform is ready.
-      this.imgCache.init({
-        cacheClearSize: 0,
-        // debug: true,
-        // useDataURI: true,
-        skipURIencoding: true
-      }).then();
+      // this.imgCache.init({
+      //   cacheClearSize: 0,
+      //   // debug: true,
+      //   // useDataURI: true,
+      //   skipURIencoding: true
+      // }).then();
     });
   }
 
