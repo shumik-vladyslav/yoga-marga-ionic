@@ -32,9 +32,40 @@ export class UserProvider {
   //     )
   // }
 
+  static subscribe(afs: AngularFirestore, userId) {
+    const s1 = afs
+    .doc(`users/${userId}`)
+    .snapshotChanges()
+    .subscribe(action => {
+      console.log('user changed');
+      const docSnapshot = action.payload;
+      if (!docSnapshot.exists) return;
+      UserProvider.id = docSnapshot.id;
+      UserProvider.user = docSnapshot.data();
+      if (!UserProvider.user.practices) {
+        UserProvider.user.practices = {};
+      }
+    });
+
+    const s2 = afs
+    .collection(`practices`)
+    .valueChanges()
+    .subscribe(value => {
+      console.log('global practices changed');
+      if (!value) return;
+      const result: any = {};
+      for (const val of value) {
+        const tmp: any = val;
+        result[tmp.id] = val;
+      }
+      UserProvider.globalPractices = result;
+    });
+  }
+
   static Init(afs: AngularFirestore, userId): Promise<any> {
     this.afs = afs;
     this.uid = userId;
+    this.subscribe(afs, userId);
     return new Promise<any>((resolve,reject) => {
       const s1 = afs
       .doc(`users/${userId}`)

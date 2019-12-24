@@ -1,7 +1,7 @@
 <ion-content>
   <div class="practice-img">
     <!-- <img img-cache img-cache-src="{{ practice.img }}" *ngIf="practice.img" style="padding-top: 10px;" /> -->
-    <img src="{{ show.img }}" *ngIf="show.img" style="padding-top: 10px;" />
+    <img src="{{ show.img }}" *ngIf="show.img" style="padding-top: 10px;" [class.mirror]="show.imgMirror"/>
   </div>
   <div class="stats-blok">
     <div>
@@ -34,7 +34,7 @@
 </ion-content>
 
 <ion-footer class="footer">
-  <button ion-button color="primary" clear (click)="onToggleAudio()" *ngIf="practice.audio">
+  <button ion-button color="primary" clear (click)="onToggleAudio()" *ngIf="show.audio">
     <ion-icon name="volume-up" class="lg-icon" *ngIf="!isMuted"></ion-icon>
     <ion-icon name="volume-off" class="lg-icon" *ngIf="isMuted"></ion-icon>
   </button>
@@ -60,7 +60,7 @@
     <ion-icon name="pause" class="lg-icon"></ion-icon>
   </button>
 
-  <button ion-button color="primary" clear *ngIf="state !== StateEnum.Started" navPush="PracticeSettingsPage"
+  <button ion-button color="primary" clear *ngIf="state === StateEnum.Inited" navPush="PracticeSettingsPage"
     [navParams]="{practice: practice}">
     <ion-icon name="settings" class="lg-icon"></ion-icon>
   </button>

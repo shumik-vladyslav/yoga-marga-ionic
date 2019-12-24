@@ -15,15 +15,16 @@ export class ExercisesHelper {
     // current exercise duration
     duration: number;
     practiceDuration;
+    // imgMirror: any;
     constructor(practice: Practice) {
         this.practice = practice;
-        if (this.practice.settings.exercises && this.practice.settings.exercises.length > 0){
+        if (this.practice.settings.exercises && this.practice.settings.exercises.length > 0) {
             this.exercises = this.practice.settings.exercises;
-        } else if (this.practice.exercises && this.practice.exercises.length > 0){
+        } else if (this.practice.exercises && this.practice.exercises.length > 0) {
             this.exercises = this.practice.exercises;
         }
         else return;
-        
+
         this.exercisesCount = this.exercises.length;
         this.exerciseIndex = 0;
         this.exercise = this.exercises[0];
@@ -64,13 +65,20 @@ export class ExercisesHelper {
             }
         }
         console.log('calculatePracticeDuration', summ);
-        return Math.floor(summ/1000);;
+        return Math.floor(summ / 1000);;
     }
 
     show;
     startTime;
     startExerciseTime;
     firstTick = true;
+
+    createAudioFromUrl(url) {
+        if (!url) return null;
+        const audio = new Audio(url);
+        // audio.addEventListener("ended", function () { this.currentTime = 0; this.play(); }, false);
+        return audio;
+    }
 
     nextTick(timeFromStart: number) {
         // debugger
@@ -80,34 +88,38 @@ export class ExercisesHelper {
         if (this.firstTick) {
             this.startTime = now;
             this.startExerciseTime = this.startTime;
+
             this.show = {
                 img: this.exercise.image,
                 title: this.exercise.name,
                 description: this.exercise.description,
                 practiceTimer: this.practiceDuration,
-                exerciseTimer: this.duration
+                exerciseTimer: this.duration,
+                imgMirror: this.exercise.imgMirror,
+                audio: this.createAudioFromUrl(this.exercise.audio)
             }
             this.firstTick = false;
             return this.show;
         }
 
-        
+
         // next exercise
         if (now - this.startExerciseTime >= this.duration) {
             this.startExerciseTime = now;
             this.privateNextExercise();
         }
-        
-        this.show.practiceTimer = (this.practiceDuration - (now - this.startTime))*1000;
-        this.show.exerciseTimer = (this.duration - (now - this.startExerciseTime))*1000;
+
+        this.show.practiceTimer = (this.practiceDuration - (now - this.startTime)) * 1000;
+        this.show.exerciseTimer = (this.duration - (now - this.startExerciseTime)) * 1000;
         return this.show;
     }
 
+    paused = true;
     privateNextExercise() {
         this.gong.play();
         const now = Math.floor(performance.now() / 1000);
         // this.startExerciseTime = Date.now();
-        this.startExerciseTime =  now;
+        this.startExerciseTime = now;
         this.exerciseIndex++;
         this.exercise = this.exercises[this.exerciseIndex];
         if (!this.exercise) {
@@ -118,6 +130,16 @@ export class ExercisesHelper {
         this.show.img = this.exercise.image;
         this.show.title = this.exercise.name;
         this.show.description = this.exercise.description;
+        this.show.imgMirror = this.exercise.imgMirror;
+
+        if (this.show.audio) {
+            this.paused = this.show.audio.paused;
+            this.show.audio.pause();
+        }
+        this.show.audio = this.createAudioFromUrl(this.exercise.audio);
+        if (!this.paused && this.show.audio) {
+            this.show.audio.play();
+        }
     }
 
     onSkipExercise() {
@@ -126,7 +148,7 @@ export class ExercisesHelper {
         this.startExerciseTime = now;
         // this.show.practiceTimer = this.practiceDuration - this.show.exerciseTimer;
         this.startTime = this.startTime - Math.floor(this.show.exerciseTimer / 1000);
-        this.show.exerciseTimer = this.duration*1000;
+        this.show.exerciseTimer = this.duration * 1000;
     }
 
     prevExercise() {

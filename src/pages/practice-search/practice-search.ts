@@ -32,7 +32,11 @@ export class PracticeSearchPage {
 
   constructor(
     public navCtrl: NavController,
-    public navParams: NavParams) {
+    public navParams: NavParams) 
+  {
+  }
+
+  ionViewWillEnter() {
     const uspr = UserProvider.getUserPractices();
 
     const glpr = Object.values(UserProvider.getGlobalPractices()).filter(
@@ -40,7 +44,7 @@ export class PracticeSearchPage {
     );
 
     this.practices = glpr.map((gp: any) => ({ ...uspr[gp.id], ...gp }));
-    
+
     this.practices = this.practices.sort((a, b) => {
       const ap = a.priority ? a.priority : 0;
       const bp = b.priority ? b.priority : 0;
@@ -48,11 +52,8 @@ export class PracticeSearchPage {
     });
 
     let com = UserProvider.getComplexes();
-    this.practices = [...com,...this.practices];
-    console.log(this.practices[0]);
-
+    this.practices = [...com, ...this.practices];
     this.filtered = this.practices;
-    console.log(this.filtered);
   }
 
   ionViewDidLoad() {
@@ -74,7 +75,7 @@ export class PracticeSearchPage {
     if (p.isBm) {
       this.navCtrl.push(BmPage, { practice: p })
     } else if (p.isComplex) {
-      this.navCtrl.push(MyComplexsPage, {complex: p});
+      this.navCtrl.push(MyComplexsPage, { complex: p });
     } else {
       this.navCtrl.push(PracticePerformancePage, { practice: p })
     }
@@ -90,7 +91,4 @@ export class PracticeSearchPage {
     } else return 0;
   }
 
-  onAddComplex() {
-    console.log('add complex');
-  }
 }

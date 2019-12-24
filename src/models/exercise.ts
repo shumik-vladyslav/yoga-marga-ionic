@@ -5,6 +5,6 @@ export class Exercise {
     description: string;
     exerciseDuration: number;
     mirror: boolean;
-
+    imgMirror: boolean;
     
 }

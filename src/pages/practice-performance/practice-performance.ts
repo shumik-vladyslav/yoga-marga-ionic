@@ -36,10 +36,12 @@ export class PracticePerformancePage {
 
   show = {
     img: '',
+    imgMirror: false,
     title: '',
     description: '',
     practiceTimer: 0,
-    exerciseTimer: null
+    exerciseTimer: null,
+    audio: null
   }
 
   constructor(
@@ -47,14 +49,24 @@ export class PracticePerformancePage {
     public navParams: NavParams,
     private file: File,
     private transfer: FileTransfer,
-    private imgCahce: ImgCacheService,
-    private document: DocumentViewer,
     private insomnia: Insomnia,
     public loadingController: LoadingController,
-    private fileOpener: FileOpener
   ) {
     this.StateEnum = { Inited: 0, Started: 1, Paused: 2 };
     this.practice = { ...this.navParams.get("practice") };
+
+    if (this.practice.audio) {
+      this.show.audio = new Audio(this.practice.audio);
+      this.show.audio.addEventListener("ended", function () { this.currentTime = 0; this.play(); }, false);
+    }
+
+    this.show.img = this.practice.img;
+    this.show.title = this.practice.name;
+    this.show.description = this.practice.shortDescription;
+  }
+
+  ionViewWillEnter() {
+    console.log('ionViewWillEnter');
 
     // for mirrored exercises
     const newExercises = [];
@@ -71,37 +83,17 @@ export class PracticePerformancePage {
       this.practice.exercises = newExercises;
     }
 
-    // fetch audio file
-    // this.imgCahce
-    //   .init({
-    //     // debug:true,
-    //     skipURIencoding: true
-    //   })
-    //   .then(_ => {
-    //     if (this.practice.audio) {
-    //       this.imgCahce.fetchFromCache(this.practice.audio).then(url => {
-    //         this.practice.audio = new Audio(url);
-    //         this.practice.audio.addEventListener("ended", function () { this.currentTime = 0; this.play(); }, false);
-    //       });
-    //     }
-    //   });
-
-    if (this.practice.audio) {
-      this.practice.audio = new Audio(this.practice.audio);
-      this.practice.audio.addEventListener("ended", function () { this.currentTime = 0; this.play(); }, false);
-    }
-    
     // fetch user settings
     const userPractices = UserProvider.getUserPractices();
     let settings = userPractices ? userPractices[this.practice.id] : null;
     if (!settings) {
       settings = PracticeSettings.createInstance();
     }
-    
+
     this.practice.settings = settings;
 
     this.exercisesHelper = new ExercisesHelper(this.practice);
-    
+
     // init metronome
     if (settings.intervals && settings.intervals.length > 0) {
       this.metronome = Metronome.createMetronome(settings.intervals.map(i => i.value),
@@ -110,13 +102,10 @@ export class PracticePerformancePage {
 
     // go to exercises performance page
     if (this.exercisesHelper.hasExercises()) {
-      this.practiceDuration = this.exercisesHelper.calculatePracticeDuration();
+      this.practiceDuration = this.exercisesHelper.calculatePracticeDuration()*1000;
     } else {
       this.practiceDuration = this.practice.settings.practiceDuration;
     }
-    this.show.img = this.practice.img;
-    this.show.title = this.practice.name;
-    this.show.description = this.practice.shortDescription;
   }
 
   presentLoading() {
@@ -130,29 +119,7 @@ export class PracticePerformancePage {
   opentText() {
     if (this.practice.text) {
       window.open(this.practice.text, '_system');
-      // this.fileOpener.open(this.practice.text, 'application/pdf')
-      //   .then(() => console.log('File is opened'))
-      //   .catch(e => console.log('Error opening file', e));
     }
-
-    // if (this.practice.text) {
-    //   const loading = this.presentLoading();
-    //   this.fetchTextFileUriFromCache().then(uri => {
-    //     loading.dismiss().then();
-    //     this.fileOpener.open(uri, 'application/pdf')
-    //       .then(() => console.log('File is opened'))
-    //       .catch(e => console.log('Error opening file', e));
-    //     // this.document.viewDocument(
-    //     //   uri,
-    //     //   "application/pdf",
-    //     //   {},
-    //     //   null,
-    //     //   null,
-    //     //   err => this.openPdfErrorHandler(err),
-    //     //   err => this.openPdfErrorHandler(err)
-    //     // );
-    //   }).catch(err => console.log('~~~openText', err));
-    // }
   }
 
   fetchTextFileUriFromCache(): Promise<any> {
@@ -177,14 +144,14 @@ export class PracticePerformancePage {
   }
 
   onToggleAudio() {
-    if (this.practice.audio) {
+    if (this.show.audio) {
       if (this.isMuted) {
         console.log("audio play");
-        this.practice.audio.play();
+        this.show.audio.play();
         this.isMuted = false;
       } else {
         console.log("audio pause");
-        this.practice.audio.pause();
+        this.show.audio.pause();
         this.isMuted = true;
       }
     }
@@ -197,8 +164,8 @@ export class PracticePerformancePage {
   ionViewWillLeave() {
     console.log("Practice performance ionViewWillLeave");
 
-    if (this.practice.audio) {
-      this.practice.audio.pause();
+    if (this.show.audio) {
+      this.show.audio.pause();
     }
     this.stopTimer();
   }
@@ -229,14 +196,14 @@ export class PracticePerformancePage {
 
   isMuted = true;
   pauseAudio() {
-    if (this.practice.audio) {
-      this.practice.audio.pause();
+    if (this.show.audio) {
+      this.show.audio.pause();
     }
   }
 
   resumeAudio() {
-    if (this.practice.audio && !this.isMuted) {
-      this.practice.audio.play()
+    if (this.show.audio && !this.isMuted) {
+      this.show.audio.play()
     }
   }
 
@@ -266,7 +233,8 @@ export class PracticePerformancePage {
     if (!this.startTime) {
       return;
     }
-    const spent = this.practiceDuration - this.countdown;
+    // debugger
+    const spent = this.practiceDuration - this.show.practiceTimer;
     const settings = this.practice.settings;
     settings.spentTime = (settings.spentTime || 0) + spent;
     await this.savePracticeSettings(settings);
@@ -312,7 +280,7 @@ export class PracticePerformancePage {
       this.remaiderSound.currentTime = 0.0;
       this.remaiderSound.play();
     }
-    //end reminder section
+    // end reminder section
   }
 
   startTimer(millisecons: number) {
