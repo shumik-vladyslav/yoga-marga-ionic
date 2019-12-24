@@ -1,17 +1,18 @@
 <ion-grid no-padding>
-  <ion-row no-padding>
-    <ion-col no-padding>
-      <button ion-button [disabled]="state=='played'" class="ion-no-margin" color="primary"
-        style="margin-bottom: 10px!important;"
-        (click)="_intervals?'':_intervals=[];_intervals.push({value: 1});onChange(_intervals)">
-        <ion-icon name="add"></ion-icon>
-      </button>
-    </ion-col>
+  <ion-row no-padding align-items-center justify-content-between style="margin-bottom: 10px!important; margin-top: 10px!important;">
+    <p ion-text text-wrap text-center color="gray">
+      Настройте метроном
+    </p>
+    <button ion-button [disabled]="state=='played'" class="ion-no-margin" color="primary"
+      (click)="_intervals?'':_intervals=[];_intervals.push({value: 1});onChange(_intervals)">
+      <ion-icon name="add"></ion-icon>
+    </button>
   </ion-row>
   <ion-row *ngFor="let interval of _intervals; let i = index">
     <ion-col>
       <ion-item text-center class="input-style input-goals input-teamplate">
-        <input type="number" text-center [(ngModel)]="_intervals[i].value" class="new-interval" (ngModelChange)="onChange(_intervals)">
+        <input type="number" text-center [(ngModel)]="_intervals[i].value" class="new-interval"
+          (ngModelChange)="onChange(_intervals)">
       </ion-item>
     </ion-col>
     <ion-col>

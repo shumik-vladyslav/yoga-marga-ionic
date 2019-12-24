@@ -3,4 +3,13 @@ page-bm {
     color: #009688 !important;
     font-weight: bolder !important;
   }
+  .play-list-item{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  ion-item.active-play-list{
+    background: #8cd0c9;
+    color: white;
+  }
 }
