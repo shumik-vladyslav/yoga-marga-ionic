@@ -21,13 +21,11 @@ export class HomePage {
   ionViewCanEnter() {
     console.log('canenter user provider', UserProvider.user);
     
-    // if 
-    // return false;
     return UserProvider.user?true:false;
   }
   
   progresses;
-  achivements;
+  // achivements;
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private afs: AngularFirestore,
@@ -40,34 +38,7 @@ export class HomePage {
             p => p.active !== false && UserProvider.arraysHasIntersection(UserProvider.user.groups, p.groups))
         }
       ));
-
-      this.achivements = UserProvider.getUserGoals().filter(a => a.achivement > 0).slice(0,3);
-      console.log(this.achivements);
       this.complexes = UserProvider.getComplexes();
-
-
-      const globalPractices = UserProvider.globalPractices;
-      console.log('global practices', globalPractices);
-      
-      this.progresses = UserProvider.getUserGoals().map(a => {
-        let val = Math.round(((+a.achivement) / (+a.goal)) * 100);
-        if (!a.achivement || !a.goal) {
-          val = 0;
-        }
-        return {
-          val: val,
-          name: a.name,
-          ico: globalPractices[a.id]?globalPractices[a.id].ico:'',
-          goal: a.goal,
-          achivement: a.achivement?a.achivement:0
-        };
-      }).filter(a => +a.goal);
-  
-      console.log(this.progresses);
-      
-      this.achivements = UserProvider.getUserGoals().filter(
-        a => a.achivement > 0
-      );
   }
   
   onClickPractice(practice) {
@@ -88,5 +59,52 @@ export class HomePage {
  
   goToMyComplex(complex) {
     this.navCtrl.push(MyComplexsPage, {complex: complex});
+  }
+
+
+  ionViewWillEnter() {
+    const practices = UserProvider.getUserPractices();
+    const globalPractices = UserProvider.globalPractices;
+    const keys = Object.keys(practices);
+
+    this.progresses = keys.map( (key:any) => {
+      const p = {...practices[key], ...globalPractices[key]}
+      console.log(p);
+      if (!this.practiceHasGoal(p)) return null;
+      return this.calculateGoal(p);
+    }).filter(p => p);
+    console.log(this.progresses);
+  }
+  
+  practiceHasGoal(pr) {
+    return pr.spentTimeGoal || pr.amountCounterGoal || pr.maxAchievementGoal;
+  }
+
+  calculateGoal(pr) {
+    if (pr.spentTimeGoal) {
+      return {
+        goal: Math.floor(+pr.spentTimeGoal / 1000 / 60/ 60),
+        achivement: Math.floor(+pr.spentTime / 1000 / 60/ 60),  
+        val: Math.round ((pr.spentTime ? +pr.spentTime / +pr.spentTimeGoal : 0) *100 ),
+        name: pr.name,
+        ico: pr.ico,
+      }
+    } else if (pr.amountCounterGoal) {
+      return {
+        goal: +pr.amountCounterGoal,
+        achivement: +pr.amountCounter,  
+        val: Math.round ((pr.amountCounter? +pr.amountCounter / +pr.amountCounterGoal : 0) *100 ),
+        name: pr.name,
+        ico: pr.ico,
+      }
+    } else if (pr.maxAchievementGoal) {
+      return {
+        goal: +pr.maxAchievementGoal,
+        achivement: +pr.maxAchievement,  
+        val: Math.round ((pr.maxAchievement? +pr.maxAchievement / +pr.maxAchievementGoal : 0) *100 ),
+        name: pr.name,
+        ico: pr.ico,
+      }
+    } else return null;
   }
 }

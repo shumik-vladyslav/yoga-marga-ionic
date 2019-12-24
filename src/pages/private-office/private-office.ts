@@ -1,3 +1,4 @@
+import { Practice } from './../../models/practice';
 import { HomePage } from './../home/home';
 import { Component } from "@angular/core";
 import { NavController, NavParams } from "ionic-angular";
@@ -18,13 +19,8 @@ import { AngularFirestore } from "@angular/fire/firestore";
   templateUrl: "private-office.html"
 })
 export class PrivateOfficePage {
-  achivements;
-  goals;
-
   progresses;
-
   gender;
-
   myForm: FormGroup;
   customeValidation;
 
@@ -39,10 +35,10 @@ export class PrivateOfficePage {
   };
 
   ionViewCanEnter() {
-    return UserProvider.user?true:false;
+    return UserProvider.user ? true : false;
   }
-  
-  user 
+
+  user
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -51,31 +47,8 @@ export class PrivateOfficePage {
     afs: AngularFirestore
   ) {
     const globalPractices = UserProvider.globalPractices;
-    console.log('global practices', globalPractices);
-    
-    
-    this.progresses = UserProvider.getUserGoals().map(a => {
-      let val = Math.round(((+a.achivement) / (+a.goal)) * 100);
-      if (!a.achivement || !a.goal) {
-        val = 0;
-      }
-      return {
-        val: val,
-        name: a.name,
-        ico: globalPractices[a.id]?globalPractices[a.id].ico:'',
-        goal: a.goal,
-        achivement: a.achivement?a.achivement:0
-      };
-    }).filter(a => +a.goal);
-
-    console.log(this.progresses);
-    
-    this.achivements = UserProvider.getUserGoals().filter(
-      a => a.achivement > 0
-    );
-
     const user = UserProvider.getUser();
-    
+
     this.myForm = formBuilder.group({
       spiritual_name: [user.spiritual_name || "", Validators.required],
       full_name: [user.full_name || "", Validators.required],
@@ -95,20 +68,62 @@ export class PrivateOfficePage {
     }
   }
 
-  goGoalsPage() {
-    this.navCtrl.setRoot(GoalsPage);
-  }
-
   ionViewDidLoad() {
     console.log("ionViewDidLoad PrivateOfficePage");
   }
 
   submit() {
-    
-    if(this.myForm.valid) {
+    if (this.myForm.valid) {
       UserProvider.updateUser(this.myForm.value)
-      .then(res => this.navCtrl.setRoot(HomePage))
-      .catch(err => console.log('error', err));
+        .then(res => this.navCtrl.setRoot(HomePage))
+        .catch(err => console.log('error', err));
     }
+  }
+
+
+  ionViewWillEnter() {
+    const practices = UserProvider.getUserPractices();
+    const globalPractices = UserProvider.globalPractices;
+    const keys = Object.keys(practices);
+
+    this.progresses = keys.map( (key:any) => {
+      const p = {...practices[key], ...globalPractices[key]}
+      console.log(p);
+      if (!this.practiceHasGoal(p)) return null;
+      return this.calculateGoal(p);
+    }).filter(p => p);
+    console.log(this.progresses);
+  }
+
+  practiceHasGoal(pr) {
+    return pr.spentTimeGoal || pr.amountCounterGoal || pr.maxAchievementGoal;
+  }
+
+  calculateGoal(pr) {
+    if (pr.spentTimeGoal) {
+      return {
+        goal: Math.floor(+pr.spentTimeGoal / 1000 / 60/ 60),
+        achivement: Math.floor(+pr.spentTime / 1000 / 60/ 60),  
+        val: Math.round ((pr.spentTime ? +pr.spentTime / +pr.spentTimeGoal : 0) *100 ),
+        name: pr.name,
+        ico: pr.ico,
+      }
+    } else if (pr.amountCounterGoal) {
+      return {
+        goal: +pr.amountCounterGoal,
+        achivement: +pr.amountCounter,  
+        val: Math.round ((pr.amountCounter? +pr.amountCounter / +pr.amountCounterGoal : 0) *100 ),
+        name: pr.name,
+        ico: pr.ico,
+      }
+    } else if (pr.maxAchievementGoal) {
+      return {
+        goal: +pr.maxAchievementGoal,
+        achivement: +pr.maxAchievement,  
+        val: Math.round ((pr.maxAchievement? +pr.maxAchievement / +pr.maxAchievementGoal : 0) *100 ),
+        name: pr.name,
+        ico: pr.ico,
+      }
+    } else return null;
   }
 }

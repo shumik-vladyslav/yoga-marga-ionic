@@ -80,7 +80,7 @@ export class ExercisesHelper {
         return audio;
     }
 
-    nextTick(timeFromStart: number) {
+    nextTick(TIMER_INTERVAL) {
         // debugger
         if (!this.exercises) return;
         const now = Math.floor(performance.now() / 1000);
@@ -93,8 +93,8 @@ export class ExercisesHelper {
                 img: this.exercise.image,
                 title: this.exercise.name,
                 description: this.exercise.description,
-                practiceTimer: this.practiceDuration,
-                exerciseTimer: this.duration,
+                practiceTimer: this.practiceDuration * 1000,
+                exerciseTimer: this.duration * 1000,
                 imgMirror: this.exercise.imgMirror,
                 audio: this.createAudioFromUrl(this.exercise.audio)
             }
@@ -104,13 +104,16 @@ export class ExercisesHelper {
 
 
         // next exercise
-        if (now - this.startExerciseTime >= this.duration) {
+        // if (now - this.startExerciseTime >= this.duration) {
+        if (this.show.exerciseTimer <= 0) {
             this.startExerciseTime = now;
             this.privateNextExercise();
         }
 
-        this.show.practiceTimer = (this.practiceDuration - (now - this.startTime)) * 1000;
-        this.show.exerciseTimer = (this.duration - (now - this.startExerciseTime)) * 1000;
+        // this.show.practiceTimer = (this.practiceDuration - (now - this.startTime)) * 1000;
+        // this.show.exerciseTimer = (this.duration - (now - this.startExerciseTime)) * 1000;
+        this.show.practiceTimer = this.show.practiceTimer - TIMER_INTERVAL;
+        this.show.exerciseTimer = this.show.exerciseTimer - TIMER_INTERVAL;
         return this.show;
     }
 

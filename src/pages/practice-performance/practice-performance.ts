@@ -14,6 +14,8 @@ import { Practice } from '../../models/practice';
 import { Metronome } from '../../utils/metronome';
 import * as moment from 'moment';
 
+const TIMER_INTERVAL = 200;
+
 @IonicPage()
 @Component({
   selector: "page-practice-performance",
@@ -176,7 +178,7 @@ export class PracticePerformancePage {
   startPractice() {
     this.resumeAudio();
     this.screenKeepAwake();
-    this.startTimer(200);
+    this.startTimer(TIMER_INTERVAL);
     this.state = this.StateEnum.Started;
   }
 
@@ -248,9 +250,10 @@ export class PracticePerformancePage {
   isRemainderRunOnce = false;
   startTime = 0;
   timerTickCb() {
-    this.countdown = this.practiceDuration - (Date.now() - this.startTime);
+    // this.countdown = this.practiceDuration - (Date.now() - this.startTime);
+    this.countdown = this.countdown - TIMER_INTERVAL;
     if (this.exercisesHelper.hasExercises()) {
-      this.show = this.exercisesHelper.nextTick((Date.now() - this.startTime));
+      this.show = this.exercisesHelper.nextTick(TIMER_INTERVAL);
     } else {
       // practice timer section
       this.show.practiceTimer = this.countdown;
