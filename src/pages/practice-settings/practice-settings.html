@@ -60,9 +60,6 @@
     </ion-item>
 
     <ion-item no-padding *ngIf="practice.hasMetronome">
-      <p ion-text text-wrap text-center color="gray">
-        Настройте метроном
-      </p>
       <metronome [(ngModel)]="settings.intervals" #metronome (ngModelChange)="onChangeIntervals($event)"></metronome>
     </ion-item>
 
@@ -71,7 +68,7 @@
         Цель: время проведенное в практике (Часов)
       </p>
       <ion-item no-padding class="input-style input-goals input-teamplate">
-        <ion-input type="number" [ngModel]="settings.spentTimeGoal/60/60/1000"
+        <ion-input class="full-width" type="number" [ngModel]="settings.spentTimeGoal/60/60/1000"
           (ngModelChange)="settings.spentTimeGoal=+$event*60*60*1000"></ion-input>
       </ion-item>
     </ion-item>

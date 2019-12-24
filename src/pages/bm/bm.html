@@ -3,9 +3,10 @@
     <img src="{{ practice.img }}" *ngIf="practice.img" style="padding-top: 10px;" />
   </div>
 
-  <ion-item *ngFor="let t of practice.bmtracks; let i=index" (click)="onSelectTrack(i)">
-    <ion-label>
-      <ion-icon *ngIf="playedIdx === i" name="radio"></ion-icon> {{i+1}}. {{t.name}}
+  <ion-item *ngFor="let t of practice.bmtracks; let i=index" [ngClass]="{'active-play-list': playedIdx === i}" (click)="onSelectTrack(i)">
+    <ion-label class="play-list-item">
+      {{i+1}}. {{t.name}}
+      <ion-icon *ngIf="playedIdx === i" ios="ios-musical-notes" md="ios-musical-notes" margin-right></ion-icon>
     </ion-label>
   </ion-item>
 </ion-content>

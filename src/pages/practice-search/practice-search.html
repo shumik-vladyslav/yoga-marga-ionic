@@ -14,11 +14,11 @@
   </ion-item> -->
   <!-- [(ngModel)]="myInput" -->
   <ion-searchbar [showCancelButton]="true" (ionInput)="onSearchChange($event.target.value)"
-    (ionCancel)="onSearchChange($event.target.value)">
+    (ionCancel)="onSearchChange($event.target.value)" mode="md">
   </ion-searchbar>
   <ion-grid>
     <ion-row justify-content-center>
-      <ion-col col-4 class=" col-between " no-padding *ngFor="let p of filtered" (click)="onPractice(p)"
+      <ion-col col-4 no-padding *ngFor="let p of filtered" (click)="onPractice(p)"
         [class.inactive]="p.active===false">
         <ion-row class="practice-icon">
           <ion-col col-12>
