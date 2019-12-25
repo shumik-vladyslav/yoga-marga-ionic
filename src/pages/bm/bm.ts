@@ -39,14 +39,17 @@ export class BmPage {
   }
 
   onBack() {
+    // debugger
+    if (this.playedIdx == null) return;
     const count = this.practice.bmtracks.length;
-    this.playedIdx = this.playedIdx - 1 < 0 ? count - 1 : this.playedIdx - 1;
+    this.playedIdx = this.playedIdx - 1 < 0 ?  this.playedIdx : this.playedIdx - 1;
     this.onSelectTrack(this.playedIdx);
   }
 
   onForw() {
+    if (this.playedIdx == null) return;
     const count = this.practice.bmtracks.length;
-    this.playedIdx = this.playedIdx + 1 >= count? 0: this.playedIdx + 1;
+    this.playedIdx = this.playedIdx + 1 >= count? this.playedIdx: this.playedIdx + 1;
     this.onSelectTrack(this.playedIdx);
   }
 
@@ -55,6 +58,10 @@ export class BmPage {
     this.playedIdx = i;
     this.played = this.practice.bmtracks[i];
     this.played.audio = new Audio(this.played.url);
+    this.played.audio.addEventListener("ended",  () => {
+      if (this.playedIdx + 1 >= this.practice.bmtracks.length) return;
+      this.onForw();
+    }, false);  
     this.onPlay();
   }
 

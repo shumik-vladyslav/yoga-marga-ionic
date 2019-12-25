@@ -26,7 +26,7 @@
     <ion-icon name="skip-forward" class="lg-icon"></ion-icon>
   </button>
 
-  <button ion-button color="primary" clear navPush="PracticeSettingsPage"
+  <button ion-button color="primary" clear navPush="PracticeSettingsPage" (click)="onPause()"
     [navParams]="{practice: practice}">
     <ion-icon name="settings" class="lg-icon"></ion-icon>
   </button>
