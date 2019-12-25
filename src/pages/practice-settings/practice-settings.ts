@@ -1,3 +1,4 @@
+import { UtilsFuncs } from './../../utils/utils-funcs';
 import { ExercisesHelper } from './../../utils/exercises-helper';
 import { ToastHelper } from './../../utils/toals-helper';
 import { PracticeSettings } from './../../models/practice-settings';
@@ -41,7 +42,7 @@ export class PracticeSettingsPage {
     public navParams: NavParams,
     public toastHelper: ToastHelper
   ) {
-    this.practice = { ...this.navParams.get("practice") };
+    this.practice = UtilsFuncs.deepCopy(this.navParams.get("practice"));
     if (!this.practice.settings) {
       this.settings = PracticeSettings.createInstance();
     } else {
@@ -52,7 +53,7 @@ export class PracticeSettingsPage {
     this.reminderInterval = this.transformTime(this.settings.reminderInterval, 'T->S');
 
     if (this.exercisesHelper.hasExercises()) {
-      this.settings.exercises = this.exercisesHelper.exercises;
+      this.settings.exercises = UtilsFuncs.deepCopy(this.exercisesHelper.exercises);
 
       const exDur = this.exercisesHelper.calculateExerciseDurations()*1000;
       this.practiceDuration = this.transformTime(this.exercisesHelper.calculatePracticeDuration()*1000, 'T->S');
@@ -68,7 +69,7 @@ export class PracticeSettingsPage {
   }
 
   setExDurationsByDefault () {
-    this.settings.exercises = [...this.practice.exercises];
+    this.settings.exercises = UtilsFuncs.deepCopy(this.practice.exercises);
 
     const exercises = this.settings.exercises;
     let summ = 0;
@@ -155,11 +156,5 @@ export class PracticeSettingsPage {
     await  UserProvider.updateUserPracticeSettings(this.practice.id,this.settings);
     await this.toastHelper.presentTopMess('Сохранено');
     await this.navCtrl.pop();
-  }
-
-  getMilliseconds(value) {
-    if (!value) return null;
-    const t = value.split(':');
-    return (t[0] * 60 * 60 + t[1] * 60 + t[2]) * 1000;
   }
 }
