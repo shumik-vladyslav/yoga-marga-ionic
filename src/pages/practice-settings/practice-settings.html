@@ -8,7 +8,7 @@
         <ion-input type="number" [(ngModel)]="settings.priority"></ion-input>
       </ion-item>
     </ion-item>
-    
+
     <div *ngIf="!exercisesHelper.hasExercises()">
       <ion-item no-padding *ngIf="!practice.isBm">
         <p ion-text text-wrap text-center color="gray">
@@ -96,12 +96,16 @@
     </ion-item>
   </ion-grid>
   <!-- <ion-item no-padding> -->
-  <p ion-text text-wrap text-center color="gray" *ngIf="settings.exercises && settings.exercises[0]">
-    Вы можете установить свое время для каждого упражнения
+
+  <div ion-text text-center>
+    <p ion-text text-wrap text-center color="gray" *ngIf="settings.exercises && settings.exercises[0]">
+      Вы можете установить свое время для каждого упражнения
+    </p>
     <button ion-button class="ion-no-margin" color="primary" (click)="setExDurationsByDefault()">
       Восстановить по умолчанию
     </button>
-  </p>
+  </div>
+
   <ion-item *ngFor="let e of settings.exercises; let i=index">
     <ion-label position="stacked">{{i+1}}.{{e.name}}</ion-label>
     <ion-datetime ion-margin-vertical displayFormat="HH:mm:ss" pickerFormat="HH:mm:ss" text-center
