@@ -106,6 +106,7 @@ export class ExercisesHelper {
         // next exercise
         // if (now - this.startExerciseTime >= this.duration) {
         if (this.show.exerciseTimer <= 0) {
+            // debugger
             this.startExerciseTime = now;
             this.privateNextExercise();
         }
@@ -134,6 +135,7 @@ export class ExercisesHelper {
         this.show.title = this.exercise.name;
         this.show.description = this.exercise.description;
         this.show.imgMirror = this.exercise.imgMirror;
+        this.show.exerciseTimer = this.duration * 1000;
 
         if (this.show.audio) {
             this.paused = this.show.audio.paused;
