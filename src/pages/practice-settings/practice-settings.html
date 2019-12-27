@@ -106,7 +106,7 @@
     </button>
   </div>
 
-  <ion-item *ngFor="let e of settings.exercises; let i=index">
+  <ion-item *ngFor="let e of settings.exercises; let i=index" class="time-change-row">
     <ion-label position="stacked">{{i+1}}.{{e.name}}</ion-label>
     <ion-datetime ion-margin-vertical displayFormat="HH:mm:ss" pickerFormat="HH:mm:ss" text-center
       [ngModel]="settings.exercises[i].exerciseDuration | appdate"

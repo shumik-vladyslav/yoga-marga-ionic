@@ -17,4 +17,9 @@ page-practice-settings {
     .datetime-md{
         padding: 0;
     }
+    .time-change-row{
+        .input-wrapper{
+            flex-flow: column;
+        }
+    }
 }
