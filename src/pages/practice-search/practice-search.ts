@@ -44,16 +44,18 @@ export class PracticeSearchPage {
     );
 
     this.practices = glpr.map((gp: any) => ({ ...uspr[gp.id], ...gp }));
-
+    console.log('pract 1', this.practices);
     this.practices = this.practices.sort((a, b) => {
       const ap = a.priority ? a.priority : 0;
       const bp = b.priority ? b.priority : 0;
       return bp - ap;
     });
-
+    console.log('pract 2', this.practices);
     let com = UserProvider.getComplexes();
     this.practices = [...com, ...this.practices];
-    this.filtered = this.practices;
+    console.log('pract 3', this.practices);
+    this.filtered = [...this.practices];
+    console.log('filtered 1', this.filtered);
   }
 
   ionViewDidLoad() {
