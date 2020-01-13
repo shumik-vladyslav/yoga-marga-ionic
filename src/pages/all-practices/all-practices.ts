@@ -1,9 +1,6 @@
 import { UserProvider } from './../../providers/user/user';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { MorningPracticePage } from '../morning-practice/morning-practice';
-import { EveningPracticePage } from '../evening-practice/evening-practice';
-import { MeditativePracticesPage } from '../meditative-practices/meditative-practices';
 import { SlicePipe } from '@angular/common';
 import { groupBy } from 'rxjs/internal/operators/groupBy';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
@@ -100,18 +97,6 @@ export class AllPracticesPage {
     this.groupPracticesBy(groupingBy);
     console.log('groupingPractices', this.groupingPractices);
     
-  }
-
-  goMorningPracticePage() {
-    this.navCtrl.setRoot(MorningPracticePage);
-  }
-
-  goEveningPracticePage() {
-    this.navCtrl.setRoot(EveningPracticePage);
-  }
-
-  goMeditativePracticesPage() {
-    this.navCtrl.setRoot(MeditativePracticesPage);
   }
 
   goToPracticesListPage(practices) {

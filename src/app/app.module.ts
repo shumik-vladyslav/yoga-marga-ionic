@@ -28,9 +28,6 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { CreateComplexPage } from '../pages/create-complex/create-complex';
 import { AllPracticesPage } from '../pages/all-practices/all-practices';
-import { MorningPracticePage } from '../pages/morning-practice/morning-practice';
-import { EveningPracticePage } from '../pages/evening-practice/evening-practice';
-import { MeditativePracticesPage } from '../pages/meditative-practices/meditative-practices';
 import { ComplexsPage } from '../pages/complexs/complexs';
 import { MyComplexsPage } from '../pages/my-complexs/my-complexs';
 import { PrivateOfficePage } from '../pages/private-office/private-office';
@@ -73,9 +70,6 @@ import { CreateComplexSelectPracticesPageModule } from '../pages/create-complex-
     SingInPage,
     CreateComplexPage,
     AllPracticesPage,
-    MorningPracticePage,
-    EveningPracticePage,
-    MeditativePracticesPage,
     ComplexsPage,
     MyComplexsPage,
     PrivateOfficePage,
@@ -126,9 +120,6 @@ import { CreateComplexSelectPracticesPageModule } from '../pages/create-complex-
     SingInPage,
     CreateComplexPage,
     AllPracticesPage,
-    MorningPracticePage,
-    EveningPracticePage,
-    MeditativePracticesPage,
     ComplexsPage,
     MyComplexsPage,
     PrivateOfficePage,

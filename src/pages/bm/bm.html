@@ -1,6 +1,6 @@
 <ion-content>
   <div class="practice-img">
-    <img src="{{ practice.img }}" *ngIf="practice.img" style="padding-top: 10px;" />
+    <img img-cache img-cache-src="{{ practice.img }}" *ngIf="practice.img" style="padding-top: 10px;" />
   </div>
 
   <ion-item *ngFor="let t of practice.bmtracks; let i=index" [ngClass]="{'active-play-list': playedIdx === i}" (click)="onSelectTrack(i)">

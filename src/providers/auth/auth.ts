@@ -1,9 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { NavController } from 'ionic-angular';
-import { HomePage } from '../../pages/home/home';
-import { SingInPage } from '../../pages/sing-in/sing-in';
 
 /*
   Generated class for the AuthProvider provider.

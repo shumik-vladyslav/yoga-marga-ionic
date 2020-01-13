@@ -1,3 +1,4 @@
+import { PracticeSearchPage } from './../practice-search/practice-search';
 import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { SignUpPage } from '../sing-up/sing-up';
@@ -60,15 +61,11 @@ export class SingInPage {
     try {
       const user = await this.afAuth.auth.signInWithEmailAndPassword(this.email, this.password);
       console.log('user', user);
-      this.navCtrl.setRoot(HomePage);
+      this.navCtrl.setRoot(PracticeSearchPage);
     } catch (err) {
       console.log(err);
       this.presentAlert('Ошибка', err);
     }
-  }
-
-  goToHome(){
-    this.navCtrl.setRoot(HomePage);
   }
 
   ionViewDidLoad() {

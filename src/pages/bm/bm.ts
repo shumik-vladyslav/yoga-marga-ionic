@@ -1,3 +1,4 @@
+import { FileCacheProvider } from './../../providers/file-cache/file-cache';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Insomnia } from '@ionic-native/insomnia';
@@ -26,6 +27,7 @@ export class BmPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private insomnia: Insomnia,
+    private fileCache: FileCacheProvider
   ) {
     this.practice = { ...this.navParams.get("practice") };
     console.log(this.practice);
@@ -53,16 +55,17 @@ export class BmPage {
     this.onSelectTrack(this.playedIdx);
   }
 
-  onSelectTrack(i) {
+  async onSelectTrack(i) {
     this.onPause();
     this.playedIdx = i;
     this.played = this.practice.bmtracks[i];
-    this.played.audio = new Audio(this.played.url);
+    const url = await this.checkCache(this.played.url) 
+    this.played.audio = new Audio(url);
     this.played.audio.addEventListener("ended",  () => {
       if (this.playedIdx + 1 >= this.practice.bmtracks.length) return;
       this.onForw();
     }, false);  
-    this.onPlay();
+    await this.onPlay();
   }
 
   onPause() {
@@ -72,12 +75,23 @@ export class BmPage {
     }
   }
 
-  onPlay() {
+  async checkCache(url) {
+    return await this.fileCache.get(url);
+  }
+
+  async onPlay() {
     this.paused = false;
+    // first click on play
     if (!this.played || !this.played.audio) {
+      
       this.playedIdx = 0;
       this.played = this.practice.bmtracks[0];
-      this.played.audio = new Audio(this.played.url);  
+      const url = await this.checkCache(this.played.url) 
+      this.played.audio = new Audio(url);  
+      this.played.audio.addEventListener("ended",  () => {
+        if (this.playedIdx + 1 >= this.practice.bmtracks.length) return;
+        this.onForw();
+      }, false);  
     }
     this.played.audio.play();
   }
