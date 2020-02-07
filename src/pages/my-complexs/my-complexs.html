@@ -54,7 +54,7 @@
               <!-- <img img-cache img-cache-src="{{p.ico}}" #img class="img-icon" style="display:none">
                       <img class="img-icon"
                         [ngStyle]="{'-webkit-mask': 'url(' + img.src + ') no-repeat 50% 50%','mask': 'url(' + img.src + ') no-repeat 50% 50%'}"> -->
-              <img src="{{p.ico}}" #img class="img-icon" style="display:none">
+              <img img-cache img-cache-src="{{ p.ico }}" #img class="img-icon" style="display:none">
               <img class="img-icon"
                 [ngStyle]="{'-webkit-mask': 'url(' + img.src + ') no-repeat 50% 50%','mask': 'url(' + img.src + ') no-repeat 50% 50%'}">
             </ion-item>
@@ -88,6 +88,6 @@
     <ion-icon name="play" class="lg-icon"></ion-icon>
   </button>
   <button ion-button color="primary" clear navPop>
-    <ion-icon name="close" class="lg-icon"></ion-icon>
+    <ion-icon name="close-circle" class="lg-icon"></ion-icon>
   </button>
 </ion-footer>

@@ -13,7 +13,7 @@
     <ion-input (input)="onSearchChange($event.target.value)"></ion-input>
   </ion-item> -->
   <!-- [(ngModel)]="myInput" -->
-  <ion-searchbar [showCancelButton]="true" (ionInput)="onSearchChange($event.target.value)"
+  <ion-searchbar [(ngModel)]="searchModel" [showCancelButton]="true" (ionInput)="onSearchChange($event.target.value)"
     (ionCancel)="onSearchChange($event.target.value)" mode="md">
   </ion-searchbar>
   <ion-grid>

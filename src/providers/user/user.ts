@@ -166,7 +166,7 @@ export class UserProvider {
     const pr = UserProvider.globalPractices;
     const cm = UserProvider.user.complexes;
     
-    if(!cm) return undefined;
+    if(!cm) return [];
     
     for (const val of cm) {
       val.ico = pr[val.practices[0]].ico;

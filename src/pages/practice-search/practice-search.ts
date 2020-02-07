@@ -30,6 +30,8 @@ export class PracticeSearchPage {
   practices;
   filtered;
 
+  searchModel;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams) 
@@ -37,6 +39,7 @@ export class PracticeSearchPage {
   }
 
   ionViewWillEnter() {
+    this.searchModel = null;
     const uspr = UserProvider.getUserPractices();
 
     const glpr = Object.values(UserProvider.getGlobalPractices()).filter(
@@ -50,6 +53,8 @@ export class PracticeSearchPage {
       return bp - ap;
     });
     let com = UserProvider.getComplexes();
+    console.log(JSON.stringify(com));
+    console.log(JSON.stringify(this.practices));
     this.practices = [...com, ...this.practices];
     this.filtered = [...this.practices];
   }

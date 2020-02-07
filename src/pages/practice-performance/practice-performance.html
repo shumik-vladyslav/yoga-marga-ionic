@@ -1,6 +1,5 @@
 <ion-content>
   <div class="practice-img">
-    <!-- <img img-cache img-cache-src="{{ practice.img }}" *ngIf="practice.img" style="padding-top: 10px;" /> -->
     <img img-cache img-cache-src="{{ show.img }}" *ngIf="show.img" style="padding-top: 10px;" [class.mirror]="show.imgMirror"/>
   </div>
   <div class="stats-blok">
@@ -38,11 +37,13 @@
     <ion-icon name="volume-up" class="lg-icon" *ngIf="!isMuted"></ion-icon>
     <ion-icon name="volume-off" class="lg-icon" *ngIf="isMuted"></ion-icon>
   </button>
+
   <button ion-button color="primary" clear (click)="toggleMetronome()" *ngIf="metronome">
     <ion-icon name="pulse" class="lg-icon"></ion-icon>
   </button>
+
   <button ion-button color="primary" clear *ngIf="practice.text && state !== StateEnum.Started" (click)="opentText()">
-    <ion-icon name="information" class="lg-icon"></ion-icon>
+    <ion-icon name="document" class="lg-icon"></ion-icon>
   </button>
 
   <button ion-button color="primary" clear *ngIf="state === StateEnum.Inited || state === StateEnum.Paused"
@@ -54,7 +55,6 @@
   *ngIf="(state === StateEnum.Started || state === StateEnum.Paused) && exercisesHelper.hasExercises()">
     <ion-icon name="skip-forward"  class="lg-icon"></ion-icon>
   </button>
-  
 
   <button ion-button color="primary" *ngIf="state === StateEnum.Started" (click)="pausePractice()" clear>
     <ion-icon name="pause" class="lg-icon"></ion-icon>
@@ -64,7 +64,9 @@
     [navParams]="{practice: practice}">
     <ion-icon name="settings" class="lg-icon"></ion-icon>
   </button>
+
   <button ion-button color="primary" clear (click)="exitPractice()">
-    <ion-icon name="close" class="lg-icon"></ion-icon>
+    <ion-icon name="close-circle" class="lg-icon"></ion-icon>
   </button>
+
 </ion-footer>
