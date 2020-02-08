@@ -17,4 +17,11 @@ page-practice-performance {
     -webkit-transform: scaleX(-1);
     transform: scaleX(-1);
   }
+  .practice-img-v2{
+    width: 100%;
+    height: calc(75vh - 142.8px);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
 }

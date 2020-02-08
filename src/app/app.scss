@@ -669,3 +669,6 @@ ion-toolbar {
     transform: rotate(45deg);
   }
 }
+.content-ios:not([no-bounce]) > .scroll-content::before{
+  bottom: 0px !important;
+}
