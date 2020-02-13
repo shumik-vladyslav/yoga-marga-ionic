@@ -79,8 +79,9 @@ export class ExercisesHelper {
         // audio.addEventListener("ended", function () { this.currentTime = 0; this.play(); }, false);
         return audio;
     }
-
+    isMuted = true;
     nextTick(TIMER_INTERVAL, isMuted) {
+        this.isMuted = isMuted;
         // debugger
         if (!this.exercises) return;
         const now = Math.floor(performance.now() / 1000);
@@ -148,10 +149,12 @@ export class ExercisesHelper {
     }
 
     onSkipExercise() {
-        this.privateNextExercise();
+        this.privateNextExercise(this.isMuted);
         const now = Math.floor(performance.now() / 1000);
         this.startExerciseTime = now;
-        // this.show.practiceTimer = this.practiceDuration - this.show.exerciseTimer;
+        
+        this.show.practiceTimer = this.show.practiceTimer  - this.show.exerciseTimer;
+
         this.startTime = this.startTime - Math.floor(this.show.exerciseTimer / 1000);
         this.show.exerciseTimer = this.duration * 1000;
     }
