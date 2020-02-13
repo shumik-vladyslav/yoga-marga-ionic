@@ -253,7 +253,7 @@ export class PracticePerformancePage {
     // this.countdown = this.practiceDuration - (Date.now() - this.startTime);
     this.countdown = this.countdown - TIMER_INTERVAL;
     if (this.exercisesHelper.hasExercises()) {
-      this.show = this.exercisesHelper.nextTick(TIMER_INTERVAL);
+      this.show = this.exercisesHelper.nextTick(TIMER_INTERVAL, this.isMuted);
     } else {
       // practice timer section
       this.show.practiceTimer = this.countdown;

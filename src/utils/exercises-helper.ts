@@ -80,7 +80,7 @@ export class ExercisesHelper {
         return audio;
     }
 
-    nextTick(TIMER_INTERVAL) {
+    nextTick(TIMER_INTERVAL, isMuted) {
         // debugger
         if (!this.exercises) return;
         const now = Math.floor(performance.now() / 1000);
@@ -108,7 +108,7 @@ export class ExercisesHelper {
         if (this.show.exerciseTimer <= 0) {
             // debugger
             this.startExerciseTime = now;
-            this.privateNextExercise();
+            this.privateNextExercise(isMuted);
         }
 
         // this.show.practiceTimer = (this.practiceDuration - (now - this.startTime)) * 1000;
@@ -119,7 +119,7 @@ export class ExercisesHelper {
     }
 
     paused = true;
-    privateNextExercise() {
+    privateNextExercise(isMuted) {
         this.gong.play();
         const now = Math.floor(performance.now() / 1000);
         // this.startExerciseTime = Date.now();
@@ -138,11 +138,11 @@ export class ExercisesHelper {
         this.show.exerciseTimer = this.duration * 1000;
 
         if (this.show.audio) {
-            this.paused = this.show.audio.paused;
             this.show.audio.pause();
         }
+
         this.show.audio = this.createAudioFromUrl(this.exercise.audio);
-        if (!this.paused && this.show.audio) {
+        if (!isMuted && this.show.audio) {
             this.show.audio.play();
         }
     }
