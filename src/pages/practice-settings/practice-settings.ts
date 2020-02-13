@@ -23,6 +23,7 @@ export class PracticeSettingsPage {
   settings: PracticeSettings;
   practice: Practice;
   exercisesHelper: ExercisesHelper;
+  savingState = false;
   onChangeIntervals(event) {
     console.log(event);
   }
@@ -153,8 +154,10 @@ export class PracticeSettingsPage {
     // const patch = { practices: this.settings };
     // patch.practices[this.practice.id] = this.settings;
     // await UserProvider.updateUser(patch);
+    this.savingState = true;
     await  UserProvider.updateUserPracticeSettings(this.practice.id,this.settings);
     await this.toastHelper.presentTopMess('Сохранено');
+    this.savingState = false;
     await this.navCtrl.pop();
   }
 }

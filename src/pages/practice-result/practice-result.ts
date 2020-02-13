@@ -20,6 +20,7 @@ export class PracticeResultPage {
   practice: Practice;
   amountCounter = 0;
   maxAchievement = 0;
+  savingState = false;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -46,9 +47,10 @@ export class PracticeResultPage {
       this.practice.settings.maxAchievement = this.maxAchievement > this.practice.settings.maxAchievement ?
       this.maxAchievement : this.practice.settings.maxAchievement;
     }
-
+    this.savingState = true;
     await  UserProvider.updateUserPracticeSettings(this.practice.id, this.practice.settings);
     await this.toastHelper.presentTopMess('Сохранено');
+    this.savingState = false;
     await this.navCtrl.popToRoot();
   }
 
