@@ -36,9 +36,9 @@
               <ion-option value="m">Статус 1</ion-option>
             </ion-select> -->
             <ion-select [(ngModel)]="data.Status" formControlName="Status">
-                <ion-option value="grihastha">Грихастха</ion-option>
-                <ion-option value="carma-sanyasy">Карма-Саньяси</ion-option>
-                <ion-option value="purna-sanyasy">Пурна-Саньяси</ion-option>
+                <ion-option [value]="g.name" *ngFor="let g of groups$ | async">{{g.name}}</ion-option>
+                <!-- <ion-option value="carma-sanyasy">Карма-Саньяси</ion-option>
+                <ion-option value="purna-sanyasy">Пурна-Саньяси</ion-option> -->
               </ion-select>
           </ion-item>
           <ion-item [ngClass]="{'error-validation': (myForm.controls['Password'].invalid) && (customeValidation === false)}" no-padding class="input-style">

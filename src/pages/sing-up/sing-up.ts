@@ -25,6 +25,7 @@ export class SignUpPage {
     gender: ""
   };
 
+  groups$
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -45,6 +46,11 @@ export class SignUpPage {
       },
       { validator: this.matchingPasswords("Password", "RepeatPassword") }
     );
+
+    this.groups$ = afs
+    .collection(`groups`)
+    .valueChanges();
+
   }
 
   presentAlert(title, message) {
