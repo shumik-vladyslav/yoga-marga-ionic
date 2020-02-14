@@ -8,7 +8,8 @@ export class MsToHoursPipe implements PipeTransform {
         if (!value) {
             return null;
         }
-        // return Math.floor(value/1000/60/60) / 100;
-        return (value/1000/60/60).toFixed(1);
+        const minutes = Math.floor((value / (1000 * 60)) % 60);
+        const hours = Math.floor((value / (1000 * 60 * 60)) % 24);
+        return `${hours}:${minutes}`;
     }
 }
