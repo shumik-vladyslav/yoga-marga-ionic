@@ -68,9 +68,9 @@ export class PracticeSettingsPage {
       this.practiceDuration = this.transformTime(this.settings.practiceDuration, 'T->S');
     }
 
-    if (!this.settings.intervals || !this.settings.intervals.length ) {
-      this.settings.intervals = [{value:0}]
-    }
+    // if (!this.settings.intervals || !this.settings.intervals.length ) {
+    //   this.settings.intervals = [{value:0}]
+    // }
   }
 
   setExDurationsByDefault () {
