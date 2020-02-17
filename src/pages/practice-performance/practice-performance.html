@@ -3,7 +3,7 @@
     <img img-cache img-cache-src="{{ show.img }}" *ngIf="show.img" style="padding-top: 10px;" [class.mirror]="show.imgMirror"/>
   </div> -->
 
-  <div class="practice-img-v2" [ngStyle]="{'background-image': 'url(../../assets/yoga-1.svg)'}"></div>
+  <div class="practice-img-v2" [ngStyle]="{'background-image': 'url('+show.img+')'}"></div>
 
   <div class="stats-blok">
     <div>
