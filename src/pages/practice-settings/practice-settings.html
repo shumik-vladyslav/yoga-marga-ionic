@@ -16,7 +16,8 @@
           Установите время всей практики
         </p>
         <ion-item no-padding class="input-style input-goals input-teamplate">
-          <ion-datetime ion-margin-vertical text-center displayFormat="HH:mm:ss" pickerFormat="HH:mm:ss"
+          <ion-datetime ion-margin-vertical text-center displayFormat="HH:mm:ss" pickerFormat="HH:mm:ss" 
+          [disabled]="exercisesHelper.hasExercises()"
             (ngModelChange)="onPracticeTimeChange($event)" [(ngModel)]="practiceDuration"></ion-datetime>
         </ion-item>
       </ion-item>
@@ -111,7 +112,7 @@
     <ion-label position="stacked">{{i+1}}.{{e.name}}</ion-label>
     <ion-datetime ion-margin-vertical displayFormat="HH:mm:ss" pickerFormat="HH:mm:ss" text-center
       [ngModel]="settings.exercises[i].exerciseDuration | appdate"
-      (ngModelChange)="settings.exercises[i].exerciseDuration=transformTime($event, 'S->T')"></ion-datetime>
+      (ngModelChange)="settings.exercises[i].exerciseDuration=transformTime($event, 'S->T'); recalcTotal()"></ion-datetime>
   </ion-item>
 
 </ion-content>

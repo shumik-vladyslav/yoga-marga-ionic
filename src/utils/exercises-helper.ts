@@ -39,7 +39,7 @@ export class ExercisesHelper {
     // returns value in secconds
     calculateExerciseDurations() {
         if (!this.exercise) return null;
-        // let duration  = Math.floor((this.practiceDuration / this.exercisesCount)/1000)*1000;
+        if (this.exercise.exerciseDuration) return Math.floor(this.exercise.exerciseDuration /1000);
         return Math.floor(this.practiceDuration / this.exercisesCount);
     }
 

@@ -104,6 +104,19 @@ export class PracticeSettingsPage {
     const milli = moment.duration(time).asMilliseconds();
     this.settings.reminderInterval = milli;
   }
+  
+  recalcTotal() {
+    if (!this.practice.exercises || this.practice.exercises.length == 0) return;
+    let summ = 0;
+    for (let e of this.settings.exercises) {
+      summ = summ + e.exerciseDuration;
+    }
+
+
+    const milli = moment.duration(summ).asMilliseconds()
+
+    this.practiceDuration = moment.utc(milli).format('HH:mm:ss');
+  }
 
   onTimeForExerciseChange (time = null) {
     if (!time) return;
