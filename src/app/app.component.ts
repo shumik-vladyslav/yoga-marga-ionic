@@ -67,7 +67,7 @@ export class MyApp {
       },
       {
         title: "Найти практику",
-        icon: "/assets/icon/svg/navigation/icon-nav4.svg",
+        icon: "/assets/icon/svg/navigation/icon-nav5.svg",
         component: PracticeSearchPage
       },
     ];

@@ -28,7 +28,7 @@
                 <ion-item text-center no-padding>
                     <!-- img-cache img-cache-src="{{p.ico}}" -->
                     <img  img-cache img-cache-src="{{p.ico}}" src="{{p.ico}}" #img class="img-icon" >
-                    <img class="img-icon" [ngStyle]="{'-webkit-mask': 'url(' + img.src + ') no-repeat 50% 50%','mask': 'url(' + img.src + ') no-repeat 50% 50%'}">
+                    <!-- <img class="img-icon" [ngStyle]="{'-webkit-mask': 'url(' + img.src + ') no-repeat 50% 50%','mask': 'url(' + img.src + ') no-repeat 50% 50%'}"> -->
                 </ion-item>
               </ion-col>
             </ion-row>
@@ -74,7 +74,7 @@
                 <ion-col col-12>
                   <ion-item text-center no-padding>
                       <img img-cache img-cache-src="{{cm.ico}}" #img1 class="img-icon" >
-                      <img class="img-icon" [ngStyle]="{'-webkit-mask': 'url(' + img1.src + ') no-repeat 50% 50%','mask': 'url(' + img1.src + ') no-repeat 50% 50%'}">
+                      <!-- <img class="img-icon" [ngStyle]="{'-webkit-mask': 'url(' + img1.src + ') no-repeat 50% 50%','mask': 'url(' + img1.src + ') no-repeat 50% 50%'}"> -->
                   </ion-item>
                 </ion-col>
               </ion-row>
@@ -114,7 +114,7 @@
             <ion-col class="border-r custom-col" col-4 no-padding *ngFor="let p of progresses">
               <ion-item text-center no-padding>
                   <img img-cache img-cache-src="{{p.ico}}"  #img2 class="img-icon" >
-                  <img class="img-icon" [ngStyle]="{'-webkit-mask': 'url(' + img2.src + ') no-repeat 50% 50%','mask': 'url(' + img2.src + ') no-repeat 50% 50%'}">
+                  <!-- <img class="img-icon" [ngStyle]="{'-webkit-mask': 'url(' + img2.src + ') no-repeat 50% 50%','mask': 'url(' + img2.src + ') no-repeat 50% 50%'}"> -->
                 <p ion-text class="value-goals text-wrap m-t-0">{{p.name}}</p>
                 <p>{{+p.achivement}}</p> 
                 <p>из</p>
