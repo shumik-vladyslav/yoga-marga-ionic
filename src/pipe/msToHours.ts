@@ -10,10 +10,10 @@ export class MsToHoursPipe implements PipeTransform {
             return null;
         }
 
-        let seconds = value / 1000;        
-        let hours = parseInt(seconds / 3600);
+        let seconds:any = value / 1000 ;        
+        let hours = Math.floor(seconds / 3600 );
         seconds = seconds % 3600;
-        let minutes = parseInt(seconds / 60);
+        let minutes = Math.floor(seconds / 60);
         seconds = seconds % 60;
 
         return `${hours}:${minutes}`;
