@@ -200,7 +200,7 @@ export class PracticePerformancePage {
   pauseAudio() {
     if (this.show.audio) {
       this.show.audio.pause();
-    }
+    } 
   }
 
   resumeAudio() {
@@ -209,14 +209,14 @@ export class PracticePerformancePage {
     }
   }
 
-  async exitPractice() {
+  exitPractice() {
     //stop audio
     this.pauseAudio();
 
     // insomnia sleep again
     this.screenAllowSleep()
 
-    await this.savePracticeSpentTime();
+    this.savePracticeSpentTime().then( () => console.log('time is saved'));
 
     if (this.state !== this.StateEnum.Inited && (this.practice.isAmountCounter || this.practice.isMaxAchievement)) {
       this.navCtrl.push('PracticeResultPage', { practice: this.practice });
