@@ -88,7 +88,10 @@ export class SignUpPage {
         .then(auth => {
           console.log(JSON.stringify(auth.user));
           if (auth.user) {
-            
+            if (this.myForm.value.Status == 'Неофит'){
+
+            }
+
             this.afs
               .doc(`users/${auth.user.email}`)
               .set({
@@ -96,7 +99,8 @@ export class SignUpPage {
                 full_name: this.myForm.value.fullName,
                 status: this.myForm.value.Status,
                 id: auth.user.uid,
-                email: auth.user.email
+                email: auth.user.email,
+                active: this.myForm.value.Status == 'Неофит'
               })
               .then(res => console.log("user extra data saved"))
               .catch(err => console.log("user saving extra data error", err));
