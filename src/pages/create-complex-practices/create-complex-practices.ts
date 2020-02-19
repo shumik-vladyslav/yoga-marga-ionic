@@ -49,6 +49,7 @@ export class CreateComplexPracticesPage {
   }
 
   onSave() {
+    debugger
     if (this.model.practices.length <= 0) return;
 
     let com = UserProvider.getComplexes();
@@ -57,7 +58,7 @@ export class CreateComplexPracticesPage {
       complexes: com || []
     };
 
-    tmp.complexes.push({
+    tmp.complexes.push({ 
       isComplex: true,
       active: true,
       name: this.model.name,
