@@ -1,7 +1,7 @@
 <ion-content>
   <div class="practice-img">
     <!-- <img img-cache img-cache-src="{{ practice.img }}" *ngIf="practice.img" style="padding-top: 10px;" /> -->
-    <div class="practice-img-v2" img-cache-bg-url="practice.img" [ngStyle]="{'background-image': 'url('+practice.img+')'}"></div>
+    <div class="practice-img-v2" img-cache img-cache-bg-url="{{ practice.img }}" [ngStyle]="{'background-image': 'url('+practice.img+')'}"></div>
 
   </div>
 
