@@ -17,6 +17,7 @@ import { SettingsPage } from "../pages/settings/settings";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { PracticeSearchPage } from '../pages/practice-search/practice-search';
 import { ImgCacheService } from '../directives/ng-imgcache/img-cache.service';
+import { AllPracticesPage } from '../pages/all-practices/all-practices';
 
 
 @Component({
@@ -48,8 +49,9 @@ export class MyApp {
       {
         title: "Каталог",
         icon: "/assets/icon/svg/navigation/icon-nav1.svg",
-        component: HomePage
+        component: AllPracticesPage
       },
+      
       {
         title: "Комплексы",
         icon: "/assets/icon/svg/navigation/icon-nav2.svg",
