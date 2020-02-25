@@ -55,4 +55,8 @@ export class PracticeResultPage {
     this.navCtrl.pop().then(() => this.navCtrl.pop());
   }
 
+  onExit() {
+    this.navCtrl.pop().then(() => this.navCtrl.pop());
+  }
+
 }
