@@ -4,6 +4,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { CreateComplexPage } from '../create-complex/create-complex';
 import { MyComplexsPage } from '../my-complexs/my-complexs';
 import { UserInfo } from 'firebase';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 /**
  * Generated class for the ComplexsPage page.
@@ -23,9 +24,17 @@ export class ComplexsPage {
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    public userP: UserProvider) {
+    public userP: UserProvider,
+    afs: AngularFirestore
+    ) {
       this.complexes = UserProvider.getComplexes();
+      afs.doc(`shared-complexes/data`).valueChanges().subscribe(
+        (doc:any) => {
+          this. presets = doc.array
+        }
+      )
       console.log('this.complexes' ,this.complexes);
+      
   }
   
   ionViewCanEnter() {
