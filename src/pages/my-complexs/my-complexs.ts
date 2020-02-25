@@ -51,13 +51,14 @@ export class MyComplexsPage {
     }
   }
 
-  ionViewWillEnter() {
+  ionViewWillEnter() { 
     if (this.isStarted) {
       this.practiceCounter++;
       if (this.practiceCounter >= this.practices.length) {
         return this.navCtrl.pop();
       }
-      this.navCtrl.push(PracticePerformancePage, { practice: this.practices[this.practiceCounter] });
+      this.onPractice(this.practices[this.practiceCounter]);
+      // this.navCtrl.push(PracticePerformancePage, { practice: this.practices[this.practiceCounter] });
     }
   }
 

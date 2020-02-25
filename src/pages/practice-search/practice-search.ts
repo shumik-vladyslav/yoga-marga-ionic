@@ -53,8 +53,8 @@ export class PracticeSearchPage {
       return bp - ap;
     });
     let com = UserProvider.getComplexes();
-    console.log(JSON.stringify(com));
-    console.log(JSON.stringify(this.practices));
+    // console.log(JSON.stringify(com));
+    // console.log(JSON.stringify(this.practices));
     this.practices = [...com, ...this.practices];
     this.filtered = [...this.practices];
   }

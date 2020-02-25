@@ -49,7 +49,6 @@ export class CreateComplexPracticesPage {
   }
 
   onSave() {
-    debugger
     if (this.model.practices.length <= 0) return;
 
     let com = UserProvider.getComplexes();
@@ -57,27 +56,31 @@ export class CreateComplexPracticesPage {
     const tmp = {
       complexes: com || []
     };
+    this.afs.doc(`complex-settings/ico`).valueChanges().subscribe(
+      (doc:any) => {
+        console.log(doc)
+        tmp.complexes.push({
+          ico: doc.url,
+          isComplex: true,
+          active: true,
+          name: this.model.name,
+          practices: this.model.practices.map(p => p.id)
+        });
 
-    tmp.complexes.push({ 
-      isComplex: true,
-      active: true,
-      name: this.model.name,
-      practices: this.model.practices.map(p => p.id)
-    });
-
-    this.afs
-      .doc(`users/${this.authP.getUserId()}`)
-      .update(tmp)
-      .then(res => {
-        this.toastHelper.presentTopMess('Сохранено').then(
-          () => this.navCtrl.popToRoot()
-        );
+        this.afs
+          .doc(`users/${this.authP.getUserId()}`)
+          .update(tmp)
+          .then(res => {
+            this.toastHelper.presentTopMess('Сохранено').then(
+              () => this.navCtrl.popToRoot()
+            );
+          })
+          .catch(err => {
+            console.log("err", err);
+            this.toastHelper.presentTopMess('Ошибка, попробуйте позже').then(
+              () => this.navCtrl.pop()
+            );
+          });
       })
-      .catch(err => {
-        console.log("err", err);
-        this.toastHelper.presentTopMess('Ошибка, попробуйте позже').then(
-          () => this.navCtrl.pop()
-        );
-      });
   }
 }

@@ -51,7 +51,8 @@ export class PracticeResultPage {
     await  UserProvider.updateUserPracticeSettings(this.practice.id, this.practice.settings);
     await this.toastHelper.presentTopMess('Сохранено');
     this.savingState = false;
-    await this.navCtrl.popToRoot();
+    // await this.navCtrl.popTo();
+    this.navCtrl.pop().then(() => this.navCtrl.pop());
   }
 
 }

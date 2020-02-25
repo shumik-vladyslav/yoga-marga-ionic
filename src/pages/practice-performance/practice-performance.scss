@@ -14,9 +14,14 @@ page-practice-performance {
   }
 
   .mirror {
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
     -webkit-transform: scaleX(-1);
     transform: scaleX(-1);
+    filter: FlipH;
+    -ms-filter: "FlipH";
   }
+  
   .practice-img-v2{
     width: 100%;
     height: calc(75vh - 142.8px);

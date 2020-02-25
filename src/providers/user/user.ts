@@ -105,9 +105,9 @@ export class UserProvider {
         }
         UserProvider.globalPractices = result;
       });
-    }); 
+    });
   }
-  
+
   static arraysHasIntersection(arr1, arr2) {
     if (!arr1 && !arr2) {
       return true;
@@ -162,16 +162,17 @@ export class UserProvider {
   }
 
   static getComplexes() {
+    // const pr = UserProvider.globalPractices;
+    // const cm = UserProvider.user.complexes;
     
-    const pr = UserProvider.globalPractices;
-    const cm = UserProvider.user.complexes;
+    // if(!cm) return [];
     
-    if(!cm) return [];
-    
-    for (const val of cm) {
-      val.ico = pr[val.practices[0]].ico;
-    }
-    return cm;
+    // for (const val of cm) {
+    //   // TODO 
+    //   val.ico = pr[val.practices[0]].ico;
+    // }
+    // return cm;
+    return UserProvider.user.complexes;
   }
 
   static getUserGoals() {
