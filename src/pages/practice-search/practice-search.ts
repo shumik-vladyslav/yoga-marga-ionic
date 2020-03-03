@@ -77,7 +77,7 @@ export class PracticeSearchPage {
     );
   }
 
-  onPractice(p) {
+  onPractice(p) { 
     if (!p.active) return;
     if (p.isBm) {
       this.navCtrl.push(BmPage, { practice: p })

@@ -26,8 +26,7 @@
             class="border-r col-between"
             no-padding
             *ngFor="let pract of practices"
-            [navPush]="pract.active === false ? '' : 'PracticePerformancePage'"
-            [navParams]="{ practice: pract }"
+            (click)="onPractice(pract)"
             [class.inactive]="pract.active === false"
           >
             <ion-row>

@@ -2,6 +2,8 @@ import { PracticePerformancePage } from './../practice-performance/practice-perf
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { UserProvider } from '../../providers/user/user';
+import { BmPage } from '../bm/bm';
+import { MyComplexsPage } from '../my-complexs/my-complexs';
 
 /**
  * Generated class for the PracticesListPage page.
@@ -33,4 +35,14 @@ export class PracticesListPage {
     console.log('ionViewDidLoad PracticesListPage');
   }
 
+  onPractice(p) { 
+    if (!p.active) return;
+    if (p.isBm) {
+      this.navCtrl.push(BmPage, { practice: p })
+    } else if (p.isComplex) {
+      this.navCtrl.push(MyComplexsPage, { complex: p });
+    } else {
+      this.navCtrl.push(PracticePerformancePage, { practice: p })
+    }
+  }
 }

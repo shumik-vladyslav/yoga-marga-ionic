@@ -5,6 +5,9 @@ import { SlicePipe } from '@angular/common';
 import { groupBy } from 'rxjs/internal/operators/groupBy';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { PracticesListPage } from '../practices-list/practices-list';
+import { BmPage } from '../bm/bm';
+import { MyComplexsPage } from '../my-complexs/my-complexs';
+import { PracticePerformancePage } from '../practice-performance/practice-performance';
 
 /**
  * Generated class for the AllPracticesPage page.
@@ -107,4 +110,14 @@ export class AllPracticesPage {
     console.log('ionViewDidLoad AllPracticesPage');
   }
 
+  onPractice(p) { 
+    if (!p.active) return;
+    if (p.isBm) {
+      this.navCtrl.push(BmPage, { practice: p })
+    } else if (p.isComplex) {
+      this.navCtrl.push(MyComplexsPage, { complex: p });
+    } else {
+      this.navCtrl.push(PracticePerformancePage, { practice: p })
+    }
+  }
 }

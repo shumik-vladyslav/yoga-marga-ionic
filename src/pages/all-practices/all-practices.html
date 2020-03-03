@@ -46,7 +46,8 @@
         <ion-grid>
           <ion-row justify-content-center>
             <ion-col col-4 class="border-r col-between" no-padding *ngFor="let pract of (group[1] | slice:0:3)" 
-            [navPush]="pract.active === false?'':'PracticePerformancePage'" [navParams]="{practice: pract}" [class.inactive]="pract.active===false">
+            (click)="onPractice(pract)"
+            [class.inactive]="pract.active===false">
 
               <ion-row>
                 <ion-col col-12>
