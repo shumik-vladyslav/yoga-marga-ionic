@@ -19,6 +19,11 @@ import { PracticeSearchPage } from '../pages/practice-search/practice-search';
 import { ImgCacheService } from '../directives/ng-imgcache/img-cache.service';
 import { AllPracticesPage } from '../pages/all-practices/all-practices';
 
+window.onerror = function(error: any) {
+  if (error.indexOf("An internal error was encountered in the Indexed Database server") >= 0) {
+    window.location.reload();
+  }
+};
 
 @Component({
   templateUrl: "app.html"
