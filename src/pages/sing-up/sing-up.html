@@ -16,7 +16,7 @@
 
         <ion-img class="img-sing-up m-t-20" src="/assets/logo/logo.jpg"></ion-img>
         <p padding-horizontal text-center ion-text>
-          Для использования приложения, пожалуйста, зарегестрируйтесь!
+          Для использования приложения, пожалуйста, зарегистрируйтесь!
         </p>
         <form novalidate [formGroup]="myForm">
           <ion-item [ngClass]="{'error-validation': (myForm.controls['spiritualName'].invalid) && (customeValidation === false)}" no-padding
@@ -46,7 +46,7 @@
             <ion-input type="password" [(ngModel)]="data.RepeatPassword" formControlName="RepeatPassword" text-left placeholder="Потвердите пароль" type="password" clearInput></ion-input>
           </ion-item>
         </form>
-        <button [ngClass]="{'error': (myForm.invalid) && (customeValidation === false)}" full text-capitalize class="height-100 btn-sing-up btn-hover" (click)="signUp()">Зарегестрироваться</button>
+        <button [ngClass]="{'error': (myForm.invalid) && (customeValidation === false)}" full text-capitalize class="height-100 btn-sing-up btn-hover" (click)="signUp()">Зарегистрироваться</button>
         <p  text-center ion-text class="m-t-40">
             Есть аккаунт? 
             <button class="bg-none cust-link" (click)="goSingIn()">

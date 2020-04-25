@@ -1,3 +1,4 @@
+import { StatsProvider } from './../../providers/stats/stats';
 import { FileCacheProvider } from './../../providers/file-cache/file-cache';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
@@ -27,7 +28,8 @@ export class BmPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private insomnia: Insomnia,
-    private fileCache: FileCacheProvider
+    private fileCache: FileCacheProvider,
+    private statsProv: StatsProvider
   ) {
     this.practice = { ...this.navParams.get("practice") };
     console.log(this.practice);
@@ -41,7 +43,6 @@ export class BmPage {
   }
 
   onBack() {
-    // debugger
     if (this.playedIdx == null) return;
     const count = this.practice.bmtracks.length;
     this.playedIdx = this.playedIdx - 1 < 0 ?  this.playedIdx : this.playedIdx - 1;
@@ -97,10 +98,13 @@ export class BmPage {
   }
 
   ionViewDidLoad() {
+    this.statsProv.event('bm_opened', {practice_name: this.practice.name});
+    this.screenKeepAwake();
     console.log('ionViewDidLoad BmPage');
   }
   
   ionViewDidLeave() {
+    this.screenAllowSleep();
     this.practice.bmtracks.forEach(t => t.audio? t.audio.pause():0);
   }
 

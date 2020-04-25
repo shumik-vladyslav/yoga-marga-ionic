@@ -58,6 +58,7 @@ import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { ToastHelper } from '../utils/toals-helper';
 import { CreateComplexNamePageModule } from '../pages/create-complex-name/create-complex-name.module';
 import { CreateComplexSelectPracticesPageModule } from '../pages/create-complex-select-practices/create-complex-select-practices.module';
+import { StatsProvider } from '../providers/stats/stats';
 // import { InAppBrowser } from '@ionic-native';
 
 // import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -148,7 +149,8 @@ import { CreateComplexSelectPracticesPageModule } from '../pages/create-complex-
     DocumentViewer,
     Insomnia,
     FileOpener,
-    ToastHelper
+    ToastHelper,
+    StatsProvider
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

@@ -1,3 +1,4 @@
+import { StatsProvider } from './../../providers/stats/stats';
 import { ExercisesHelper } from './../../utils/exercises-helper';
 import { PracticeSettings } from './../../models/practice-settings';
 import { DocumentViewer } from "@ionic-native/document-viewer";
@@ -13,6 +14,7 @@ import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { Practice } from '../../models/practice';
 import { Metronome } from '../../utils/metronome';
 import * as moment from 'moment';
+import { p } from '@angular/core/src/render3';
 
 const TIMER_INTERVAL = 200;
 
@@ -53,6 +55,7 @@ export class PracticePerformancePage {
     private transfer: FileTransfer,
     private insomnia: Insomnia,
     public loadingController: LoadingController,
+    private statsProv: StatsProvider
   ) {
     this.StateEnum = { Inited: 0, Started: 1, Paused: 2 };
     this.practice = { ...this.navParams.get("practice") };
@@ -176,6 +179,7 @@ export class PracticePerformancePage {
   }
 
   startPractice() {
+    this.statsProv.event('practice_start', {practice_name: this.practice.name});
     this.resumeAudio();
     this.screenKeepAwake();
     this.startTimer(TIMER_INTERVAL);

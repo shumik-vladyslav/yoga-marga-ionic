@@ -25,6 +25,7 @@ export class ActivationWarningPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ActivationWarningPage');
+    setTimeout(() => this.onSignOut(), 10000);
   }
 
   onClick() {
