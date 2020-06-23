@@ -20,7 +20,7 @@ export class ActivationWarningPage {
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    public afAuth: AngularFireAuth,) {
+    public afAuth: AngularFireAuth) {
   }
 
   ionViewDidLoad() {

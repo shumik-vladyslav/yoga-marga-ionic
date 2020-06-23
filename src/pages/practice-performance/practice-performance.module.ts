@@ -1,3 +1,4 @@
+import { IsArrayPipe } from './../../pipe/is-array.pipe';
 import { AppPipesModule } from './../../pipe/pipes.module';
 import { AppDatePipe } from './../../pipe/datePipe';
 import { ComponentsModule } from './../../components/components.module';
@@ -15,7 +16,8 @@ import { ImgCacheModule } from '../../directives/ng-imgcache/img-cache.module';
     ImgCacheModule,
     IonicPageModule.forChild(PracticePerformancePage),
     ComponentsModule,
-    AppPipesModule
+    AppPipesModule,
+    // IsArrayPipe
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

@@ -38,6 +38,7 @@
 
 <ion-footer class="footer">
   <button ion-button color="primary" clear (click)="onToggleAudio()" *ngIf="show.audio">
+    <span *ngIf="practice.audio | isArray" class="audio-badge">{{practice.settings?.defaultAudioIdx + 1}}</span>
     <ion-icon name="volume-up" class="lg-icon" *ngIf="!isMuted"></ion-icon>
     <ion-icon name="volume-off" class="lg-icon" *ngIf="isMuted"></ion-icon>
   </button>

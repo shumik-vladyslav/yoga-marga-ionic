@@ -60,10 +60,7 @@ export class PracticePerformancePage {
     this.StateEnum = { Inited: 0, Started: 1, Paused: 2 };
     this.practice = { ...this.navParams.get("practice") };
 
-    if (this.practice.audio) {
-      this.show.audio = new Audio(this.practice.audio);
-      this.show.audio.addEventListener("ended", function () { this.currentTime = 0; this.play(); }, false);
-    }
+   
 
     this.show.img = this.practice.img;
     this.show.title = this.practice.name;
@@ -96,6 +93,20 @@ export class PracticePerformancePage {
     }
 
     this.practice.settings = settings;
+    debugger
+    if (this.practice.audio) {
+      if (
+        Array.isArray(this.practice.audio) &&
+        this.practice.settings &&
+        Number.isInteger(this.practice.settings.defaultAudioIdx)
+      ) {
+        this.show.audio = new Audio(this.practice.audio[this.practice.settings.defaultAudioIdx]);
+      } else {
+        this.show.audio = new Audio(this.practice.audio);
+      }
+      
+      this.show.audio.addEventListener("ended", function () { this.currentTime = 0; this.play(); }, false);
+    }
 
     this.exercisesHelper = new ExercisesHelper(this.practice);
 
@@ -107,7 +118,7 @@ export class PracticePerformancePage {
 
     // go to exercises performance page
     if (this.exercisesHelper.hasExercises()) {
-      this.practiceDuration = this.exercisesHelper.calculatePracticeDuration()*1000;
+      this.practiceDuration = this.exercisesHelper.calculatePracticeDuration() * 1000;
     } else {
       this.practiceDuration = this.practice.settings.practiceDuration;
     }
@@ -179,7 +190,7 @@ export class PracticePerformancePage {
   }
 
   startPractice() {
-    this.statsProv.event('practice_start', {practice_name: this.practice.name});
+    this.statsProv.event('practice_start', { practice_name: this.practice.name });
     this.resumeAudio();
     this.screenKeepAwake();
     this.startTimer(TIMER_INTERVAL);
@@ -204,7 +215,7 @@ export class PracticePerformancePage {
   pauseAudio() {
     if (this.show.audio) {
       this.show.audio.pause();
-    } 
+    }
   }
 
   resumeAudio() {
@@ -220,7 +231,7 @@ export class PracticePerformancePage {
     // insomnia sleep again
     this.screenAllowSleep()
 
-    this.savePracticeSpentTime().then( () => console.log('time is saved'));
+    this.savePracticeSpentTime().then(() => console.log('time is saved'));
 
     if (this.state !== this.StateEnum.Inited && (this.practice.isAmountCounter || this.practice.isMaxAchievement)) {
       this.navCtrl.push('PracticeResultPage', { practice: this.practice });

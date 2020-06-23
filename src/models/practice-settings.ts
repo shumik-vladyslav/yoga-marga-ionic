@@ -19,6 +19,7 @@ export class PracticeSettings {
     maxAchievementGoal?: number;
     amountCounterGoal?: number;
     priority?: number;
+    defaultAudioIdx?: number;
     // fabric method
     public static createInstance(): PracticeSettings {
         return {
@@ -31,7 +32,8 @@ export class PracticeSettings {
             spentTime: 0,
             singleReminder: false,
             multiReminder: false,
-            metronomeFlag: false
+            metronomeFlag: false,
+            defaultAudioIdx: 0
         }
     }
 }

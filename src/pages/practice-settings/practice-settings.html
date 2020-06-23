@@ -8,7 +8,25 @@
         <ion-input type="number" [(ngModel)]="settings.priority"></ion-input>
       </ion-item>
     </ion-item>
+    <ion-item no-padding *ngIf="practice.audio | isArray">
+      <p ion-text text-wrap text-center color="gray">
+        Выберите аудиофайл который будет использоваться по умолчанию
+      </p>
+      <div *ngFor="let a of practice.audio;let i = index">
+        <ion-item id="radio-style ios" class="width-default radio-style" style="display: inline-block;">
+          <ion-toggle [ngModel]="settings.defaultAudioIdx == i" (ngModelChange)="settings.defaultAudioIdx=i">
+          </ion-toggle>
+        </ion-item>
 
+        <audio controls >
+          <source  [src]="a">
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+    </ion-item>
+
+
+    
     <!-- *ngIf="!exercisesHelper.hasExercises()" -->
     <div >
       <ion-item no-padding *ngIf="!practice.isBm">
