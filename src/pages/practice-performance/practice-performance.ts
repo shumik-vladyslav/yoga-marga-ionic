@@ -93,7 +93,6 @@ export class PracticePerformancePage {
     }
 
     this.practice.settings = settings;
-    debugger
     if (this.practice.audio) {
       if (
         Array.isArray(this.practice.audio) &&
