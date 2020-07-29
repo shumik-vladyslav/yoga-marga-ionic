@@ -1,5 +1,15 @@
 <ion-content padding>
   <ion-grid>
+    
+    <div ion-text text-center *ngIf="practice.detailedInformation">
+      <!-- <button ion-button class="ion-no-margin" color="primary" (click)="setExDurationsByDefault()">
+        Восстановить по умолчанию
+      </button> -->
+      <a ion-button class="ion-no-margin" color="primary"  href="#" (click)="window.open(practice.detailedInformation, '_system', 'location=yes');"> Детальное описание практики</a>
+      <br><br>
+    </div>
+    
+
     <ion-item no-padding>
       <p ion-text text-wrap text-center color="gray">
         Установите приоритет (чем больше число тем выше практика в списке)

@@ -27,7 +27,7 @@ export class PracticeSettingsPage {
   onChangeIntervals(event) {
     console.log(event);
   }
-
+  window = window;
   transformTime(value, direction) {
     if (!value) return;
     // milliseconds time to string HH:mm:ss

@@ -9,7 +9,7 @@ export class Practice {
     text?: string | any;
     exercises: any[];
     settings?: PracticeSettings;
-
+    detailedInformation?: string;
     hasMetronome: boolean;
     
     isMaxAchievement: boolean; // for backward compatibility

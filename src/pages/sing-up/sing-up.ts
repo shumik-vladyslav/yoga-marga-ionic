@@ -48,8 +48,8 @@ export class SignUpPage {
     );
 
     this.groups$ = afs
-    .collection(`groups`)
-    .valueChanges();
+      .collection(`groups`)
+      .valueChanges();
 
   }
 
@@ -88,7 +88,7 @@ export class SignUpPage {
         .then(auth => {
           console.log(JSON.stringify(auth.user));
           if (auth.user) {
-            if (this.myForm.value.Status == 'Неофит'){
+            if (this.myForm.value.Status == 'Неофит') {
 
             }
 
@@ -103,9 +103,16 @@ export class SignUpPage {
                 active: this.myForm.value.Status == 'Неофит'
               })
               .then(res => console.log("user extra data saved"))
-              .catch(err => console.log("user saving extra data error", err));
+              .catch(err => {
+                this.presentAlert('Ошибка сервера', 'Проверьте подключение к сети');
+                console.log("user saving extra data error", err);
+              });
           }
-        });
+        })
+        .catch(err => {
+          console.log(err);
+          this.presentAlert('Ошибка сервера', 'Возможно такая почта уже зарегистрирована, или отсутствует подключение к сети');
+        })
     } else {
       this.presentAlert('Ошибка', 'Проверьте правильность полей');
       this.customeValidation = false;

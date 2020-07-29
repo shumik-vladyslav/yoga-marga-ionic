@@ -153,13 +153,13 @@ export class ExercisesHelper {
         const now = Math.floor(performance.now() / 1000);
         this.startExerciseTime = now;
         
-        this.show.practiceTimer = this.show.practiceTimer  - this.show.exerciseTimer;
+        this.show.practiceTimer = this.show.practiceTimer - this.show.exerciseTimer;
 
         this.startTime = this.startTime - Math.floor(this.show.exerciseTimer / 1000);
         this.show.exerciseTimer = this.duration * 1000;
     }
 
     prevExercise() {
-
+ 
     }
 }

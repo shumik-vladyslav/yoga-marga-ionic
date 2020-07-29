@@ -57,6 +57,7 @@ export class SingInPage {
   async signIn() {
     if(this.myForm.invalid){
       this.customeValidation = false;
+      return this.presentAlert('Ошибка', 'Проверьте правильность полей');
     }
     try {
       const user = await this.afAuth.auth.signInWithEmailAndPassword(this.email, this.password);
@@ -64,7 +65,7 @@ export class SingInPage {
       this.navCtrl.setRoot(PracticeSearchPage);
     } catch (err) {
       console.log(err);
-      this.presentAlert('Ошибка', err);
+      this.presentAlert('Ошибка сервера', 'Проверьте правильность ввода полей и подключение к сети');
     }
   }
 
