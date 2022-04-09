@@ -58,7 +58,7 @@
     "ionic-angular": "3.9.2",
     "ionic-img-cache": "^1.3.2",
     "ionicons": "3.0.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "ng-circle-progress": "^1.2.0",
     "ng-imgcache": "^1.0.1",
     "rxjs": "^6.3.3",
